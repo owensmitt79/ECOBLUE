@@ -146,7 +146,7 @@
   width: 100%;
   height: 480px;
   user-select: none;
-  touch-action: pan-y;
+  touch-action: none; /* JS handles touch — prevents conflict with page scroll gesture */
   background-color: #0f172a;
 }
 

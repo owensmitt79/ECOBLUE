@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface ModalContextValue {
   isQuoteModalOpen: boolean;
@@ -20,20 +20,30 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState<boolean>(false);
   const [prefilledService, setPrefilledService] = useState<string>('');
 
+  // Safety cleanup: always restore scroll when this provider unmounts
+  useEffect(() => {
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
+    };
+  }, []);
+
+  // Sync body overflow whenever modal state changes
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = isQuoteModalOpen ? 'hidden' : '';
+    }
+  }, [isQuoteModalOpen]);
+
   const openQuoteModal = (serviceName: string = '') => {
     setPrefilledService(serviceName);
     setIsQuoteModalOpen(true);
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'hidden';
-    }
   };
 
   const closeQuoteModal = () => {
     setIsQuoteModalOpen(false);
     setPrefilledService('');
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = '';
-    }
   };
 
   return (

@@ -2,7 +2,8 @@
    EcoBlue Environmental Services Ltd. - Main Corporate Stylesheet
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+
 
 /* --- Reset & Global Baseline --- */
 *, *::before, *::after {
@@ -16,6 +17,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;  /* Prevent horizontal scroll at root level */
 }
 
 body {
@@ -23,7 +25,8 @@ body {
   color: var(--color-text-main);
   background-color: var(--color-bg-body);
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: clip; /* Use clip instead of hidden — avoids suppressing vertical scroll on iOS */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS tablets */
 }
 
 /* Headings */
