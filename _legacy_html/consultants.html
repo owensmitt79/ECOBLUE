@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultants | EcoBlue Environmental Services Ltd. - Join Us</title>
+  <meta name="description" content="EcoBlue Environmental Services Ltd. collaborates with experienced consultants, technical experts, and industry specialists across environmental, scientific, and engineering disciplines in Rivers State." />
+  <meta name="keywords" content="environmental consultants Port Harcourt, EIA specialists Rivers State, waste management advisory Nigeria, EcoBlue consultants, circular economy consultants" />
+
+  <!-- Stylesheets -->
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+
+  <style>
+    .consultants-hero {
+      position: relative;
+      background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, var(--color-navy-light) 100%);
+      color: #ffffff;
+      padding: clamp(70px, 9vw, 110px) 0 clamp(40px, 5vw, 60px);
+      overflow: hidden;
+    }
+    .consultants-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .consultants-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--color-text-inverse-muted);
+      margin-bottom: 1.25rem;
+    }
+    .consultants-breadcrumb a {
+      color: var(--color-green-light);
+      text-decoration: none;
+    }
+    .consultants-hero-title {
+      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .consultants-overview-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .consultants-overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .practice-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-subtle);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .practice-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-green);
+    }
+    .practice-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--color-green-subtle);
+      color: var(--color-primary-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="EcoBlue Home">
+        <img src="images/logo.png" alt="EcoBlue Environmental Services Ltd." class="brand-logo-img" />
+        <div class="brand-name-group">
+          <span class="brand-name">Eco<span>Blue</span></span>
+          <span class="brand-subline">Environmental Services Ltd.</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+
+        <!-- About Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="about.html" class="nav-link dropdown-toggle" aria-expanded="false">
+            About Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="about.html#our-company" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Our Company</div>
+                <div class="dropdown-item-desc">Corporate profile, story & values</div>
+              </div>
+            </a>
+            <a href="chairmans-message.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Chairman's Message</div>
+                <div class="dropdown-item-desc">Leadership vision & strategic mandate</div>
+              </div>
+            </a>
+            <a href="about.html#report" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Sustainability Report</div>
+                <div class="dropdown-item-desc">ESG commitment & operational standards</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="partnerships.html" class="nav-link">Partnerships</a>
+
+        <!-- Join Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="#" class="nav-link dropdown-toggle active" aria-expanded="false">
+            Join Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="careers.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Careers</div>
+                <div class="dropdown-item-desc">Work with our operations team</div>
+              </div>
+            </a>
+            <a href="consultants.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Consultants</div>
+                <div class="dropdown-item-desc">Collaborate on technical projects</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- CTA Button & Hamburger -->
+      <div class="header-actions">
+        <button class="mobile-toggle" aria-label="Open Navigation Menu" id="openMobileNav">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-backdrop"></div>
+  <aside class="mobile-drawer" aria-label="Mobile Menu">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo">
+        <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:56px; width:auto;" />
+        <div class="brand-name-group">
+          <span class="brand-name" style="font-size:1.15rem;">Eco<span>Blue</span></span>
+          <span class="brand-subline" style="font-size:0.6rem;">Environmental Services</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" aria-label="Close Mobile Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+
+      <!-- Mobile About Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <a href="about.html" class="mobile-nav-link">About Us</a>
+          <button class="mobile-dropdown-btn" aria-label="Toggle About Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="about.html#our-company" class="mobile-sub-link">Our Company</a>
+          <a href="chairmans-message.html" class="mobile-sub-link">Chairman's Message</a>
+          <a href="about.html#report" class="mobile-sub-link">Sustainability Report</a>
+        </div>
+      </div>
+
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="partnerships.html" class="mobile-nav-link">Partnerships</a>
+
+      <!-- Mobile Join Us Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <span class="mobile-nav-link active">Join Us</span>
+          <button class="mobile-dropdown-btn" aria-label="Toggle Join Us Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu" style="display:block;">
+          <a href="careers.html" class="mobile-sub-link">Careers</a>
+          <a href="consultants.html" class="mobile-sub-link active">Consultants</a>
+        </div>
+      </div>
+
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin.html" class="mobile-nav-link" style="color:var(--color-primary-green);">Staff Admin</a>
+    </div>
+    <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--color-border-subtle);">
+      <div style="font-size:0.85rem; color:var(--color-text-subtle); text-align:center;">
+        Port Harcourt, Rivers State<br>08061193218
+      </div>
+    </div>
+  </aside>
+
+  <!-- 1. Hero Section (Jawura Inspired Layout) -->
+  <section class="consultants-hero">
+    <div class="container">
+      <div class="consultants-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Join Us</span>
+        <span>/</span>
+        <span style="color:#ffffff;">Consultants</span>
+      </div>
+
+      <div style="max-width: 840px;">
+        <h1 class="consultants-hero-title">Consultants & Technical Specialists</h1>
+        <p style="font-size:1.2rem; line-height:1.75; color:#E2E8F0; margin-bottom:2rem; font-weight:400;">
+          EcoBlue Environmental Services Ltd. collaborates with experienced consultants, technical experts, and industry specialists across environmental, scientific, technological, and engineering disciplines in Rivers State and nationwide.
+        </p>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="#eoiFormSection" class="btn btn-lg btn-primary">
+            <span>Submit Expression of Interest</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="#practice-areas" class="btn btn-lg btn-outline-white">
+            <span>Specialization Areas</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Work With EcoBlue Section (Jawura Format) -->
+  <section class="section-py" style="background:#ffffff;">
+    <div class="container">
+      <div class="consultants-overview-grid">
+        <div>
+          <div class="section-badge navy">Collaboration Framework</div>
+          <h2 class="section-title">Work With EcoBlue Environmental</h2>
+          <p style="font-size:1.15rem; color:var(--color-text-main); font-weight:500; margin-bottom:1.25rem; line-height:1.7;">
+            We welcome professionals who share our commitment to scientific excellence, regulatory compliance, sustainability, and environmentally responsible solutions.
+          </p>
+          <p style="color:var(--color-text-muted); line-height:1.7; margin-bottom:1.5rem;">
+            Whether in environmental assessment, laboratory sciences, waste management, remediation, policy advisory, or technical support services, your expertise can contribute to impactful projects across Port Harcourt, the Niger Delta, and beyond.
+          </p>
+          <div style="padding:1.25rem 1.5rem; background:var(--color-navy-subtle); border-radius:var(--radius-md); border-left:4px solid var(--color-primary-navy); margin-bottom:2rem;">
+            <div style="font-weight:700; color:var(--color-primary-navy); font-size:1.05rem; margin-bottom:0.35rem;">
+              Multidisciplinary Network
+            </div>
+            <div style="color:var(--color-text-muted); font-size:0.95rem; line-height:1.6;">
+              Become part of a multidisciplinary network delivering trusted, data-driven environmental solutions for public authorities, commercial clients, and industrial operations.
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div style="display:flex; gap:0.75rem; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span style="font-weight:600; color:var(--color-primary-navy);">Project Retainers</span>
+            </div>
+            <div style="display:flex; gap:0.75rem; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span style="font-weight:600; color:var(--color-primary-navy);">EIA Field Studies</span>
+            </div>
+            <div style="display:flex; gap:0.75rem; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span style="font-weight:600; color:var(--color-primary-navy);">Regulatory Documentation</span>
+            </div>
+            <div style="display:flex; gap:0.75rem; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span style="font-weight:600; color:var(--color-primary-navy);">Joint Bidding</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-xl); border:4px solid #ffffff;">
+            <img src="images/consultants-hero.jpg" alt="EcoBlue Technical Environmental Consultants and Field Scientists" style="width:100%; height:460px; object-fit:cover;" />
+            <div style="position:absolute; bottom:0; inset-inline:0; background:linear-gradient(to top, rgba(10, 37, 64, 0.9) 0%, transparent 100%); padding:2rem 1.5rem 1.25rem;">
+              <div style="font-weight:700; color:#ffffff; font-size:1.1rem;">Environmental Research & Regulatory Advisory</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Practice Areas Section -->
+  <section class="section-py" id="practice-areas" style="background:var(--color-bg-body);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Practice Disciplines</div>
+        <h2 class="section-title">Specialist Consulting Fields</h2>
+        <p class="section-desc">
+          We maintain an accredited database of external senior consultants and technical specialists across critical environmental domains in Nigeria.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem;">
+        
+        <!-- Field 1 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">Environmental Impact Assessment (EIA)</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Lead practitioners for baseline environmental sampling, biodiversity surveys, socio-economic impact studies, and statutory EIA documentation for Federal & Rivers State authorities.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> Air quality samplers, toxicology profiling, ecological modeling.
+          </div>
+        </div>
+
+        <!-- Field 2 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">Circular Economy & Polymer Engineering</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Technical advisory on post-consumer plastic value chains (PET, HDPE, LDPE), polymer contamination reduction, extrusion technologies, and circular economy integration for industrial clients.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> Material Flow Analysis (MFA), polymer purity testing, recycling yield metrics.
+          </div>
+        </div>
+
+        <!-- Field 3 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">GIS Spatial Mapping & Route Telematics</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Geographic Information System experts for waste generation density mapping, catchment zone optimization, and telematics-guided route planning for Port Harcourt compactor vehicles.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> QGIS/ArcGIS, telemetry API analytics, municipal road network nodes.
+          </div>
+        </div>
+
+        <!-- Field 4 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">Industrial Waste Audit & Remediation</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Industrial hygiene, effluent testing, sludge decontamination, and waste minimization audits for oil and gas service bases, marine dockyards, and food manufacturing plants.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> Chemical risk matrices, waste manifest protocols, bioremediation design.
+          </div>
+        </div>
+
+        <!-- Field 5 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">Regulatory Compliance & Permitting</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Specialists with verified liaison expertise in navigating regulatory frameworks under CAMA 2020, Rivers State Ministry of Environment (RSMEnv), RIWAMA, and FMEnv guidelines.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> Legal compliance gap analysis, statutory permit registers, policy drafting.
+          </div>
+        </div>
+
+        <!-- Field 6 -->
+        <div class="practice-card">
+          <div class="practice-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 style="font-size:1.3rem; color:var(--color-primary-navy); margin-bottom:0.75rem;">Community Health & ESG Frameworks</h3>
+          <p style="font-size:0.95rem; color:var(--color-text-muted); line-height:1.65; margin-bottom:1.25rem;">
+            Consultants specialized in designing community sanitation advocacy, informal waste picker integration frameworks, and measurable Corporate Environmental Social Governance (ESG) reports.
+          </p>
+          <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+            <strong>Key Tools:</strong> GRI reporting standards, community engagement metrics, social impact assessment.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Expression of Interest (EOI) Form Section -->
+  <section class="section-py" id="eoiFormSection" style="background:#ffffff;">
+    <div class="container">
+      <div style="max-width:780px; margin:0 auto; background:var(--color-bg-body); border-radius:var(--radius-xl); padding:clamp(2rem, 5vw, 3.5rem); border:1px solid var(--color-border-subtle); box-shadow:var(--shadow-md);">
+        
+        <div style="text-align:center; margin-bottom:2.5rem;">
+          <div class="section-badge navy">Expression of Interest (EOI)</div>
+          <h2 style="font-size:2rem; color:var(--color-primary-navy); margin-bottom:0.5rem;">Register as a Technical Consultant</h2>
+          <p style="color:var(--color-text-muted); font-size:1rem;">
+            Submit your professional details below for ongoing and upcoming environmental engagements in Rivers State.
+          </p>
+        </div>
+
+        <form id="consultantEoiForm">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="cstName">Consultant Full Name *</label>
+              <input type="text" id="cstName" class="form-control" placeholder="e.g. Dr. Ibiene Dagogo" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cstOrg">Consulting Practice / Firm Name</label>
+              <input type="text" id="cstOrg" class="form-control" placeholder="e.g. Dagogo Environmental Ltd. or Independent" />
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="cstEmail">Email Address *</label>
+              <input type="email" id="cstEmail" class="form-control" placeholder="e.g. i.dagogo@ecoconsult.ng" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cstPhone">Phone Number *</label>
+              <input type="tel" id="cstPhone" class="form-control" placeholder="e.g. 0803 987 6543" required />
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="cstField">Primary Field of Expertise *</label>
+              <select id="cstField" class="form-control" required>
+                <option value="">Select primary field...</option>
+                <option value="Environmental Impact Assessment (EIA)">Environmental Impact Assessment (EIA)</option>
+                <option value="Circular Economy & Polymer Engineering">Circular Economy & Polymer Engineering</option>
+                <option value="GIS Spatial Mapping & Route Telematics">GIS Spatial Mapping & Route Telematics</option>
+                <option value="Industrial Waste Audit & Remediation">Industrial Waste Audit & Remediation</option>
+                <option value="Regulatory Compliance & Permitting">Regulatory Compliance & Permitting</option>
+                <option value="Community Health & ESG Frameworks">Community Health & ESG Frameworks</option>
+                <option value="Other Specialist Discipline">Other Specialist Discipline</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cstMode">Preferred Engagement Mode *</label>
+              <select id="cstMode" class="form-control" required>
+                <option value="Project-based Specialist">Project-based Specialist</option>
+                <option value="Technical Advisory Board">Technical Advisory Board</option>
+                <option value="Joint Venture / Consortia Partner">Joint Venture / Consortia Partner</option>
+                <option value="Senior Retainer Consultant">Senior Retainer Consultant</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="cstExperience">Years of Professional Experience</label>
+              <select id="cstExperience" class="form-control">
+                <option value="3 - 5 Years">3 - 5 Years</option>
+                <option value="6 - 10 Years">6 - 10 Years</option>
+                <option value="11 - 15 Years">11 - 15 Years</option>
+                <option value="15+ Years">15+ Years (Senior Lead)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cstQual">Certifications / Professional Bodies</label>
+              <input type="text" id="cstQual" class="form-control" placeholder="e.g. Ph.D, NES, COREN, EIA Certified" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cstNotes">Summary of Past Environmental Projects & Core Competencies</label>
+            <textarea id="cstNotes" class="form-control" rows="4" placeholder="Highlight past EIA studies, industrial audits, or waste logistics projects handled in Rivers State or Nigeria..."></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+              Direct technical inquiries: <a href="mailto:info@ecoblueenvironmental.com" style="color:var(--color-primary-green); font-weight:600;">info@ecoblueenvironmental.com</a>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding:0.85rem 2rem;">
+              Submit Consultant Profile
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Corporate Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col-brand">
+          <div class="brand-logo" style="margin-bottom:1rem;">
+            <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:72px; width:auto;" />
+            <div class="brand-name-group">
+              <span class="brand-name" style="color:#ffffff;">Eco<span>Blue</span></span>
+              <span class="brand-subline">Environmental Services Ltd.</span>
+            </div>
+          </div>
+          <p style="color:var(--color-text-inverse-muted); font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
+            Professional, reliable, and sustainable waste management solutions across Port Harcourt, Rivers State, and Nigeria.
+          </p>
+          <div style="font-size:0.8rem; color:var(--color-text-inverse-muted);">
+            CAMA 2020 Registered • Port Harcourt, Rivers State
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="chairmans-message.html" class="footer-link">Chairman's Message</a>
+            <a href="services.html" class="footer-link">Services</a>
+            <a href="partnerships.html" class="footer-link">Partnerships</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Join Us</h4>
+          <div class="footer-links">
+            <a href="careers.html" class="footer-link">Careers & Jobs</a>
+            <a href="consultants.html" class="footer-link" style="color:#ffffff; font-weight:600;">Consultants Network</a>
+            <a href="fleet.html" class="footer-link">Fleet & Operations</a>
+            <a href="community-impact.html" class="footer-link">Community Impact</a>
+            <a href="admin.html" class="footer-link">Staff Admin Portal</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contact Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Port Harcourt, Rivers State, Nigeria</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>08061193218</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>info@ecoblueenvironmental.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 EcoBlue Environmental Services Ltd. All rights reserved.</div>
+        <div>Compliant with CAMA 2020 & Rivers State Environmental Framework.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Universal Consultation Modal Container -->
+  <div id="quoteModalContainer"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/storage.js"></script>
+  <script src="js/quote-modal.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    // Consultant EOI form submission
+    const form = document.getElementById('consultantEoiForm');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const consultant = {
+          name: document.getElementById('cstName').value.trim(),
+          organization: document.getElementById('cstOrg').value.trim(),
+          email: document.getElementById('cstEmail').value.trim(),
+          phone: document.getElementById('cstPhone').value.trim(),
+          fieldOfExpertise: document.getElementById('cstField').value,
+          engagementMode: document.getElementById('cstMode').value,
+          yearsExperience: document.getElementById('cstExperience').value,
+          qualifications: document.getElementById('cstQual').value.trim(),
+          notes: document.getElementById('cstNotes').value.trim()
+        };
+
+        if (window.StorageService && window.StorageService.saveConsultant) {
+          window.StorageService.saveConsultant(consultant);
+        }
+
+        if (window.Toast) {
+          window.Toast.show('Thank you! Your consultant profile has been submitted to the technical review committee.', 'success');
+        } else {
+          alert('Thank you! Your consultant profile has been submitted to the technical review committee.');
+        }
+
+        form.reset();
+      });
+    }
+  </script>
+</body>
+</html>

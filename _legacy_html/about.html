@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | EcoBlue Environmental Services Ltd. - Port Harcourt</title>
+  <meta name="description" content="Learn about EcoBlue Environmental Services Ltd. — Our story, core values, mission, vision, sustainability report, and environmental commitment in Port Harcourt, Rivers State." />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+
+  <style>
+    /* =========================================================
+       JAWURA-INSPIRED PREMIUM CORPORATE STYLING FOR ABOUT PAGE
+       ========================================================= */
+
+    /* Hero Banner */
+    .about-hero {
+      background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, var(--color-green-dark) 100%);
+      padding: clamp(60px, 8vw, 110px) 0;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 30%, var(--color-green-glow), transparent 50%),
+                  radial-gradient(circle at 15% 80%, rgba(11, 66, 97, 0.4), transparent 60%);
+      pointer-events: none;
+    }
+    .about-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .about-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+    .about-breadcrumb a {
+      color: #34D399;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .about-breadcrumb a:hover {
+      color: #ffffff;
+    }
+    .about-hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .about-hero-divider {
+      width: 72px;
+      height: 4px;
+      background: #10B981;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+    .about-hero-subtitle {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      color: #E2E8F0;
+      max-width: 65ch;
+      line-height: 1.7;
+    }
+
+    /* -------------------------
+       Section 1: Our Story (jxStoryPro)
+       ------------------------- */
+    .jxStoryPro {
+      box-sizing: border-box;
+      --ink: #0A2540;
+      --muted: rgba(10, 37, 64, 0.75);
+      --line: rgba(10, 37, 64, 0.12);
+      --card: rgba(255, 255, 255, 0.9);
+      --accent: #059669;
+      --shadow: 0 18px 44px rgba(10, 37, 64, 0.08);
+
+      background: #ffffff;
+      color: var(--ink);
+      padding: clamp(50px, 7vw, 96px) 0;
+    }
+    .jxStoryPro__wrap {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: start;
+    }
+    .jxStoryPro__eyebrow {
+      margin: 0 0 10px;
+      font: 800 12px/1 'Inter', sans-serif;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .jxStoryPro__title {
+      margin: 0 0 16px;
+      font: 800 clamp(32px, 4.2vw, 52px)/1.1 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -.03em;
+      color: var(--ink);
+    }
+    .jxStoryPro__lead {
+      margin: 0 0 16px;
+      font: 600 18px/1.75 'Plus Jakarta Sans', sans-serif;
+      color: rgba(10, 37, 64, 0.85);
+      max-width: 60ch;
+    }
+    .jxStoryPro__lead strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .jxStoryPro__copy {
+      display: grid;
+      gap: 14px;
+      color: var(--muted);
+      font: 450 15.5px/1.85 'Inter', sans-serif;
+      max-width: 64ch;
+    }
+    .jxStoryPro__copy strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+    /* Stats */
+    .jxStoryPro__stats {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .jxStoryPro__stat {
+      border: 1px solid var(--line);
+      background: #F8FAFC;
+      border-radius: 16px;
+      padding: 16px 14px 14px;
+      box-shadow: 0 10px 24px rgba(10, 37, 64, 0.04);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .jxStoryPro__stat:hover {
+      transform: translateY(-2px);
+      border-color: rgba(5, 150, 105, 0.35);
+    }
+    .jxStoryPro__statNum {
+      display: block;
+      font: 800 22px/1 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -.02em;
+      color: var(--ink);
+    }
+    .jxStoryPro__statLabel {
+      display: block;
+      margin-top: 8px;
+      font: 700 11.5px/1.3 'Inter', sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(10, 37, 64, 0.65);
+    }
+    /* Chips */
+    .jxStoryPro__chips {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 66ch;
+    }
+    .jxStoryPro__chip {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(10, 37, 64, 0.12);
+      background: rgba(248, 250, 252, 0.85);
+      color: rgba(10, 37, 64, 0.8);
+      font: 700 11px/1 'Inter', sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: all 180ms ease;
+    }
+    .jxStoryPro__chip:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      background: rgba(5, 150, 105, 0.08);
+      color: var(--accent);
+    }
+    /* Right Card */
+    .jxStoryPro__card {
+      margin: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(10, 37, 64, 0.12);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+    .jxStoryPro__imgWrap {
+      position: relative;
+      overflow: hidden;
+      background: #0A2540;
+      min-height: 280px;
+    }
+    .jxStoryPro__img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      aspect-ratio: 16 / 11;
+      object-fit: cover;
+      transform: scale(1.01);
+      transition: transform 700ms cubic-bezier(.2, .8, .2, 1);
+    }
+    .jxStoryPro__card:hover .jxStoryPro__img {
+      transform: scale(1.05);
+    }
+    .jxStoryPro__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10, 37, 64, 0.05), rgba(10, 37, 64, 0.35));
+      pointer-events: none;
+    }
+    .jxStoryPro__tag {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #0A2540;
+      font: 750 12px/1 'Inter', sans-serif;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+    }
+    .jxStoryPro__tagDot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #059669;
+      box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.2);
+    }
+    .jxStoryPro__caption {
+      padding: 18px 20px 20px;
+      color: rgba(10, 37, 64, 0.78);
+      font: 500 14px/1.65 'Inter', sans-serif;
+      border-top: 1px solid rgba(10, 37, 64, 0.08);
+      background: #ffffff;
+    }
+    /* Bullets */
+    .jxStoryPro__bullets {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      background: #F8FAFC;
+      box-shadow: 0 10px 24px rgba(10, 37, 64, 0.03);
+    }
+    .jxStoryPro__bullet {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: rgba(10, 37, 64, 0.75);
+      font: 450 14px/1.65 'Inter', sans-serif;
+    }
+    .jxStoryPro__bullet strong {
+      color: #0A2540;
+      font-weight: 700;
+    }
+    .jxStoryPro__bulletIcon {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: rgba(5, 150, 105, 0.14);
+      color: #059669;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    /* -------------------------
+       Section 2: Core Values, Mission & Vision (jxMVX)
+       ------------------------- */
+    .jxMVX {
+      --ink: #0A2540;
+      --muted: rgba(10, 37, 64, 0.75);
+      --line: rgba(10, 37, 64, 0.10);
+      --accent: #059669;
+
+      background: #F8FAFC;
+      padding: clamp(60px, 8vw, 100px) 0;
+      color: var(--ink);
+    }
+    .jxMVX__wrap {
+      width: min(1200px, calc(100% - 40px));
+      margin: auto;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 40px;
+      align-items: stretch;
+    }
+    .jxMVX__left {
+      padding: 32px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: 0 15px 35px rgba(10, 37, 64, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+    .jxMVX__eyebrow {
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+    .jxMVX__title {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 20px;
+      line-height: 1.15;
+    }
+    .jxMVX__list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px;
+      display: grid;
+      gap: 14px;
+      flex-grow: 1;
+    }
+    .jxMVX__list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      color: rgba(10, 37, 64, 0.85);
+      font-size: 15px;
+    }
+    .jxMVX__list span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.15);
+      flex-shrink: 0;
+    }
+    .jxMVX__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 800;
+      transition: background 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 8px 20px rgba(5, 150, 105, 0.25);
+    }
+    .jxMVX__btn:hover {
+      background: #047857;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(5, 150, 105, 0.32);
+    }
+    /* Cards */
+    .jxMVX__cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .jxMVX__card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(10, 37, 64, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .jxMVX__card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(10, 37, 64, 0.08);
+    }
+    .jxMVX__cardImgWrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #0A2540;
+      position: relative;
+    }
+    .jxMVX__img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 600ms cubic-bezier(.2, .8, .2, 1);
+    }
+    .jxMVX__card:hover .jxMVX__img {
+      transform: scale(1.06);
+    }
+    .jxMVX__card h3 {
+      margin: 20px 20px 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .jxMVX__card p {
+      margin: 0 20px 22px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14.5px;
+      flex-grow: 1;
+    }
+
+    /* -------------------------
+       Section 3: Sustainability Report (jxSusY)
+       ------------------------- */
+    .jxSusY {
+      padding: clamp(60px, 8vw, 110px) 0;
+      background: #ffffff;
+    }
+    .jxSusY__wrap {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .jxSusY__grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: clamp(32px, 4vw, 70px);
+      align-items: center;
+      background: linear-gradient(135deg, #F8FAFC 0%, #EDF2F7 100%);
+      padding: clamp(32px, 5vw, 60px);
+      border-radius: 24px;
+      border: 1px solid rgba(10, 37, 64, 0.08);
+      box-shadow: 0 20px 50px rgba(10, 37, 64, 0.04);
+    }
+    .jxSusY__eyebrow {
+      margin: 0 0 12px;
+      font: 800 12px/1 'Inter', sans-serif;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: #059669;
+    }
+    .jxSusY__title {
+      margin: 0 0 16px;
+      font: 800 clamp(26px, 3vw, 40px)/1.2 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -.02em;
+      color: #0A2540;
+    }
+    .jxSusY__text {
+      margin: 0 0 26px;
+      max-width: 62ch;
+      font: 450 clamp(15px, 1.1vw, 16.5px)/1.75 'Inter', sans-serif;
+      color: rgba(10, 37, 64, 0.75);
+    }
+    .jxSusY__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      align-items: center;
+    }
+    .jxSusY__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: #0A2540;
+      color: #ffffff;
+      font: 750 12.5px/1 'Inter', sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: all .2s ease;
+      box-shadow: 0 12px 28px rgba(10, 37, 64, 0.15);
+      border: none;
+      cursor: pointer;
+    }
+    .jxSusY__btn:hover {
+      transform: translateY(-2px);
+      background: #059669;
+      box-shadow: 0 16px 36px rgba(5, 150, 105, 0.25);
+    }
+    .jxSusY__meta {
+      font: 600 13px/1.4 'Inter', sans-serif;
+      color: rgba(10, 37, 64, 0.55);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Document visual */
+    .jxSusY__visual {
+      display: flex;
+      justify-content: center;
+    }
+    .jxSusY__doc {
+      width: min(260px, 100%);
+      aspect-ratio: 3/4;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff, #F8FAFC);
+      border: 1px solid rgba(10, 37, 64, 0.12);
+      box-shadow: 0 24px 50px rgba(10, 37, 64, 0.12);
+      padding: 22px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .jxSusY__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #059669;
+      margin-bottom: 14px;
+    }
+    .jxSusY__bar {
+      height: 10px;
+      width: 55%;
+      border-radius: 999px;
+      background: #059669;
+      margin-bottom: 18px;
+    }
+    .jxSusY__lines span {
+      display: block;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(10, 37, 64, 0.08);
+      margin-bottom: 12px;
+    }
+    .jxSusY__lines span:nth-child(1) { width: 92%; }
+    .jxSusY__lines span:nth-child(2) { width: 78%; }
+    .jxSusY__lines span:nth-child(3) { width: 85%; }
+    .jxSusY__lines span:nth-child(4) { width: 64%; }
+    .jxSusY__lines span:nth-child(5) { width: 72%; margin-bottom: 0; }
+    .jxSusY__docStamp {
+      margin-top: auto;
+      border-top: 1px dashed rgba(10, 37, 64, 0.15);
+      padding-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: rgba(10, 37, 64, 0.6);
+      font-weight: 600;
+    }
+
+    /* -------------------------
+       Section 4: Permits & Compliance Grid
+       ------------------------- */
+    .permits-section {
+      padding: clamp(50px, 7vw, 90px) 0;
+      background: #F8FAFC;
+    }
+    .permits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .permit-card {
+      background: #ffffff;
+      border: 1px solid rgba(10, 37, 64, 0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(10, 37, 64, 0.03);
+    }
+    .permit-card:hover {
+      transform: translateY(-3px);
+      border-color: #059669;
+      box-shadow: 0 14px 30px rgba(10, 37, 64, 0.08);
+    }
+    .permit-logo-img {
+      width: 54px;
+      height: 54px;
+      margin-bottom: 12px;
+      transition: transform 0.25s ease;
+    }
+    .permit-card:hover .permit-logo-img {
+      transform: scale(1.12);
+    }
+    .permit-name {
+      font-weight: 750;
+      font-size: 14px;
+      color: #0A2540;
+      margin-bottom: 4px;
+    }
+    .permit-desc {
+      font-size: 11.5px;
+      color: rgba(10, 37, 64, 0.6);
+      line-height: 1.4;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .jxStoryPro__wrap { grid-template-columns: 1fr; }
+      .jxStoryPro__stats { grid-template-columns: 1fr; }
+      .jxMVX__wrap { grid-template-columns: 1fr; }
+      .jxMVX__cards { grid-template-columns: 1fr; }
+      .jxSusY__grid { grid-template-columns: 1fr; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="EcoBlue Home">
+        <img src="images/logo.png" alt="EcoBlue Environmental Services Ltd." class="brand-logo-img" />
+        <div class="brand-name-group">
+          <span class="brand-name">Eco<span>Blue</span></span>
+          <span class="brand-subline">Environmental Services Ltd.</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+
+        <!-- About Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="about.html" class="nav-link dropdown-toggle active" aria-expanded="false">
+            About Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="about.html#our-company" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Our Company</div>
+                <div class="dropdown-item-desc">Corporate profile, story & values</div>
+              </div>
+            </a>
+            <a href="chairmans-message.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Chairman's Message</div>
+                <div class="dropdown-item-desc">Leadership vision & strategic mandate</div>
+              </div>
+            </a>
+            <a href="about.html#report" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Sustainability Report</div>
+                <div class="dropdown-item-desc">ESG commitment & operational standards</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="partnerships.html" class="nav-link">Partnerships</a>
+
+        <!-- Join Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+            Join Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="careers.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Careers</div>
+                <div class="dropdown-item-desc">Work with our operations team</div>
+              </div>
+            </a>
+            <a href="consultants.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Consultants</div>
+                <div class="dropdown-item-desc">Collaborate on technical projects</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="mobile-toggle" aria-label="Open Navigation Menu">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-backdrop"></div>
+  <aside class="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo">
+        <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:56px; width:auto;" />
+        <div class="brand-name-group">
+          <span class="brand-name" style="font-size:1.15rem;">Eco<span>Blue</span></span>
+          <span class="brand-subline" style="font-size:0.6rem;">Environmental Services</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" aria-label="Close Mobile Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      
+      <!-- Mobile Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <a href="about.html" class="mobile-nav-link active">About Us</a>
+          <button class="mobile-dropdown-btn" aria-label="Toggle About Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="about.html#our-company" class="mobile-sub-link">Our Company</a>
+          <a href="chairmans-message.html" class="mobile-sub-link">Chairman's Message</a>
+          <a href="about.html#report" class="mobile-sub-link">Sustainability Report</a>
+        </div>
+      </div>
+
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="partnerships.html" class="mobile-nav-link">Partnerships</a>
+
+      <!-- Mobile Join Us Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <span class="mobile-nav-link">Join Us</span>
+          <button class="mobile-dropdown-btn" aria-label="Toggle Join Us Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="careers.html" class="mobile-sub-link">Careers</a>
+          <a href="consultants.html" class="mobile-sub-link">Consultants</a>
+        </div>
+      </div>
+
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin.html" class="mobile-nav-link" style="color:var(--color-primary-green);">Staff Admin</a>
+    </div>
+  </aside>
+
+  <!-- Page Banner (Jawura-Style Clean Header) -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>About Us</span>
+      </div>
+      <h1 class="about-hero-title">About Us</h1>
+      <div class="about-hero-divider"></div>
+      <p class="about-hero-subtitle">
+        EcoBlue Environmental Services Ltd. is a science-aligned, technology-enabled environmental solutions and waste management company headquartered in Port Harcourt, Rivers State.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 1: Our Story (Based on Jawura jxStoryPro layout) -->
+  <section class="jxStoryPro" id="our-company" aria-label="Our Story">
+    <div class="jxStoryPro__wrap">
+
+      <!-- Left Column: Story Copy -->
+      <div class="jxStoryPro__left">
+        <p class="jxStoryPro__eyebrow">About EcoBlue</p>
+        <h2 class="jxStoryPro__title">Our Story</h2>
+
+        <p class="jxStoryPro__lead">
+          <strong>EcoBlue Environmental Services Ltd.</strong> is a professional, sustainability-driven environmental services, waste management, and recycling enterprise delivering dependable collection, compliance assurance, and sustainable solutions across Port Harcourt, Rivers State, and Nigeria.
+        </p>
+
+        <div class="jxStoryPro__copy">
+          <p>
+            We support residential communities, commercial corporate facilities, industrial parks, and institutional clients through structured waste logistics, source segregation, and high-efficiency material recovery for <strong>plastics, cardboard, scrap metal</strong>, and non-hazardous recyclables.
+          </p>
+
+          <p>
+            Operating in strict accordance with the <strong>Companies and Allied Matters Act 2020 (CAMA 2020)</strong> and Rivers State environmental guidelines, EcoBlue delivers scheduled municipal routes, containerized skip placements, and site sanitations that protect urban neighborhoods and Niger Delta waterways from environmental degradation.
+          </p>
+        </div>
+
+        <!-- Key Highlights / Stat Badges -->
+        <div class="jxStoryPro__stats" aria-label="Key highlights">
+          <div class="jxStoryPro__stat">
+            <span class="jxStoryPro__statNum">HYDRAULIC</span>
+            <span class="jxStoryPro__statLabel">Compactor Fleet</span>
+          </div>
+
+          <div class="jxStoryPro__stat">
+            <span class="jxStoryPro__statNum">CAMA 2020</span>
+            <span class="jxStoryPro__statLabel">Registered & Regulated</span>
+          </div>
+
+          <div class="jxStoryPro__stat">
+            <span class="jxStoryPro__statNum">Rivers State</span>
+            <span class="jxStoryPro__statLabel">Municipal & Regional Hub</span>
+          </div>
+        </div>
+
+        <!-- Regulatory / Compliance Chips -->
+        <div class="jxStoryPro__chips" aria-label="Compliance and Standards">
+          <span class="jxStoryPro__chip">RSMEnv</span>
+          <span class="jxStoryPro__chip">RIWAMA</span>
+          <span class="jxStoryPro__chip">FMEnv</span>
+          <span class="jxStoryPro__chip">NESREA</span>
+          <span class="jxStoryPro__chip">CAMA 2020</span>
+          <span class="jxStoryPro__chip">HSE Standard</span>
+          <span class="jxStoryPro__chip">GPS Telemetry</span>
+          <span class="jxStoryPro__chip">Circular Economy</span>
+          <span class="jxStoryPro__chip">Resource Recovery</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Media Card -->
+      <div class="jxStoryPro__right">
+        <figure class="jxStoryPro__card">
+          <div class="jxStoryPro__imgWrap">
+            <img decoding="async" class="jxStoryPro__img" src="images/fleet-crew-operations.jpg" alt="EcoBlue Field Operations and Compactor Fleet in Port Harcourt" loading="lazy" />
+            <div class="jxStoryPro__overlay" aria-hidden="true"></div>
+
+            <!-- Floating Tag -->
+            <div class="jxStoryPro__tag">
+              <span class="jxStoryPro__tagDot" aria-hidden="true"></span>
+              Professional • Reliable • Sustainable
+            </div>
+          </div>
+
+          <figcaption class="jxStoryPro__caption">
+            EcoBlue Environmental Services Ltd. provides reliable, scheduled waste collection, recycling, and environmental stewardship across Greater Port Harcourt and Rivers State.
+          </figcaption>
+        </figure>
+
+        <!-- Feature Bullets -->
+        <div class="jxStoryPro__bullets" aria-label="Core strengths">
+          <div class="jxStoryPro__bullet">
+            <span class="jxStoryPro__bulletIcon" aria-hidden="true">✓</span>
+            <span><strong>Prompt & Scheduled Collection</strong> with dedicated modern hydraulic compactors</span>
+          </div>
+          <div class="jxStoryPro__bullet">
+            <span class="jxStoryPro__bulletIcon" aria-hidden="true">✓</span>
+            <span><strong>Circular Economy Recovery</strong> sorting plastics, metals, and cardboard for productive reuse</span>
+          </div>
+          <div class="jxStoryPro__bullet">
+            <span class="jxStoryPro__bulletIcon" aria-hidden="true">✓</span>
+            <span><strong>Regulatory Confidence</strong> backed by CAMA 2020 compliance and Rivers State environmental standards</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 2: Core Values, Mission & Vision (Based on Jawura jxMVX layout) -->
+  <section class="jxMVX" id="core-values" aria-label="Core Values, Mission and Vision">
+    <div class="jxMVX__wrap">
+
+      <!-- Left Card: Core Values -->
+      <aside class="jxMVX__left">
+        <p class="jxMVX__eyebrow">What Guides Us</p>
+        <h2 class="jxMVX__title">Core Values</h2>
+
+        <ul class="jxMVX__list">
+          <li><span></span>Customer Focus & Responsiveness</li>
+          <li><span></span>Honesty & Operational Integrity</li>
+          <li><span></span>Excellence in Environmental Execution</li>
+          <li><span></span>Efficiency in Routing & Logistics</li>
+          <li><span></span>Environmental Stewardship & Circularity</li>
+          <li><span></span>Community Impact & Public Health</li>
+          <li><span></span>Direct Ownership & Accountability</li>
+        </ul>
+
+        <button class="jxMVX__btn" data-open-quote>Request a Consultation</button>
+      </aside>
+
+      <!-- Right Side: Mission & Vision Cards -->
+      <div class="jxMVX__cards">
+
+        <!-- Mission Statement -->
+        <article class="jxMVX__card">
+          <div class="jxMVX__cardImgWrap">
+            <img decoding="async" class="jxMVX__img" src="images/mission.svg" alt="EcoBlue Mission - Environmental Transformation" loading="lazy" />
+          </div>
+          <h3>Mission Statement</h3>
+          <p>
+            “To provide innovative, efficient, and environmentally responsible solutions that transform waste into value while improving public health, community hygiene, and environmental sustainability across Rivers State and Nigeria.”
+          </p>
+        </article>
+
+        <!-- Vision -->
+        <article class="jxMVX__card">
+          <div class="jxMVX__cardImgWrap">
+            <img decoding="async" class="jxMVX__img" src="images/vision.svg" alt="EcoBlue Vision - Sustainable Future Leadership" loading="lazy" />
+          </div>
+          <h3>Vision</h3>
+          <p>
+            “To be the leading environmental services company in Rivers State and a recognized pioneer in sustainable waste management, circular economy practices, and ecological preservation across Nigeria.”
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 3: Sustainability Report & Commitment (Based on Jawura jxSusY layout) -->
+  <section class="jxSusY" id="report" aria-label="Sustainability report">
+    <div class="jxSusY__wrap">
+      <div class="jxSusY__grid">
+
+        <div class="jxSusY__content">
+          <p class="jxSusY__eyebrow">SUSTAINABILITY REPORT</p>
+
+          <h2 class="jxSusY__title">
+            Our Commitment to Responsible & Sustainable Operations
+          </h2>
+
+          <p class="jxSusY__text">
+            This operational framework outlines our approach to environmental stewardship, safety protocols, regulatory compliance, and circular economy integration. It details our policies, route emission minimization via modern hydraulic compactors, and ongoing community health impact across Greater Port Harcourt.
+          </p>
+
+          <div class="jxSusY__actions">
+            <button class="jxSusY__btn" data-open-quote>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Request Sustainability Profile
+            </button>
+
+            <span class="jxSusY__meta">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              EcoBlue-Sustainability-Report.pdf
+            </span>
+          </div>
+        </div>
+
+        <div class="jxSusY__visual" aria-hidden="true">
+          <div class="jxSusY__doc">
+            <div class="jxSusY__badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Official Document
+            </div>
+            <div class="jxSusY__bar"></div>
+            <div class="jxSusY__lines">
+              <span></span><span></span><span></span>
+              <span></span><span></span>
+            </div>
+            <div class="jxSusY__docStamp">
+              <span>EcoBlue ESG Charter</span>
+              <span>Rivers State</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Permits, Licenses & Regulatory Standards (Based on Jawura Permits section) -->
+  <section class="permits-section">
+    <div class="container">
+      <div class="section-header" style="text-align:center; max-width:700px; margin:0 auto 2rem;">
+        <div class="section-badge navy" style="margin-bottom:0.75rem;">Regulatory Alignment</div>
+        <h2 class="section-title">Permits, Standards & Legal Framework</h2>
+        <p class="section-desc">
+          EcoBlue operates with strict adherence to national, state, and local regulatory statutes governing environmental sanitation and waste handling.
+        </p>
+      </div>
+
+      <div class="permits-grid">
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/cama.svg" alt="CAMA 2020 Compliance Emblem" width="54" height="54" />
+          <div class="permit-name">CAMA 2020</div>
+          <div class="permit-desc">Companies & Allied Matters Act Incorporation</div>
+        </div>
+
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/rsmenv.svg" alt="Rivers State Ministry of Environment Emblem" width="54" height="54" />
+          <div class="permit-name">RSMEnv</div>
+          <div class="permit-desc">Rivers State Ministry of Environment Guidelines</div>
+        </div>
+
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/riwama.svg" alt="Rivers State Waste Management Agency Emblem" width="54" height="54" />
+          <div class="permit-name">RIWAMA</div>
+          <div class="permit-desc">Rivers State Waste Management Agency Standards</div>
+        </div>
+
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/fmenv.svg" alt="Federal Ministry of Environment Emblem" width="54" height="54" />
+          <div class="permit-name">FMEnv</div>
+          <div class="permit-desc">Federal Ministry of Environment Compliance</div>
+        </div>
+
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/nesrea.svg" alt="NESREA Standards Emblem" width="54" height="54" />
+          <div class="permit-name">NESREA</div>
+          <div class="permit-desc">National Environmental Standards Enforcement</div>
+        </div>
+
+        <div class="permit-card">
+          <img class="permit-logo-img" src="images/permits/hse.svg" alt="HSE Safety Standards Emblem" width="54" height="54" />
+          <div class="permit-name">HSE Protocols</div>
+          <div class="permit-desc">Health, Safety & Driver PPE Compliance</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section style="background:var(--color-primary-navy); padding:4.5rem 0; color:#ffffff; text-align:center;">
+    <div class="container" style="max-width:750px;">
+      <h2 style="color:#ffffff; font-size:2.25rem; margin-bottom:1rem;">Ready to Partner With EcoBlue?</h2>
+      <p style="color:#E2E8F0; margin-bottom:2rem;">Contact our Port Harcourt team today to discuss scheduled waste collection, estate sanitation, or recycling programs.</p>
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <button class="btn btn-primary" data-open-quote>Request a Consultation</button>
+        <a href="contact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4); color:#ffffff;">Contact Office</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom:1rem;">
+            <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:72px; width:auto;" />
+            <div class="brand-name-group"><span class="brand-name" style="color:#ffffff;">Eco<span style="color:var(--color-green-light);">Blue</span></span><span class="brand-subline" style="color:#94A3B8;">Environmental Services Ltd.</span></div>
+          </div>
+          <p>"Professional, Reliable, Sustainable Waste Management Solutions"</p>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="services.html" class="footer-link">Services</a>
+            <a href="careers.html" class="footer-link">Careers</a>
+            <a href="consultants.html" class="footer-link">Consultants</a>
+            <a href="partnerships.html" class="footer-link">Partnerships</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Services</h4>
+          <div class="footer-links">
+            <a href="services.html#waste-collection" class="footer-link">Waste Collection</a>
+            <a href="services.html#recycling" class="footer-link">Recycling Services</a>
+            <a href="services.html#environmental" class="footer-link">Environmental Services</a>
+            <a href="services.html#logistics" class="footer-link">Logistics & Support</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Port Harcourt, Rivers State, Nigeria</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:info@ecoblueenvironmental.com">info@ecoblueenvironmental.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:08061193218">08061193218</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-legal-bar">
+        <div class="footer-statement">"Together, let's build a cleaner, more sustainable future for Rivers State and Nigeria."</div>
+        <div>&copy; 2026 EcoBlue Environmental Services Ltd. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/quote-modal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

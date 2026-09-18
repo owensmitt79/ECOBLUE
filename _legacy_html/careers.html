@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers | EcoBlue Environmental Services Ltd. - Join Our Team</title>
+  <meta name="description" content="Build your career with EcoBlue Environmental Services Ltd. in Port Harcourt, Rivers State. Explore rewarding opportunities in waste operations, fleet logistics, HSE, and recycling." />
+  <meta name="keywords" content="careers in waste management Port Harcourt, environmental jobs Rivers State, compactor driver jobs Port Harcourt, HSE jobs Rivers State, EcoBlue careers" />
+
+  <!-- Stylesheets -->
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+
+  <style>
+    .careers-hero {
+      position: relative;
+      background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, var(--color-navy-light) 100%);
+      color: #ffffff;
+      padding: clamp(70px, 9vw, 110px) 0 clamp(40px, 5vw, 60px);
+      overflow: hidden;
+    }
+    .careers-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .careers-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--color-text-inverse-muted);
+      margin-bottom: 1.25rem;
+    }
+    .careers-breadcrumb a {
+      color: var(--color-green-light);
+      text-decoration: none;
+    }
+    .careers-hero-title {
+      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .careers-hero-quote {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #E2E8F0;
+      border-left: 3px solid var(--color-primary-green);
+      padding-left: 1.25rem;
+      margin-bottom: 1.5rem;
+      max-width: 680px;
+      line-height: 1.6;
+    }
+    .careers-overview-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .careers-overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .job-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-subtle);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-green);
+    }
+    .job-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--color-green-subtle);
+      color: var(--color-primary-green);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.75rem;
+      width: fit-content;
+    }
+    .job-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.825rem;
+      color: var(--color-text-subtle);
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .job-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .perks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .perk-card {
+      background: #ffffff;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .perk-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--color-green-subtle);
+      color: var(--color-primary-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="EcoBlue Home">
+        <img src="images/logo.png" alt="EcoBlue Environmental Services Ltd." class="brand-logo-img" />
+        <div class="brand-name-group">
+          <span class="brand-name">Eco<span>Blue</span></span>
+          <span class="brand-subline">Environmental Services Ltd.</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+
+        <!-- About Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="about.html" class="nav-link dropdown-toggle" aria-expanded="false">
+            About Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="about.html#our-company" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Our Company</div>
+                <div class="dropdown-item-desc">Corporate profile, story & values</div>
+              </div>
+            </a>
+            <a href="chairmans-message.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Chairman's Message</div>
+                <div class="dropdown-item-desc">Leadership vision & strategic mandate</div>
+              </div>
+            </a>
+            <a href="about.html#report" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Sustainability Report</div>
+                <div class="dropdown-item-desc">ESG commitment & operational standards</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="partnerships.html" class="nav-link">Partnerships</a>
+
+        <!-- Join Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="#" class="nav-link dropdown-toggle active" aria-expanded="false">
+            Join Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="careers.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Careers</div>
+                <div class="dropdown-item-desc">Work with our operations team</div>
+              </div>
+            </a>
+            <a href="consultants.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Consultants</div>
+                <div class="dropdown-item-desc">Collaborate on technical projects</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- CTA Button & Hamburger -->
+      <div class="header-actions">
+        <button class="mobile-toggle" aria-label="Open Navigation Menu" id="openMobileNav">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-backdrop"></div>
+  <aside class="mobile-drawer" aria-label="Mobile Menu">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo">
+        <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:56px; width:auto;" />
+        <div class="brand-name-group">
+          <span class="brand-name" style="font-size:1.15rem;">Eco<span>Blue</span></span>
+          <span class="brand-subline" style="font-size:0.6rem;">Environmental Services</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" aria-label="Close Mobile Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+
+      <!-- Mobile About Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <a href="about.html" class="mobile-nav-link">About Us</a>
+          <button class="mobile-dropdown-btn" aria-label="Toggle About Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="about.html#our-company" class="mobile-sub-link">Our Company</a>
+          <a href="chairmans-message.html" class="mobile-sub-link">Chairman's Message</a>
+          <a href="about.html#report" class="mobile-sub-link">Sustainability Report</a>
+        </div>
+      </div>
+
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="partnerships.html" class="mobile-nav-link">Partnerships</a>
+
+      <!-- Mobile Join Us Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <span class="mobile-nav-link active">Join Us</span>
+          <button class="mobile-dropdown-btn" aria-label="Toggle Join Us Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu" style="display:block;">
+          <a href="careers.html" class="mobile-sub-link active">Careers</a>
+          <a href="consultants.html" class="mobile-sub-link">Consultants</a>
+        </div>
+      </div>
+
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin.html" class="mobile-nav-link" style="color:var(--color-primary-green);">Staff Admin</a>
+    </div>
+    <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--color-border-subtle);">
+      <div style="font-size:0.85rem; color:var(--color-text-subtle); text-align:center;">
+        Port Harcourt, Rivers State<br>08061193218
+      </div>
+    </div>
+  </aside>
+
+  <!-- 1. Hero Section (Jawura Inspired) -->
+  <section class="careers-hero">
+    <div class="container">
+      <div class="careers-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Join Us</span>
+        <span>/</span>
+        <span style="color:#ffffff;">Careers</span>
+      </div>
+
+      <div style="max-width: 800px;">
+        <div class="section-badge" style="background:rgba(5, 150, 105, 0.2); color:var(--color-green-light); border:1px solid rgba(16, 185, 129, 0.4); margin-bottom:1rem;">
+          Join Us • Careers
+        </div>
+        <h1 class="careers-hero-title">Build Your Career at EcoBlue</h1>
+        <div class="careers-hero-quote">
+          “It’s not what you achieve, it’s what you overcome. That’s what defines your career.” — <strong>Carlton Fisk</strong>
+        </div>
+        <p style="font-size:1.15rem; line-height:1.7; color:#E2E8F0; margin-bottom:2rem;">
+          A career at EcoBlue Environmental Services Ltd. gives you the chance to do meaningful work that protects the environment, eliminates municipal waste hazards, and supports healthier communities across Rivers State.
+        </p>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="#applicationFormSection" class="btn btn-lg btn-primary">
+            <span>Submit Application</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Why Work With EcoBlue Section -->
+  <section class="section-py" style="background:#ffffff;">
+    <div class="container">
+      <div class="careers-overview-grid">
+        <div>
+          <div class="section-badge navy">Our Culture & Commitment</div>
+          <h2 class="section-title">Why Work With Us</h2>
+          <p style="font-size:1.1rem; color:var(--color-text-main); font-weight:500; margin-bottom:1.25rem; line-height:1.7;">
+            We value integrity, operational discipline, and technical innovation. At EcoBlue, your skills are recognised, your safety is paramount, and your contribution directly impacts living conditions across Port Harcourt and the Niger Delta.
+          </p>
+          <p style="color:var(--color-text-muted); line-height:1.7; margin-bottom:2rem;">
+            We invest in our people through continuous occupational safety training, structured career advancement paths, and modern equipment. Whether you are in field operations with our hydraulic compactor fleet, logistics management, or recycling engineering, you will be part of a team transforming municipal sanitation into sustainable resource recovery.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:2rem;">
+            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div>
+                <strong style="color:var(--color-primary-navy);">Safety-First Culture</strong>
+                <p style="font-size:0.875rem; color:var(--color-text-muted); margin:0;">Full PPE gear and rigorous health protocols.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div>
+                <strong style="color:var(--color-primary-navy);">Competitive Pay</strong>
+                <p style="font-size:0.875rem; color:var(--color-text-muted); margin:0;">Punctual compensation and performance rewards.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div>
+                <strong style="color:var(--color-primary-navy);">Modern Equipment</strong>
+                <p style="font-size:0.875rem; color:var(--color-text-muted); margin:0;">Advanced hydraulic compactor trucks & GPS routing.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:var(--color-green-subtle); color:var(--color-primary-green); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div>
+                <strong style="color:var(--color-primary-navy);">Local Community Impact</strong>
+                <p style="font-size:0.875rem; color:var(--color-text-muted); margin:0;">Proudly making Rivers State cleaner and greener.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="position:relative; border-radius:var(--radius-xl); overflow:hidden; box-shadow:var(--shadow-xl); border:4px solid #ffffff;">
+            <img src="images/careers-hero.jpg" alt="EcoBlue Professional Environmental Operations and Field Engineering Team" style="width:100%; height:460px; object-fit:cover;" />
+            <div style="position:absolute; bottom:0; inset-inline:0; background:linear-gradient(to top, rgba(10, 37, 64, 0.9) 0%, transparent 100%); padding:2rem 1.5rem 1.25rem;">
+              <div style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--color-primary-green); color:#ffffff; font-size:0.75rem; font-weight:700; padding:0.25rem 0.6rem; border-radius:var(--radius-full); margin-bottom:0.4rem;">
+                <span style="width:7px; height:7px; background:#ffffff; border-radius:50%;"></span>
+                FIELD OPERATIONS TEAM
+              </div>
+              <div style="font-weight:700; color:#ffffff; font-size:1.1rem;">Depot & Logistics Operations • Port Harcourt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 4. Interactive Online Application Form Section -->
+  <section class="section-py" id="applicationFormSection" style="background:#ffffff;">
+    <div class="container">
+      <div style="max-width:760px; margin:0 auto; background:var(--color-bg-body); border-radius:var(--radius-xl); padding:clamp(2rem, 5vw, 3.5rem); border:1px solid var(--color-border-subtle); box-shadow:var(--shadow-md);">
+        
+        <div style="text-align:center; margin-bottom:2.5rem;">
+          <div class="section-badge navy">Online Portal</div>
+          <h2 style="font-size:2rem; color:var(--color-primary-navy); margin-bottom:0.5rem;">Submit Your Application</h2>
+          <p style="color:var(--color-text-muted); font-size:1rem;">
+            Ready to build a cleaner future with EcoBlue? Complete the profile below. Our human resources team in Port Harcourt reviews every qualified submission.
+          </p>
+        </div>
+
+        <form id="careerApplicationForm">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="applicantName">Full Name *</label>
+              <input type="text" id="applicantName" class="form-control" placeholder="e.g. Samuel Belema" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="applicantEmail">Email Address *</label>
+              <input type="email" id="applicantEmail" class="form-control" placeholder="e.g. belema@gmail.com" required />
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="applicantPhone">Phone Number (WhatsApp Preferred) *</label>
+              <input type="tel" id="applicantPhone" class="form-control" placeholder="e.g. 0806 119 3218" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="applicantPosition">Position Applied For *</label>
+              <select id="applicantPosition" class="form-control" required>
+                <option value="">Select an opening...</option>
+                <option value="Operations & Route Supervisor">Operations & Route Supervisor</option>
+                <option value="Heavy-Duty Compactor Driver">Heavy-Duty Compactor Driver</option>
+                <option value="HSE Field Compliance Officer">HSE Field Compliance Officer</option>
+                <option value="Recycling Facility Technician">Recycling Facility Technician</option>
+                <option value="General Environmental Operations">General Environmental Operations</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="applicantExperience">Years of Relevant Experience</label>
+              <select id="applicantExperience" class="form-control">
+                <option value="Entry Level (0 - 1 Year)">Entry Level (0 - 1 Year)</option>
+                <option value="2 - 4 Years">2 - 4 Years</option>
+                <option value="5 - 7 Years">5 - 7 Years</option>
+                <option value="8+ Years">8+ Years</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="applicantQualification">Highest Qualification / License</label>
+              <input type="text" id="applicantQualification" class="form-control" placeholder="e.g. B.Sc, HND, or Class-E License" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="applicantNotes">Cover Summary & Relevant Competencies</label>
+            <textarea id="applicantNotes" class="form-control" rows="4" placeholder="Summarize your past waste management, driving, or environmental operations experience..."></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div style="font-size:0.85rem; color:var(--color-text-subtle);">
+              CV can also be emailed to: <a href="mailto:info@ecoblueenvironmental.com" style="color:var(--color-primary-green); font-weight:600;">info@ecoblueenvironmental.com</a>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding:0.85rem 2rem;">
+              Submit Application
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Corporate Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col-brand">
+          <div class="brand-logo" style="margin-bottom:1rem;">
+            <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:72px; width:auto;" />
+            <div class="brand-name-group">
+              <span class="brand-name" style="color:#ffffff;">Eco<span>Blue</span></span>
+              <span class="brand-subline">Environmental Services Ltd.</span>
+            </div>
+          </div>
+          <p style="color:var(--color-text-inverse-muted); font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
+            Professional, reliable, and sustainable waste management solutions across Port Harcourt, Rivers State, and Nigeria.
+          </p>
+          <div style="font-size:0.8rem; color:var(--color-text-inverse-muted);">
+            CAMA 2020 Registered • Port Harcourt, Rivers State
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="chairmans-message.html" class="footer-link">Chairman's Message</a>
+            <a href="services.html" class="footer-link">Services</a>
+            <a href="partnerships.html" class="footer-link">Partnerships</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Join Us</h4>
+          <div class="footer-links">
+            <a href="careers.html" class="footer-link" style="color:#ffffff; font-weight:600;">Careers & Jobs</a>
+            <a href="consultants.html" class="footer-link">Consultants Network</a>
+            <a href="fleet.html" class="footer-link">Fleet & Operations</a>
+            <a href="community-impact.html" class="footer-link">Community Impact</a>
+            <a href="admin.html" class="footer-link">Staff Admin Portal</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contact Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Port Harcourt, Rivers State, Nigeria</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>08061193218</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>info@ecoblueenvironmental.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 EcoBlue Environmental Services Ltd. All rights reserved.</div>
+        <div>Compliant with CAMA 2020 & Rivers State Environmental Framework.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Universal Consultation Modal Container -->
+  <div id="quoteModalContainer"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/storage.js"></script>
+  <script src="js/quote-modal.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    // Role selection prefill
+    document.querySelectorAll('.apply-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const role = btn.getAttribute('data-role');
+        const select = document.getElementById('applicantPosition');
+        if (select) {
+          select.value = role;
+        }
+        document.getElementById('applicationFormSection').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Career application form submission
+    const form = document.getElementById('careerApplicationForm');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const application = {
+          name: document.getElementById('applicantName').value.trim(),
+          email: document.getElementById('applicantEmail').value.trim(),
+          phone: document.getElementById('applicantPhone').value.trim(),
+          position: document.getElementById('applicantPosition').value,
+          experience: document.getElementById('applicantExperience').value,
+          qualification: document.getElementById('applicantQualification').value.trim(),
+          notes: document.getElementById('applicantNotes').value.trim()
+        };
+
+        if (window.StorageService && window.StorageService.saveCareer) {
+          window.StorageService.saveCareer(application);
+        }
+
+        if (window.Toast) {
+          window.Toast.show('Thank you! Your application has been received. Our HR team will contact you shortly.', 'success');
+        } else {
+          alert('Thank you! Your application has been received. Our HR team will contact you shortly.');
+        }
+
+        form.reset();
+      });
+    }
+  </script>
+</body>
+</html>

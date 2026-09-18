@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="missionBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="40%" stop-color="#064E3B"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="350" fill="url(#missionBg)"/>
+
+  <!-- Subtle Geometric Grid Lines -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+    <line x1="0" y1="70" x2="600" y2="70"/>
+    <line x1="0" y1="140" x2="600" y2="140"/>
+    <line x1="0" y1="210" x2="600" y2="210"/>
+    <line x1="0" y1="280" x2="600" y2="280"/>
+    <line x1="100" y1="0" x2="100" y2="350"/>
+    <line x1="200" y1="0" x2="200" y2="350"/>
+    <line x1="300" y1="0" x2="300" y2="350"/>
+    <line x1="400" y1="0" x2="400" y2="350"/>
+    <line x1="500" y1="0" x2="500" y2="350"/>
+  </g>
+
+  <!-- Circular Loop & Ecosystem Illustration -->
+  <g transform="translate(300, 165)">
+    <!-- Outer Glow Circle -->
+    <circle cx="0" cy="0" r="115" fill="none" stroke="rgba(52, 211, 153, 0.15)" stroke-width="28"/>
+    <circle cx="0" cy="0" r="92" fill="none" stroke="url(#ringGrad)" stroke-width="6" stroke-dasharray="8 6"/>
+
+    <!-- Center Globe with Leaf -->
+    <circle cx="0" cy="0" r="62" fill="#0A2540" stroke="#10B981" stroke-width="3.5"/>
+    <!-- Eco Leaf Symbol -->
+    <path d="M-8,-25 C18,-25 32,-10 24,14 C16,28 -14,24 -18,12 C-20,0 -12,-25 -8,-25 Z" fill="#34D399"/>
+    <path d="M-12,14 Q2,-5 20,-20" stroke="#064E3B" stroke-width="2.5" fill="none"/>
+
+    <!-- Orbital Cycle Arrows -->
+    <!-- Top Arrow: Collection -->
+    <g transform="translate(0, -92)">
+      <circle cx="0" cy="0" r="18" fill="#10B981"/>
+      <path d="M-6,-4 L6,0 L-6,4 Z" fill="#ffffff"/>
+    </g>
+    <!-- Right Arrow: Sorting -->
+    <g transform="translate(92, 0)">
+      <circle cx="0" cy="0" r="18" fill="#34D399"/>
+      <path d="M-4,-6 L0,6 L4,-6 Z" fill="#0A2540"/>
+    </g>
+    <!-- Bottom Arrow: Processing -->
+    <g transform="translate(0, 92)">
+      <circle cx="0" cy="0" r="18" fill="#10B981"/>
+      <path d="M6,4 L-6,0 L6,-4 Z" fill="#ffffff"/>
+    </g>
+    <!-- Left Arrow: Reuse -->
+    <g transform="translate(-92, 0)">
+      <circle cx="0" cy="0" r="18" fill="#34D399"/>
+      <path d="M4,6 L0,-6 L-4,6 Z" fill="#0A2540"/>
+    </g>
+  </g>
+
+  <!-- Environmental Value Pillars (Floating labels) -->
+  <g transform="translate(50, 45)">
+    <rect width="165" height="34" rx="17" fill="rgba(10,37,64,0.75)" stroke="rgba(52,211,153,0.4)" stroke-width="1.5"/>
+    <circle cx="17" cy="17" r="6" fill="#34D399"/>
+    <text x="32" y="22" font-family="'Inter', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" letter-spacing="0.5">CIRCULAR RECOVERY</text>
+  </g>
+
+  <g transform="translate(385, 45)">
+    <rect width="165" height="34" rx="17" fill="rgba(10,37,64,0.75)" stroke="rgba(52,211,153,0.4)" stroke-width="1.5"/>
+    <circle cx="17" cy="17" r="6" fill="#F59E0B"/>
+    <text x="32" y="22" font-family="'Inter', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" letter-spacing="0.5">COMMUNITY HEALTH</text>
+  </g>
+
+  <g transform="translate(200, 300)">
+    <rect width="200" height="32" rx="16" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text x="100" y="20" font-family="'Inter', sans-serif" font-size="11" font-weight="700" fill="#E2E8F0" text-anchor="middle" letter-spacing="1">SUSTAINABLE PRACTICE</text>
+  </g>
+</svg>

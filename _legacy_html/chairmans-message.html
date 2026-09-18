@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chairman's Message | EcoBlue Environmental Services Ltd. - Port Harcourt</title>
+  <meta name="description" content="Read the official Chairman's Message and executive leadership statement from EcoBlue Environmental Services Ltd., Port Harcourt, Rivers State." />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+
+  <style>
+    .message-hero {
+      background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, var(--color-green-dark) 100%);
+      padding: clamp(60px, 8vw, 100px) 0;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    .message-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 30%, var(--color-green-glow), transparent 50%),
+                  radial-gradient(circle at 15% 80%, rgba(11, 66, 97, 0.45), transparent 60%);
+      pointer-events: none;
+    }
+    .message-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .message-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .message-hero-title {
+      font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+    .message-hero-divider {
+      width: 68px;
+      height: 4px;
+      background: var(--color-green-light);
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+    .message-hero-subtitle {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      color: #E2E8F0;
+      max-width: 65ch;
+      line-height: 1.7;
+    }
+
+    /* Executive Article Layout */
+    .exec-section {
+      padding: clamp(60px, 7vw, 100px) 0;
+      background: #ffffff;
+    }
+    .exec-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: start;
+    }
+    .exec-profile-card {
+      background: var(--color-bg-body);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 20px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 100px;
+    }
+    .exec-avatar-wrap {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      background: linear-gradient(135deg, var(--color-primary-navy) 0%, var(--color-primary-green) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: var(--shadow-green);
+      border: 4px solid #ffffff;
+    }
+    .exec-name {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-primary-navy);
+      margin-bottom: 0.35rem;
+    }
+    .exec-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-primary-green);
+      margin-bottom: 1rem;
+    }
+    .exec-org {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      border-top: 1px solid rgba(10, 37, 64, 0.08);
+      padding-top: 1rem;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    .exec-quote-pill {
+      margin-top: 1.25rem;
+      background: rgba(5, 150, 105, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.825rem;
+      color: #065F46;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .exec-article {
+      color: var(--color-primary-navy);
+      font-size: 1.05rem;
+      line-height: 1.85;
+    }
+    .exec-lead {
+      font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+      font-weight: 700;
+      color: var(--color-primary-navy);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+      border-left: 4px solid var(--color-primary-green);
+    }
+    .exec-article p {
+      margin-bottom: 1.5rem;
+      color: rgba(10, 37, 64, 0.82);
+    }
+    .exec-highlight-box {
+      background: #F8FAFC;
+      border-radius: 18px;
+      border: 1px solid rgba(10, 37, 64, 0.08);
+      padding: 28px;
+      margin: 2.25rem 0;
+    }
+    .exec-highlight-box h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-primary-navy);
+      margin-bottom: 0.75rem;
+    }
+    .exec-signature-block {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid rgba(10, 37, 64, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .exec-signature-name {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--color-primary-navy);
+    }
+    .exec-signature-role {
+      font-size: 0.875rem;
+      color: var(--color-primary-green);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 900px) {
+      .exec-grid {
+        grid-template-columns: 1fr;
+      }
+      .exec-profile-card {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="EcoBlue Home">
+        <img src="images/logo.png" alt="EcoBlue Environmental Services Ltd." class="brand-logo-img" />
+        <div class="brand-name-group">
+          <span class="brand-name">Eco<span>Blue</span></span>
+          <span class="brand-subline">Environmental Services Ltd.</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        
+        <!-- About Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="about.html" class="nav-link dropdown-toggle active" aria-expanded="false">
+            About Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="about.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Our Company</div>
+                <div class="dropdown-item-desc">Corporate profile, story & values</div>
+              </div>
+            </a>
+            <a href="chairmans-message.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Chairman's Message</div>
+                <div class="dropdown-item-desc">Leadership vision & strategic mandate</div>
+              </div>
+            </a>
+            <a href="about.html#report" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Sustainability Report</div>
+                <div class="dropdown-item-desc">ESG commitment & operational standards</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="partnerships.html" class="nav-link">Partnerships</a>
+
+        <!-- Join Us Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+            Join Us
+            <svg class="dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="careers.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Careers</div>
+                <div class="dropdown-item-desc">Work with our operations team</div>
+              </div>
+            </a>
+            <a href="consultants.html" class="dropdown-item">
+              <div class="dropdown-item-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div class="dropdown-item-title">Consultants</div>
+                <div class="dropdown-item-desc">Collaborate on technical projects</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="mobile-toggle" aria-label="Open Navigation Menu">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-backdrop"></div>
+  <aside class="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo">
+        <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:56px; width:auto;" />
+        <div class="brand-name-group">
+          <span class="brand-name" style="font-size:1.15rem;">Eco<span>Blue</span></span>
+          <span class="brand-subline" style="font-size:0.6rem;">Environmental Services</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" aria-label="Close Mobile Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      
+      <!-- Mobile Dropdown -->
+      <div class="mobile-nav-dropdown open">
+        <div class="mobile-nav-dropdown-toggle">
+          <a href="about.html" class="mobile-nav-link active">About Us</a>
+          <button class="mobile-dropdown-btn" aria-label="Toggle About Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="about.html#our-company" class="mobile-sub-link">Our Company</a>
+          <a href="chairmans-message.html" class="mobile-sub-link active">Chairman's Message</a>
+          <a href="about.html#report" class="mobile-sub-link">Sustainability Report</a>
+        </div>
+      </div>
+
+      <a href="services.html" class="mobile-nav-link">Services</a>
+      <a href="partnerships.html" class="mobile-nav-link">Partnerships</a>
+
+      <!-- Mobile Join Us Dropdown -->
+      <div class="mobile-nav-dropdown">
+        <div class="mobile-nav-dropdown-toggle">
+          <span class="mobile-nav-link">Join Us</span>
+          <button class="mobile-dropdown-btn" aria-label="Toggle Join Us Submenu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="mobile-sub-menu">
+          <a href="careers.html" class="mobile-sub-link">Careers</a>
+          <a href="consultants.html" class="mobile-sub-link">Consultants</a>
+        </div>
+      </div>
+
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="admin.html" class="mobile-nav-link" style="color:var(--color-primary-green);">Staff Admin</a>
+    </div>
+  </aside>
+
+  <!-- Page Banner -->
+  <section class="message-hero">
+    <div class="container">
+      <div class="message-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="about.html">About Us</a>
+        <span>/</span>
+        <span>Chairman's Message</span>
+      </div>
+      <h1 class="message-hero-title">Chairman's Message</h1>
+      <div class="message-hero-divider"></div>
+      <p class="message-hero-subtitle">
+        A strategic mandate on environmental stewardship, modern compactor logistics, and sustainable economic transformation in Rivers State and across Nigeria.
+      </p>
+    </div>
+  </section>
+
+  <!-- Executive Statement Article -->
+  <section class="exec-section">
+    <div class="container">
+      <div class="exec-grid">
+
+        <!-- Left Profile Card -->
+        <aside class="exec-profile-card">
+          <div class="exec-avatar-wrap">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="exec-name">Executive Leadership</div>
+          <div class="exec-title">Office of the Chairman</div>
+
+          <div style="margin-top: 1.5rem;">
+            <button class="btn btn-sm btn-primary" style="width: 100%;" data-open-quote>Request a Consultation</button>
+          </div>
+        </aside>
+
+        <!-- Right Article Content -->
+        <article class="exec-article">
+          <div class="exec-lead">
+            "At EcoBlue Environmental Services Ltd., our driving conviction is that sustainable waste management is the foundation of public health, urban dignity, and economic resilience."
+          </div>
+
+          <p>
+            Welcome to <strong>EcoBlue Environmental Services Ltd.</strong> As we navigate the complex ecological and infrastructural dynamics of Port Harcourt and Greater Rivers State, our enterprise was established under the Companies and Allied Matters Act 2020 (CAMA 2020) with a precise vision: to build a dependable, technology-enabled, and environmentally responsible waste solutions ecosystem that sets national benchmarks.
+          </p>
+
+          <p>
+            The challenges of urban waste in our region require more than conventional disposal. Rapid urban expansion, commercial density, and industrial growth demand modern engineering, disciplined fleet logistics, and an uncompromising commitment to circular resource recovery. We have invested strategically in high-capacity <strong>heavy hydraulic compactor vehicles</strong>, GPS telemetry systems, and trained environmental personnel to ensure that collection schedules are prompt, sanitary, and transparent.
+          </p>
+
+          <div class="exec-highlight-box">
+            <h3>Three Strategic Pillars of Our Mandate:</h3>
+            <ul style="display:grid; gap:0.75rem; list-style:none; padding:0; margin:0;">
+              <li style="display:flex; gap:0.75rem; align-items:flex-start;">
+                <span style="color:var(--color-primary-green); font-weight:800;">01.</span>
+                <span><strong>Operational Reliability:</strong> Guaranteeing uninterrupted collection services for residential estates, commercial facilities, and industrial complexes.</span>
+              </li>
+              <li style="display:flex; gap:0.75rem; align-items:flex-start;">
+                <span style="color:var(--color-primary-green); font-weight:800;">02.</span>
+                <span><strong>Circular Economy Integration:</strong> Diverting valuable plastics, cardboard, and scrap metals away from landfills into structured reprocessing cycles.</span>
+              </li>
+              <li style="display:flex; gap:0.75rem; align-items:flex-start;">
+                <span style="color:var(--color-primary-green); font-weight:800;">03.</span>
+                <span><strong>Regulatory Partnership:</strong> Working in complete harmony with the Rivers State Ministry of Environment (RSMEnv), RIWAMA, and national regulators to protect our waterways and communities.</span>
+              </li>
+            </ul>
+          </div>
+
+          <p>
+            To our corporate clients, estate executives, and community partners: EcoBlue is not merely a service contractor; we are your long-term sustainability partner. We measure our success not solely by the tonnage of waste evacuated, but by the cleaner streets, unblocked drainage channels, and healthier living spaces we create every day.
+          </p>
+
+          <p>
+            As we expand our operational footprint across Rivers State, we invite forward-thinking businesses, housing estates, and institutions to join us in championing sustainable environmental stewardship.
+          </p>
+
+          <div class="exec-signature-block">
+            <div>
+              <div class="exec-signature-name">Executive Chairman</div>
+              <div class="exec-signature-role">EcoBlue Environmental Services Ltd.</div>
+            </div>
+            <div>
+              <a href="about.html" class="btn btn-outline">Explore Our Story</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-primary-navy); padding:4.5rem 0; color:#ffffff; text-align:center;">
+    <div class="container" style="max-width:750px;">
+      <h2 style="color:#ffffff; font-size:2.25rem; margin-bottom:1rem;">Partner With Us for a Cleaner Future</h2>
+      <p style="color:#E2E8F0; margin-bottom:2rem;">Speak with our Port Harcourt environmental advisory team today to establish scheduled waste management or corporate recycling.</p>
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <button class="btn btn-primary" data-open-quote>Request a Consultation</button>
+        <a href="contact.html" class="btn btn-outline-white">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom:1rem;">
+            <img src="images/logo.png" alt="EcoBlue Logo" class="brand-logo-img" style="height:72px; width:auto;" />
+            <div class="brand-name-group"><span class="brand-name" style="color:#ffffff;">Eco<span style="color:var(--color-green-light);">Blue</span></span><span class="brand-subline" style="color:#94A3B8;">Environmental Services Ltd.</span></div>
+          </div>
+          <p>"Professional, Reliable, Sustainable Waste Management Solutions"</p>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="services.html" class="footer-link">Services</a>
+            <a href="careers.html" class="footer-link">Careers</a>
+            <a href="consultants.html" class="footer-link">Consultants</a>
+            <a href="partnerships.html" class="footer-link">Partnerships</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">About EcoBlue</h4>
+          <div class="footer-links">
+            <a href="about.html" class="footer-link">Our Company</a>
+            <a href="chairmans-message.html" class="footer-link">Chairman's Message</a>
+            <a href="about.html#report" class="footer-link">Sustainability Report</a>
+            <a href="about.html#core-values" class="footer-link">Core Values</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Port Harcourt, Rivers State, Nigeria</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:info@ecoblueenvironmental.com">info@ecoblueenvironmental.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:08061193218">08061193218</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-legal-bar">
+        <div class="footer-statement">"Together, let's build a cleaner, more sustainable future for Rivers State and Nigeria."</div>
+        <div>&copy; 2026 EcoBlue Environmental Services Ltd. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/quote-modal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

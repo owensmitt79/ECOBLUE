@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <circle cx="50" cy="50" r="46" fill="#F8FAFC" stroke="#D97706" stroke-width="3"/>
+  <circle cx="50" cy="50" r="38" fill="#FFFBEB"/>
+  <!-- Safety Cross / Shield -->
+  <path d="M50,22 L72,32 L72,58 C72,72 50,80 50,80 C50,80 28,72 28,58 L28,32 Z" fill="#D97706"/>
+  <!-- White Safety Cross -->
+  <rect x="45" y="36" width="10" height="28" rx="2" fill="#ffffff"/>
+  <rect x="36" y="45" width="28" height="10" rx="2" fill="#ffffff"/>
+  <text x="50" y="74" font-family="'Inter', sans-serif" font-size="8" font-weight="900" fill="#ffffff" text-anchor="middle">HSE</text>
+</svg>

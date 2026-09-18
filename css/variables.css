@@ -1,0 +1,76 @@
+/* ==========================================================================
+   EcoBlue Environmental Services Ltd. - Design Tokens & Variables
+   Corporate Branding | Port Harcourt, Rivers State, Nigeria
+   ========================================================================== */
+
+:root {
+  /* Brand Primary Oceanic Navy (Extracted from "Blue" & Crest Outline) */
+  --color-primary-navy: #0B4261;       /* Deep executive corporate oceanic navy */
+  --color-navy-dark: #062C43;          /* Darker oceanic shade for footers, hero & deep contrasts */
+  --color-navy-light: #155E8A;         /* Medium ocean blue for interactive accents */
+  --color-navy-subtle: #EDF5F9;        /* Soft ocean mist for subtle card backgrounds */
+
+  /* Brand Environmental Greens (Extracted from "Eco", Leaf Sprig & Recycling Crest) */
+  --color-primary-green: #2E9A3C;      /* Exact vibrant nature green of "Eco" */
+  --color-green-dark: #1E6E2E;         /* Deep foliage evergreen */
+  --color-green-light: #44C156;        /* Bright lively eco leaf accent */
+  --color-green-hover: #258332;        /* Button hover state */
+  --color-green-subtle: #F0FDF4;       /* Fresh eco wash for badges and highlights */
+  --color-green-glow: rgba(46, 154, 60, 0.25);
+
+  /* Brand Oceanic Skyline & Waves (Extracted from Skyline & Waves in Logo Crest) */
+  --color-ocean-blue: #0284C7;         /* Vibrant skyline & wave azure */
+  --color-ocean-light: #38BDF8;        /* Sky highlight */
+  --color-ocean-subtle: #E0F2FE;       /* Soft sky tint */
+
+  /* Accent & Status Colors */
+  --color-accent-teal: #0D9488;
+  --color-accent-amber: #D97706;       /* Warning/Pending status */
+  --color-accent-red: #DC2626;         /* Error state */
+  --color-accent-blue: #0284C7;        /* Informational badges */
+
+  /* Neutral Surface Palette */
+  --color-bg-body: #F4F8F6;            /* Fresh eco-clean background canvas */
+  --color-bg-surface: #FFFFFF;         /* Pure white container cards */
+  --color-bg-surface-alt: #EDF5F9;     /* Soft ocean mist surface */
+  --color-bg-glass: rgba(255, 255, 255, 0.92);
+  --color-border-subtle: #E2EBF0;      /* Gentle border */
+  --color-border-medium: #CBD8E1;      /* Interactive border */
+
+  /* Typography Colors */
+  --color-text-main: #0B2535;          /* Deep ocean slate for maximum crisp contrast */
+  --color-text-muted: #335368;         /* Secondary descriptive text */
+  --color-text-subtle: #5C7688;        /* Muted captions & metadata */
+  --color-text-inverse: #FFFFFF;       /* High-contrast white */
+  --color-text-inverse-muted: #A3BFD1; /* Readable light tint on navy */
+
+  /* Typography Stack */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Elevations & Shadows (Infused with Logo Navy & Green) */
+  --shadow-xs: 0 1px 2px 0 rgba(11, 66, 97, 0.05);
+  --shadow-sm: 0 2px 4px -1px rgba(11, 66, 97, 0.07), 0 1px 2px -1px rgba(11, 66, 97, 0.04);
+  --shadow-md: 0 4px 12px -1px rgba(11, 66, 97, 0.09), 0 2px 6px -2px rgba(11, 66, 97, 0.05);
+  --shadow-lg: 0 12px 24px -3px rgba(11, 66, 97, 0.12), 0 4px 8px -4px rgba(11, 66, 97, 0.07);
+  --shadow-xl: 0 24px 48px -12px rgba(11, 66, 97, 0.18);
+  --shadow-green: 0 8px 20px -4px rgba(46, 154, 60, 0.35);
+
+  /* Border Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout Max-Widths */
+  --container-max: 1240px;
+  --container-wide: 1380px;
+  --header-height: 84px;
+  --topbar-height: 40px;
+}

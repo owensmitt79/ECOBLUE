@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="visionBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="50%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="50%" stop-color="#0369A1"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky & Horizon -->
+  <rect width="600" height="350" fill="url(#visionBg)"/>
+
+  <!-- Glowing Horizon Sun/Arc -->
+  <ellipse cx="300" cy="220" rx="280" ry="120" fill="url(#glowGrad)" opacity="0.25"/>
+  <circle cx="300" cy="180" r="45" fill="#FEF08A" opacity="0.9"/>
+  <circle cx="300" cy="180" r="70" fill="#FEF08A" opacity="0.2"/>
+
+  <!-- Clean Sustainable Green Cityscape & Smart Infrastructure -->
+  <g fill="#0F172A" opacity="0.6">
+    <rect x="70" y="140" width="35" height="110" rx="4"/>
+    <rect x="115" y="110" width="45" height="140" rx="4"/>
+    <rect x="170" y="160" width="35" height="90" rx="4"/>
+    <rect x="395" y="150" width="35" height="100" rx="4"/>
+    <rect x="440" y="100" width="48" height="150" rx="4"/>
+    <rect x="498" y="130" width="38" height="120" rx="4"/>
+  </g>
+
+  <!-- Modern Green Towers with solar/eco crowns -->
+  <g fill="#0A2540">
+    <path d="M220,110 L255,80 L290,110 L290,250 L220,250 Z"/>
+    <rect x="235" y="125" width="40" height="125" fill="#1E293B"/>
+    <!-- Eco Wind Turbine on Green Building -->
+    <line x1="255" y1="80" x2="255" y2="50" stroke="#34D399" stroke-width="2.5"/>
+    <circle cx="255" cy="50" r="4" fill="#34D399"/>
+    <line x1="255" y1="50" x2="242" y2="38" stroke="#34D399" stroke-width="2"/>
+    <line x1="255" y1="50" x2="268" y2="38" stroke="#34D399" stroke-width="2"/>
+    <line x1="255" y1="50" x2="255" y2="66" stroke="#34D399" stroke-width="2"/>
+
+    <!-- Right Tower -->
+    <path d="M310,110 L345,75 L380,110 L380,250 L310,250 Z"/>
+    <rect x="325" y="125" width="40" height="125" fill="#1E293B"/>
+    <!-- Solar Crown -->
+    <polygon points="325,120 365,120 360,105 330,105" fill="#38BDF8"/>
+  </g>
+
+  <!-- Clean Urban Waterway & Green Parklands (Rivers State Ecological Health) -->
+  <path d="M0,250 C180,230 380,240 600,250 L600,350 L0,350 Z" fill="url(#waterGrad)"/>
+  
+  <!-- Clean Ripple Reflections -->
+  <ellipse cx="300" cy="275" rx="140" ry="8" fill="rgba(255,255,255,0.25)"/>
+  <ellipse cx="300" cy="295" rx="100" ry="6" fill="rgba(255,255,255,0.18)"/>
+  <ellipse cx="300" cy="315" rx="60" ry="4" fill="rgba(255,255,255,0.12)"/>
+
+  <!-- Foreground Green Ecological Shore -->
+  <path d="M0,290 C120,270 200,310 260,350 L0,350 Z" fill="#059669"/>
+  <path d="M0,305 C100,285 180,320 230,350 L0,350 Z" fill="#10B981"/>
+  <!-- Trees -->
+  <circle cx="80" cy="285" r="18" fill="#047857"/>
+  <circle cx="115" cy="295" r="15" fill="#065F46"/>
+  <circle cx="50" cy="300" r="16" fill="#059669"/>
+
+  <!-- Right Shore -->
+  <path d="M340,350 C400,310 480,270 600,290 L600,350 Z" fill="#059669"/>
+  <path d="M370,350 C420,320 500,285 600,305 L600,350 Z" fill="#10B981"/>
+  <circle cx="520" cy="285" r="18" fill="#047857"/>
+  <circle cx="485" cy="295" r="15" fill="#065F46"/>
+  <circle cx="550" cy="300" r="16" fill="#059669"/>
+
+  <!-- Floating Vision Badge -->
+  <g transform="translate(190, 25)">
+    <rect width="220" height="36" rx="18" fill="rgba(10,37,64,0.85)" stroke="rgba(56,189,248,0.4)" stroke-width="1.5"/>
+    <circle cx="18" cy="18" r="6" fill="#38BDF8"/>
+    <text x="36" y="23" font-family="'Inter', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" letter-spacing="1">STATE LEADERSHIP 2026–2031</text>
+  </g>
+</svg>
