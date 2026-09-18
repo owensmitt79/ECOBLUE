@@ -33,7 +33,7 @@ export default function QuoteModal() {
 
   if (!isQuoteModalOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.email) {
       showToast('Validation Error', 'Please complete your name, phone number, and email.', 'error');
@@ -42,7 +42,7 @@ export default function QuoteModal() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.saveQuote(formData);
+      const created = await StorageService.saveQuote(formData);
       showToast(
         'Quote Request Received!',
         `Your request #${created.id} has been logged. Redirecting to your confirmation dossier...`,

@@ -923,13 +923,27 @@ ul {
 }
 
 /* --- Responsive Media Queries --- */
+
+/* ── Tablet Landscape (1024px) ── */
 @media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
   }
+
+  .container,
+  .container-wide {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .section-py {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
 }
 
+/* ── Tablet / Nav Breakpoint (900px) ── */
 @media (max-width: 900px) {
   .nav-menu {
     display: none;
@@ -940,23 +954,160 @@ ul {
   .top-bar-right {
     display: none;
   }
+  .header-actions .btn {
+    display: none; /* Hide desktop CTA on tablet — use mobile drawer */
+  }
 }
 
-@media (max-width: 640px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
+/* ── Tablet Portrait (768px) ── */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
   }
+
+  .container,
+  .container-wide {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-py {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .section-py-sm {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-wrapper {
+    padding: 3.5rem 0 4.5rem 0;
+  }
+
   .hero-title {
     font-size: 2.25rem;
   }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .page-banner {
+    padding: 3rem 0;
+  }
+
+  .page-banner-title {
+    font-size: 2rem;
+  }
+
+  .top-bar {
+    display: none; /* Hide top bar on tablet/mobile — too cramped */
+  }
+
+  /* Footer */
+  .site-footer {
+    padding-top: 3.5rem;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* Buttons */
+  .btn-lg {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.975rem;
+  }
+}
+
+/* ── Mobile (640px and below) ── */
+@media (max-width: 640px) {
+  html {
+    font-size: 14.5px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.975rem;
+  }
+
   .hero-actions {
     flex-direction: column;
   }
+
   .hero-actions .btn {
     width: 100%;
+    justify-content: center;
   }
+
+  .hero-stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .footer-legal-bar {
     flex-direction: column;
     text-align: center;
+  }
+
+  .footer-newsletter-form {
+    flex-direction: column;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-py {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  /* Brand logo smaller on mobile */
+  .brand-logo-img {
+    height: 52px;
+    max-height: 56px;
+  }
+}
+
+/* ── Small Mobile (400px and below) ── */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-logo-img {
+    height: 44px;
+    max-height: 48px;
+  }
+
+  .btn {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.25rem;
   }
 }

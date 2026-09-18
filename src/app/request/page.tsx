@@ -87,7 +87,7 @@ function RequestFormContent() {
     }
   }, [initialService]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
       showToast('Incomplete Fields', 'Please enter your name, telephone, and email address.', 'error');
@@ -96,7 +96,7 @@ function RequestFormContent() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.saveQuote(formData);
+      const created = await StorageService.saveQuote(formData);
       showToast('Booking Logged!', `Request #${created.id} received. Redirecting to confirmation...`, 'success');
       router.push(`/request-confirmation?id=${created.id}`);
     } catch {

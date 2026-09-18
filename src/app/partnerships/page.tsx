@@ -16,7 +16,7 @@ export default function PartnershipsPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.organization || !formData.contactPerson || !formData.email || !formData.phone) {
       showToast('Missing Fields', 'Please complete all required partnership contact fields.', 'error');
@@ -25,7 +25,7 @@ export default function PartnershipsPage() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.savePartnership(formData);
+      const created = await StorageService.savePartnership(formData);
       showToast(
         'Proposal Submitted!',
         `Your partnership inquiry #${created.id} has been logged. Our corporate development team will reach out shortly.`,

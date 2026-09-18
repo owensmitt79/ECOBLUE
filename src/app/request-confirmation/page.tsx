@@ -28,37 +28,25 @@ function ConfirmationContent() {
   const [quote, setQuote] = useState<QuoteLead | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  const fetchQuote = () => {
-    if (quoteId) {
-      const found = StorageService.getQuoteById(quoteId);
-      if (found) {
-        setQuote(found);
+  useEffect(() => {
+    const fetchQuote = async () => {
+      if (quoteId) {
+        const found = await StorageService.getQuoteById(quoteId);
+        if (found) {
+          setQuote(found);
+        } else {
+          // Fallback: take newest quote if none found
+          const quotes = await StorageService.getQuotes();
+          if (quotes.length > 0) setQuote(quotes[0]);
+        }
       } else {
-        // Fallback: take newest quote if none found
-        const quotes = StorageService.getQuotes();
+        const quotes = await StorageService.getQuotes();
         if (quotes.length > 0) setQuote(quotes[0]);
       }
-    } else {
-      const quotes = StorageService.getQuotes();
-      if (quotes.length > 0) setQuote(quotes[0]);
-    }
-    setLoaded(true);
-  };
+      setLoaded(true);
+    };
 
-  useEffect(() => {
     fetchQuote();
-
-    const handleUpdate = () => {
-      fetchQuote();
-    };
-
-    window.addEventListener('storage', handleUpdate);
-    window.addEventListener('ecoblue_storage_update', handleUpdate);
-
-    return () => {
-      window.removeEventListener('storage', handleUpdate);
-      window.removeEventListener('ecoblue_storage_update', handleUpdate);
-    };
   }, [quoteId]);
 
   if (!loaded) {

@@ -76,12 +76,19 @@ function AdminDashboardContent() {
   const [modalCurrentStatus, setModalCurrentStatus] = useState<LeadStatus>('Pending');
   const [deletePending, setDeletePending] = useState<{ type: string; id: string; name: string } | null>(null);
 
-  const loadData = () => {
-    setQuotes(StorageService.getQuotes());
-    setInquiries(StorageService.getInquiries());
-    setPartnerships(StorageService.getPartnerships());
-    setCareers(StorageService.getCareers());
-    setConsultants(StorageService.getConsultants());
+  const loadData = async () => {
+    const [q, inq, p, c, cons] = await Promise.all([
+      StorageService.getQuotes(),
+      StorageService.getInquiries(),
+      StorageService.getPartnerships(),
+      StorageService.getCareers(),
+      StorageService.getConsultants(),
+    ]);
+    setQuotes(q);
+    setInquiries(inq);
+    setPartnerships(p);
+    setCareers(c);
+    setConsultants(cons);
   };
 
   useEffect(() => {
@@ -92,18 +99,6 @@ function AdminDashboardContent() {
       }
     }
     loadData();
-
-    const handleUpdate = () => {
-      loadData();
-    };
-
-    window.addEventListener('storage', handleUpdate);
-    window.addEventListener('ecoblue_storage_update', handleUpdate);
-
-    return () => {
-      window.removeEventListener('storage', handleUpdate);
-      window.removeEventListener('ecoblue_storage_update', handleUpdate);
-    };
   }, []);
 
   // Sync modalCurrentStatus whenever detailModal opens
@@ -255,12 +250,12 @@ function AdminDashboardContent() {
   }, [consultants, consultantStatus, consultantSearch]);
 
   // Update Status
-  const handleUpdateStatus = (type: string, id: string, newStatus: LeadStatus) => {
-    if (type === 'quote') StorageService.updateQuoteStatus(id, newStatus);
-    else if (type === 'inquiry') StorageService.updateInquiryStatus(id, newStatus);
-    else if (type === 'partner') StorageService.updatePartnershipStatus(id, newStatus);
-    else if (type === 'career') StorageService.updateCareerStatus(id, newStatus);
-    else if (type === 'consultant') StorageService.updateConsultantStatus(id, newStatus);
+  const handleUpdateStatus = async (type: string, id: string, newStatus: LeadStatus) => {
+    if (type === 'quote') await StorageService.updateQuoteStatus(id, newStatus);
+    else if (type === 'inquiry') await StorageService.updateInquiryStatus(id, newStatus);
+    else if (type === 'partner') await StorageService.updatePartnershipStatus(id, newStatus);
+    else if (type === 'career') await StorageService.updateCareerStatus(id, newStatus);
+    else if (type === 'consultant') await StorageService.updateConsultantStatus(id, newStatus);
 
     loadData();
     if (detailModal && detailModal.record.id === id) {
@@ -274,14 +269,14 @@ function AdminDashboardContent() {
   };
 
   // Delete Action
-  const executeDelete = () => {
+  const executeDelete = async () => {
     if (!deletePending) return;
     const { type, id } = deletePending;
-    if (type === 'quote') StorageService.deleteQuote(id);
-    else if (type === 'inquiry') StorageService.deleteInquiry(id);
-    else if (type === 'partner') StorageService.deletePartnership(id);
-    else if (type === 'career') StorageService.deleteCareer(id);
-    else if (type === 'consultant') StorageService.deleteConsultant(id);
+    if (type === 'quote') await StorageService.deleteQuote(id);
+    else if (type === 'inquiry') await StorageService.deleteInquiry(id);
+    else if (type === 'partner') await StorageService.deletePartnership(id);
+    else if (type === 'career') await StorageService.deleteCareer(id);
+    else if (type === 'consultant') await StorageService.deleteConsultant(id);
 
     loadData();
     setDeletePending(null);

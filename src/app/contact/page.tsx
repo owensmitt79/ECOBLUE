@@ -15,7 +15,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone || !formData.message) {
       showToast('Validation Error', 'Please complete all required fields.', 'error');
@@ -24,7 +24,7 @@ export default function ContactPage() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.saveInquiry(formData);
+      const created = await StorageService.saveInquiry(formData);
       showToast(
         'Inquiry Sent!',
         `Your message #${created.id} has been delivered. An EcoBlue representative will respond promptly.`,

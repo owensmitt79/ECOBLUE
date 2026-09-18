@@ -17,7 +17,7 @@ export default function CareersPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone) {
       showToast('Validation Error', 'Please complete your name, email, and phone number.', 'error');
@@ -26,7 +26,7 @@ export default function CareersPage() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.saveCareer(formData);
+      const created = await StorageService.saveCareer(formData);
       showToast(
         'Application Submitted!',
         `Your candidate profile #${created.id} has been registered with EcoBlue HR.`,

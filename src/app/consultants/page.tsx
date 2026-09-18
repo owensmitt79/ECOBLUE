@@ -17,7 +17,7 @@ export default function ConsultantsPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone) {
       showToast('Validation Error', 'Please complete your full name, email, and phone number.', 'error');
@@ -26,7 +26,7 @@ export default function ConsultantsPage() {
 
     setIsSubmitting(true);
     try {
-      const created = StorageService.saveConsultant(formData);
+      const created = await StorageService.saveConsultant(formData);
       showToast(
         'Registration Logged!',
         `Your expert profile #${created.id} has been registered in the EcoBlue Technical Advisory Network.`,
