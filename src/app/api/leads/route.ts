@@ -1,11 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-// Server-side Supabase client (uses env vars — safe on server only)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { getSupabase } from '@/lib/supabase';
 
 const TABLE_MAP: Record<string, string> = {
   quotes: 'quotes',
@@ -16,9 +10,18 @@ const TABLE_MAP: Record<string, string> = {
 };
 
 export async function GET(request: Request) {
+  const supabase = getSupabase();
+  if (!supabase) {
+    return NextResponse.json({
+      success: false,
+      error: 'Supabase is not configured yet. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+    }, { status: 503 });
+  }
+
   const { searchParams } = new URL(request.url);
   const type = searchParams.get('type') || 'quotes';
   const table = TABLE_MAP[type];
+
 
   if (!table) {
     return NextResponse.json(
@@ -49,6 +52,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabase();
+    if (!supabase) {
+      return NextResponse.json({
+        success: false,
+        error: 'Supabase is not configured yet. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+      }, { status: 503 });
+    }
     const body = await request.json();
     const { type, data } = body;
 

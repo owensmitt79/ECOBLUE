@@ -25,16 +25,16 @@ export default function HomePage() {
             </p>
 
             <div className="hero-actions">
-              <button
+              <Link
+                href="/consultation"
                 className="btn btn-lg btn-primary"
-                onClick={() => openQuoteModal()}
               >
                 <span>Request a Consultation</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </button>
+              </Link>
               <Link href="/services" className="btn btn-lg btn-outline-white">
                 <span>Explore Our Services</span>
               </Link>

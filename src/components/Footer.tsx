@@ -44,6 +44,7 @@ export default function Footer() {
               <Link href="/about" className="footer-link">About Us</Link>
               <Link href="/chairmans-message" className="footer-link">Chairman's Message</Link>
               <Link href="/services" className="footer-link">Services</Link>
+              <Link href="/consultation" className="footer-link">Request Consultation</Link>
               <Link href="/careers" className="footer-link">Careers</Link>
               <Link href="/consultants" className="footer-link">Consultants</Link>
               <Link href="/partnerships" className="footer-link">Partnerships</Link>
@@ -58,6 +59,7 @@ export default function Footer() {
               <Link href="/services#waste-collection" className="footer-link">Waste Collection & Evacuation</Link>
               <Link href="/services#recycling" className="footer-link">Recycling & Materials Recovery</Link>
               <Link href="/services#environmental" className="footer-link">Environmental Sanitation</Link>
+              <Link href="/consultation" className="footer-link">EIA & Advisory Consultation</Link>
               <Link href="/services#logistics" className="footer-link">Logistics & Skip Containers</Link>
               <Link href="/community-impact" className="footer-link">Community Impact</Link>
               <Link href="/admin" className="footer-link" style={{ color: 'var(--color-green-light)', fontWeight: 600 }}>Staff Admin Portal</Link>

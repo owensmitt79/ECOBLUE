@@ -68,6 +68,8 @@ export default function QuoteModal() {
     }
   };
 
+  const isConsultation = formData.service === 'Environmental Consultancy';
+
   return (
     <div
       className="modal-overlay"
@@ -131,7 +133,7 @@ export default function QuoteModal() {
           <div
             style={{
               display: 'inline-block',
-              backgroundColor: 'var(--color-green-subtle)',
+              backgroundColor: isConsultation ? 'rgba(46, 154, 60, 0.15)' : 'var(--color-green-subtle)',
               color: 'var(--color-primary-green)',
               padding: '4px 12px',
               borderRadius: '9999px',
@@ -142,13 +144,15 @@ export default function QuoteModal() {
               marginBottom: '8px'
             }}
           >
-            Direct Operational Inquiry
+            {isConsultation ? 'Advisory & Statutory Consultation' : 'Direct Operational Inquiry'}
           </div>
           <h3 style={{ margin: '0 0 6px 0', fontSize: '1.6rem', color: 'var(--color-primary-navy)', fontWeight: 800 }}>
-            Request a Service Proposal
+            {isConsultation ? 'Request an Environmental Consultation' : 'Request a Service Proposal'}
           </h3>
           <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--color-text-muted)' }}>
-            Submit your waste evacuation or recycling specifications. Headquartered in Port Harcourt, Rivers State.
+            {isConsultation
+              ? 'Schedule a technical consultation or compliance review with our environmental specialists in Port Harcourt.'
+              : 'Submit your waste evacuation or recycling specifications. Headquartered in Port Harcourt, Rivers State.'}
           </p>
         </div>
 
@@ -281,7 +285,9 @@ export default function QuoteModal() {
               className="btn btn-primary"
               style={{ flex: 1, padding: '14px', fontSize: '1rem', fontWeight: 700 }}
             >
-              {isSubmitting ? 'Submitting Request...' : 'Submit Service Request'}
+              {isSubmitting
+                ? 'Submitting...'
+                : (isConsultation ? 'Submit Consultation Request' : 'Submit Service Request')}
             </button>
             <button
               type="button"

@@ -55,6 +55,17 @@ const SERVICES = [
         <circle cx="18.5" cy="18.5" r="2.5" />
       </svg>
     )
+  },
+  {
+    id: 'Environmental Consultancy',
+    title: 'Consultation & Advisory',
+    desc: 'EIA, statutory regulatory compliance, environmental audits & waste mitigation advisory.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    )
   }
 ];
 
@@ -426,6 +437,7 @@ function RequestFormContent() {
                   <option value="Commercial Food / Organic">Commercial Food & Organic Waste</option>
                   <option value="Recyclable Polymers & Bales">Recyclable Polymers, PET Bottles & Paper</option>
                   <option value="Construction & Demolition Debris">Construction & Demolition Rubble</option>
+                  <option value="Environmental Assessment / Consultation">Environmental Assessment / EIA / Compliance Advisory</option>
                   <option value="Other Non-Hazardous Waste">Other Non-Hazardous Waste Stream</option>
                 </select>
               </div>
@@ -446,6 +458,7 @@ function RequestFormContent() {
                   <option value="Bi-Weekly Evacuation">Bi-Weekly Evacuation</option>
                   <option value="One-Time Emergency Clearance">One-Time Emergency Clearance</option>
                   <option value="Roll-on/Roll-off Skip Placement">Permanent Heavy Skip Placement</option>
+                  <option value="Immediate Advisory Consultation">Immediate Advisory Consultation</option>
                 </select>
               </div>
             </div>

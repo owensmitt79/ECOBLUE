@@ -65,9 +65,9 @@ export default function ChairmansMessagePage() {
               </div>
 
               <div style={{ marginTop: '1.5rem' }}>
-                <button onClick={() => openQuoteModal()} className="btn btn-primary" style={{ width: '100%', padding: '12px' }}>
+                <Link href="/consultation" className="btn btn-primary" style={{ width: '100%', padding: '12px', display: 'block', textAlign: 'center' }}>
                   Request Consultation
-                </button>
+                </Link>
               </div>
             </aside>
 
