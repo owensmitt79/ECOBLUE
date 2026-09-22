@@ -51,15 +51,44 @@ export default function CareersPage() {
   return (
     <div>
       {/* Header */}
-      <section className="page-header" style={{ backgroundColor: 'var(--color-navy-dark)', color: '#fff', padding: '4rem 0', textAlign: 'center' }}>
-        <div className="container">
-          <span className="section-badge" style={{ background: 'rgba(46, 154, 60, 0.25)', color: '#6EE7B7', border: '1px solid rgba(46, 154, 60, 0.4)', marginBottom: '1rem', display: 'inline-block' }}>
-            Work With Us
-          </span>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)', color: '#ffffff', fontWeight: 800, marginBottom: '1rem' }}>
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.88) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/careers-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 25%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
             Join the EcoBlue Operations Team
           </h1>
-          <p style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.1rem', color: '#CBD5E1', lineHeight: 1.6 }}>
+          <p
+            style={{
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2EBF0',
+              lineHeight: 1.65,
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)'
+            }}
+          >
             Be part of a disciplined, safety-conscious environmental workforce dedicated to raising the standard of waste management in Port Harcourt.
           </p>
         </div>
@@ -70,7 +99,9 @@ export default function CareersPage() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
             <div className="card" style={{ padding: '28px', backgroundColor: 'var(--color-bg-body)', borderRadius: '16px', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '12px' }}>🛡️</div>
+              <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '8px' }}>HSE-First Culture</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
                 Full personal protective equipment (PPE), rigorous inoculation programs, and comprehensive health & safety protocols on every dispatch.
@@ -78,7 +109,9 @@ export default function CareersPage() {
             </div>
 
             <div className="card" style={{ padding: '28px', backgroundColor: 'var(--color-bg-body)', borderRadius: '16px', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '12px' }}>📈</div>
+              <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '8px' }}>Career Progression</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
                 Structured advancement pathways from field operations and driver ranks to route supervisors and fleet logistics managers.
@@ -86,7 +119,9 @@ export default function CareersPage() {
             </div>
 
             <div className="card" style={{ padding: '28px', backgroundColor: 'var(--color-bg-body)', borderRadius: '16px', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '12px' }}>💰</div>
+              <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '8px' }}>Competitive Compensation</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
                 Timely, competitive remuneration with hazard allowances, performance incentives, and pension compliance.

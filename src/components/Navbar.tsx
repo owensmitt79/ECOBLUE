@@ -278,9 +278,6 @@ export default function Navbar() {
           <Link href="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             Contact Us
           </Link>
-          <Link href="/admin" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--color-primary-green)', fontWeight: 700 }}>
-            Staff Portal
-          </Link>
         </nav>
 
         <div style={{ paddingTop: '20px', borderTop: '1px solid var(--color-border-subtle)' }}>

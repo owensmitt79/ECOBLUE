@@ -110,9 +110,15 @@ CREATE INDEX IF NOT EXISTS idx_consultants_created_at ON public.consultants ("cr
 CREATE INDEX IF NOT EXISTS idx_consultants_status ON public.consultants (status);
 
 -- ==============================================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
+-- ROW LEVEL SECURITY (RLS) POLICIES & PERMISSIONS
 -- Enables public form submissions and staff dashboard operations using anon key
 -- ==============================================================================
+
+GRANT ALL ON TABLE public.quotes TO anon, authenticated;
+GRANT ALL ON TABLE public.inquiries TO anon, authenticated;
+GRANT ALL ON TABLE public.partnerships TO anon, authenticated;
+GRANT ALL ON TABLE public.careers TO anon, authenticated;
+GRANT ALL ON TABLE public.consultants TO anon, authenticated;
 
 ALTER TABLE public.quotes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
@@ -120,13 +126,17 @@ ALTER TABLE public.partnerships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.careers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.consultants ENABLE ROW LEVEL SECURITY;
 
-DO $$
-DECLARE
-  tbl TEXT;
-BEGIN
-  FOR tbl IN SELECT unnest(ARRAY['quotes', 'inquiries', 'partnerships', 'careers', 'consultants'])
-  LOOP
-    EXECUTE format('DROP POLICY IF EXISTS "Public full access for %I" ON public.%I', tbl, tbl);
-    EXECUTE format('CREATE POLICY "Public full access for %I" ON public.%I FOR ALL TO anon USING (true) WITH CHECK (true)', tbl, tbl);
-  END LOOP;
-END $$;
+DROP POLICY IF EXISTS "Public access for quotes" ON public.quotes;
+CREATE POLICY "Public access for quotes" ON public.quotes FOR ALL TO public USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public access for inquiries" ON public.inquiries;
+CREATE POLICY "Public access for inquiries" ON public.inquiries FOR ALL TO public USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public access for partnerships" ON public.partnerships;
+CREATE POLICY "Public access for partnerships" ON public.partnerships FOR ALL TO public USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public access for careers" ON public.careers;
+CREATE POLICY "Public access for careers" ON public.careers FOR ALL TO public USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public access for consultants" ON public.consultants;
+CREATE POLICY "Public access for consultants" ON public.consultants FOR ALL TO public USING (true) WITH CHECK (true);

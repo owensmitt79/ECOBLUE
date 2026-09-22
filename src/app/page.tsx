@@ -437,9 +437,7 @@ export default function HomePage() {
       {/* 7. Full-Width CTA Banner - Original Placement */}
       <section style={{ background: 'linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, var(--color-green-dark) 100%)', padding: '5rem 0', color: '#ffffff', textAlign: 'center' }}>
         <div className="container" style={{ maxWidth: '850px' }}>
-          <div className="section-badge" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6EE7B7', borderColor: 'rgba(16, 185, 129, 0.4)', marginBottom: '1.25rem' }}>
-            Partnership & Service Delivery
-          </div>
+
           <h2 style={{ fontSize: '2.65rem', color: '#ffffff', marginBottom: '1.25rem', fontWeight: 800 }}>
             Let's Build a Cleaner Rivers State Together.
           </h2>

@@ -40,8 +40,11 @@ function AdminDashboardContent() {
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [adminEmail, setAdminEmail] = useState('admin@ecoblue.com');
-  const [adminPass, setAdminPass] = useState('ecoblue2026');
+  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true);
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPass, setAdminPass] = useState('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loginError, setLoginError] = useState('');
 
   // Mobile Sidebar & Active Tab
@@ -75,30 +78,87 @@ function AdminDashboardContent() {
   const [detailModal, setDetailModal] = useState<{ record: any; type: string } | null>(null);
   const [modalCurrentStatus, setModalCurrentStatus] = useState<LeadStatus>('Pending');
   const [deletePending, setDeletePending] = useState<{ type: string; id: string; name: string } | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+  const [isSavingStatus, setIsSavingStatus] = useState<boolean>(false);
+  const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
+
+  const getAvailableStatuses = (type?: string): LeadStatus[] => {
+    switch (type) {
+      case 'partner':
+        return ['Pending', 'Reviewed', 'Empanelled', 'Completed'];
+      case 'career':
+        return ['Pending', 'Reviewed', 'Shortlisted', 'Interviewed', 'Completed'];
+      case 'consultant':
+        return ['Pending', 'Reviewed', 'Empanelled', 'Active Project', 'Completed'];
+      case 'quote':
+      case 'inquiry':
+      default:
+        return ['Pending', 'Reviewed', 'Contacted', 'Completed'];
+    }
+  };
 
   const loadData = async () => {
-    const [q, inq, p, c, cons] = await Promise.all([
-      StorageService.getQuotes(),
-      StorageService.getInquiries(),
-      StorageService.getPartnerships(),
-      StorageService.getCareers(),
-      StorageService.getConsultants(),
-    ]);
-    setQuotes(q);
-    setInquiries(inq);
-    setPartnerships(p);
-    setCareers(c);
-    setConsultants(cons);
+    try {
+      const [q, inq, p, c, cons] = await Promise.all([
+        StorageService.getQuotes(),
+        StorageService.getInquiries(),
+        StorageService.getPartnerships(),
+        StorageService.getCareers(),
+        StorageService.getConsultants(),
+      ]);
+      setQuotes(q || []);
+      setInquiries(inq || []);
+      setPartnerships(p || []);
+      setCareers(c || []);
+      setConsultants(cons || []);
+    } catch (err) {
+      console.error('Failed to load admin records:', err);
+    }
+  };
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+    showToast('Data Refreshed', 'Synced latest records from database.', 'success');
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const session = sessionStorage.getItem('ecoblue_admin_logged');
-      if (session === 'true') {
-        setIsAuthenticated(true);
+    let isMounted = true;
+    const verifySession = async () => {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        const res = await fetch('/api/admin/auth', { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (!isMounted) return;
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.authenticated) {
+            setIsAuthenticated(true);
+            setIsCheckingAuth(false);
+            loadData();
+            return;
+          }
+        }
+        setIsAuthenticated(false);
+      } catch (err: any) {
+        if (isMounted) {
+          console.warn('Session verification fallback to login:', err?.message);
+          setIsAuthenticated(false);
+        }
+      } finally {
+        if (isMounted) {
+          setIsCheckingAuth(false);
+        }
       }
-    }
-    loadData();
+    };
+    verifySession();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Sync modalCurrentStatus whenever detailModal opens
@@ -108,20 +168,49 @@ function AdminDashboardContent() {
     }
   }, [detailModal]);
 
-  // Sync tab and view parameters from incoming URL
+  // Sync tab and view parameters from incoming URL across all 5 lead channels
   useEffect(() => {
     if (tabParam) {
       setActiveTab(tabParam);
     }
-    if (viewParam && quotes.length > 0 && isAuthenticated) {
-      const found = quotes.find(q => q.id === viewParam);
-      if (found) {
+    if (viewParam && isAuthenticated) {
+      const q = quotes.find(item => item.id === viewParam);
+      if (q) {
         setActiveTab('tabQuotes');
-        setDetailModal({ record: found, type: 'quote' });
+        setDetailModal({ record: q, type: 'quote' });
         setQuoteSearch(viewParam);
+        return;
+      }
+      const inq = inquiries.find(item => item.id === viewParam);
+      if (inq) {
+        setActiveTab('tabInquiries');
+        setDetailModal({ record: inq, type: 'inquiry' });
+        setInquirySearch(viewParam);
+        return;
+      }
+      const p = partnerships.find(item => item.id === viewParam);
+      if (p) {
+        setActiveTab('tabPartnerships');
+        setDetailModal({ record: p, type: 'partner' });
+        setPartnerSearch(viewParam);
+        return;
+      }
+      const c = careers.find(item => item.id === viewParam);
+      if (c) {
+        setActiveTab('tabCareers');
+        setDetailModal({ record: c, type: 'career' });
+        setCareerSearch(viewParam);
+        return;
+      }
+      const cons = consultants.find(item => item.id === viewParam);
+      if (cons) {
+        setActiveTab('tabConsultants');
+        setDetailModal({ record: cons, type: 'consultant' });
+        setConsultantSearch(viewParam);
+        return;
       }
     }
-  }, [tabParam, viewParam, quotes, isAuthenticated]);
+  }, [tabParam, viewParam, quotes, inquiries, partnerships, careers, consultants, isAuthenticated]);
 
   // Handle ESC key to close modals
   useEffect(() => {
@@ -135,26 +224,41 @@ function AdminDashboardContent() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (adminEmail === 'admin@ecoblue.com' && adminPass === 'ecoblue2026') {
-      setIsAuthenticated(true);
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('ecoblue_admin_logged', 'true');
+    setLoginError('');
+    setIsLoggingIn(true);
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: adminEmail, password: adminPass })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsAuthenticated(true);
+        setAdminPass('');
+        await loadData();
+        showToast('Welcome Back', 'Authorized staff session initiated.', 'success');
+      } else {
+        setLoginError(data.error || 'Authentication failed. Please verify your credentials.');
       }
-      setLoginError('');
-      showToast('Welcome Back', 'Logged into EcoBlue Staff Console.', 'success');
-    } else {
-      setLoginError('Invalid credentials. Use admin@ecoblue.com / ecoblue2026');
+    } catch {
+      setLoginError('Unable to connect to authentication service. Please try again.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('ecoblue_admin_logged');
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch {
+      // Ignore network error on logout
     }
-    showToast('Signed Out', 'You have securely signed out.', 'info');
+    setIsAuthenticated(false);
+    setAdminPass('');
+    showToast('Signed Out', 'Staff session terminated securely.', 'info');
   };
 
   // Metrics
@@ -167,6 +271,85 @@ function AdminDashboardContent() {
       totalCareers: careers.length,
       totalConsultants: consultants.length
     };
+  }, [quotes, inquiries, partnerships, careers, consultants]);
+
+  // Combined Recent Submissions for Overview Live Stream
+  const recentSubmissions = useMemo(() => {
+    const list: Array<{
+      id: string;
+      name: string;
+      channel: string;
+      type: 'quote' | 'inquiry' | 'partner' | 'career' | 'consultant';
+      category: string;
+      status: LeadStatus;
+      date?: string;
+      raw: any;
+    }> = [];
+
+    quotes.forEach(q =>
+      list.push({
+        id: q.id,
+        name: q.name,
+        channel: 'Quote Request',
+        type: 'quote',
+        category: q.service,
+        status: q.status,
+        date: q.createdAt,
+        raw: q
+      })
+    );
+    inquiries.forEach(i =>
+      list.push({
+        id: i.id,
+        name: i.fullName,
+        channel: 'Contact Inquiry',
+        type: 'inquiry',
+        category: i.subject || 'General Inquiry',
+        status: i.status,
+        date: i.createdAt,
+        raw: i
+      })
+    );
+    partnerships.forEach(p =>
+      list.push({
+        id: p.id,
+        name: p.organization || p.contactPerson,
+        channel: 'Partnership',
+        type: 'partner',
+        category: p.track,
+        status: p.status,
+        date: p.createdAt,
+        raw: p
+      })
+    );
+    careers.forEach(c =>
+      list.push({
+        id: c.id,
+        name: c.fullName,
+        channel: 'Career Applicant',
+        type: 'career',
+        category: c.position,
+        status: c.status,
+        date: c.createdAt,
+        raw: c
+      })
+    );
+    consultants.forEach(c =>
+      list.push({
+        id: c.id,
+        name: c.fullName,
+        channel: 'Consultant',
+        type: 'consultant',
+        category: c.specialization,
+        status: c.status,
+        date: c.createdAt,
+        raw: c
+      })
+    );
+
+    return list
+      .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
+      .slice(0, 10);
   }, [quotes, inquiries, partnerships, careers, consultants]);
 
   // Filtered Quotes
@@ -251,21 +434,31 @@ function AdminDashboardContent() {
 
   // Update Status
   const handleUpdateStatus = async (type: string, id: string, newStatus: LeadStatus) => {
-    if (type === 'quote') await StorageService.updateQuoteStatus(id, newStatus);
-    else if (type === 'inquiry') await StorageService.updateInquiryStatus(id, newStatus);
-    else if (type === 'partner') await StorageService.updatePartnershipStatus(id, newStatus);
-    else if (type === 'career') await StorageService.updateCareerStatus(id, newStatus);
-    else if (type === 'consultant') await StorageService.updateConsultantStatus(id, newStatus);
+    setIsSavingStatus(true);
+    try {
+      if (type === 'quote') await StorageService.updateQuoteStatus(id, newStatus);
+      else if (type === 'inquiry') await StorageService.updateInquiryStatus(id, newStatus);
+      else if (type === 'partner') await StorageService.updatePartnershipStatus(id, newStatus);
+      else if (type === 'career') await StorageService.updateCareerStatus(id, newStatus);
+      else if (type === 'consultant') await StorageService.updateConsultantStatus(id, newStatus);
 
-    loadData();
-    if (detailModal && detailModal.record.id === id) {
-      setDetailModal({
-        ...detailModal,
-        record: { ...detailModal.record, status: newStatus }
-      });
-      setModalCurrentStatus(newStatus);
+      await loadData();
+      if (detailModal && detailModal.record.id === id) {
+        setDetailModal({
+          ...detailModal,
+          record: { ...detailModal.record, status: newStatus }
+        });
+        setModalCurrentStatus(newStatus);
+      }
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 2500);
+      showToast('Status Updated', `Record ${id} updated to "${newStatus}"`, 'success');
+    } catch (err: any) {
+      console.error('Failed to update status:', err);
+      showToast('Update Failed', 'Could not save status change.', 'error');
+    } finally {
+      setIsSavingStatus(false);
     }
-    showToast('Status Updated', `Record ${id} updated to ${newStatus}`, 'success');
   };
 
   // Delete Action
@@ -278,7 +471,7 @@ function AdminDashboardContent() {
     else if (type === 'career') await StorageService.deleteCareer(id);
     else if (type === 'consultant') await StorageService.deleteConsultant(id);
 
-    loadData();
+    await loadData();
     setDeletePending(null);
     if (detailModal && detailModal.record.id === id) {
       setDetailModal(null);
@@ -335,7 +528,21 @@ function AdminDashboardContent() {
     }
   };
 
-  // 1. Unauthenticated Login Screen Guard
+  // 1. Initial Auth Check Loading Gate
+  if (isCheckingAuth) {
+    return (
+      <div className="admin-body" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#F8FAFC' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div className="spinner" style={{ margin: '0 auto 1rem auto' }} />
+          <p style={{ fontSize: '0.9rem', color: 'var(--color-primary-navy)', fontWeight: 600 }}>
+            Verifying secure staff credentials...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Unauthenticated Login Screen Guard
   if (!isAuthenticated) {
     return (
       <div className="admin-body">
@@ -368,11 +575,12 @@ function AdminDashboardContent() {
                   backgroundColor: '#FEE2E2',
                   border: '1px solid #F87171',
                   color: '#991B1B',
-                  padding: '10px',
+                  padding: '12px',
                   borderRadius: '8px',
                   fontSize: '0.85rem',
                   marginBottom: '16px',
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  lineHeight: 1.5
                 }}
               >
                 {loginError}
@@ -395,7 +603,7 @@ function AdminDashboardContent() {
                   gap: '0.65rem'
                 }}
               >
-                <span style={{ fontSize: '1.2rem' }}>🎯</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 <div>
                   <strong>Staff Access Link:</strong> Request <strong>{viewParam}</strong> is queued for inspection. Sign in below to load the live dispatch record.
                 </div>
@@ -405,40 +613,91 @@ function AdminDashboardContent() {
             <form onSubmit={handleLogin} style={{ textAlign: 'left' }}>
               <div className="form-group" style={{ marginBottom: '1rem' }}>
                 <label className="form-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '4px' }}>
-                  Staff Email
+                  Staff Email / Username
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
+                  placeholder="ecoblueenvironmentalservice@gmail.com"
                   value={adminEmail}
                   onChange={e => setAdminEmail(e.target.value)}
                   required
-                  style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)' }}
+                  autoComplete="username"
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)', fontSize: '0.95rem' }}
                 />
               </div>
+
               <div className="form-group" style={{ marginBottom: '1.25rem' }}>
                 <label className="form-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '4px' }}>
                   Password
                 </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  value={adminPass}
-                  onChange={e => setAdminPass(e.target.value)}
-                  required
-                  style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)' }}
-                />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    className="form-control"
+                    placeholder="Enter security password"
+                    value={adminPass}
+                    onChange={e => setAdminPass(e.target.value)}
+                    required
+                    autoComplete="current-password"
+                    style={{ width: '100%', padding: '10px 42px 10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)', fontSize: '0.95rem' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--color-text-subtle)',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      fontSize: '0.8rem',
+                      fontWeight: 600
+                    }}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
               </div>
+
               <button
                 type="submit"
                 className="btn btn-primary"
-                style={{ width: '100%', marginTop: '0.75rem', padding: '12px', fontSize: '1rem', fontWeight: 700 }}
+                disabled={isLoggingIn}
+                style={{
+                  width: '100%',
+                  marginTop: '0.75rem',
+                  padding: '12px',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  cursor: isLoggingIn ? 'wait' : 'pointer'
+                }}
               >
-                Sign In to Dashboard
+                {isLoggingIn ? (
+                  <>
+                    <svg className="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                    </svg>
+                    <span>Authenticating...</span>
+                  </>
+                ) : (
+                  <span>Sign In to Operations Portal</span>
+                )}
               </button>
             </form>
-            <div style={{ marginTop: '1.25rem', fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>
-              Demo Login: <code>admin@ecoblue.com</code> / <code>ecoblue2026</code>
+
+            <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #E2E8F0', fontSize: '0.75rem', color: 'var(--color-text-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>256-bit Encrypted Operations Gateway • Authorized Personnel Only</span>
             </div>
           </div>
         </div>
@@ -644,7 +903,37 @@ function AdminDashboardContent() {
               </button>
               <div className="admin-page-title">Operations & Inquiries Console</div>
             </div>
-            <div className="admin-user-profile">
+            <div className="admin-user-profile" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <button
+                type="button"
+                onClick={handleRefresh}
+                disabled={isRefreshing}
+                className="btn btn-sm btn-outline"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.75rem',
+                  fontSize: '0.825rem',
+                  borderColor: 'var(--color-border-medium)',
+                  background: '#ffffff',
+                  cursor: isRefreshing ? 'wait' : 'pointer'
+                }}
+                title="Sync and refresh all records from database"
+              >
+                <svg
+                  className={isRefreshing ? 'spin' : ''}
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                </svg>
+                <span>{isRefreshing ? 'Syncing...' : 'Refresh'}</span>
+              </button>
               <span className="admin-user-tag">EcoBlue Admin • Port Harcourt</span>
               <div className="admin-avatar">EB</div>
             </div>
@@ -757,6 +1046,87 @@ function AdminDashboardContent() {
                     </div>
                   </div>
                 </div>
+
+                {/* Recent Submissions Stream */}
+                <div className="admin-card" style={{ marginTop: '1.5rem' }}>
+                  <div className="admin-card-header">
+                    <div>
+                      <h3 style={{ fontSize: '1.15rem', color: 'var(--color-primary-navy)' }}>Recent Submissions Stream</h3>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--color-text-subtle)', margin: 0 }}>
+                        Real-time feed of all incoming quotes, contact inquiries, and applications.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="table-responsive">
+                    <table className="admin-table">
+                      <thead>
+                        <tr>
+                          <th>Ref ID</th>
+                          <th>Channel</th>
+                          <th>Sender / Contact</th>
+                          <th>Category / Service</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {recentSubmissions.length === 0 ? (
+                          <tr>
+                            <td colSpan={7} style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--color-text-subtle)' }}>
+                              No submissions received yet.
+                            </td>
+                          </tr>
+                        ) : (
+                          recentSubmissions.map(item => {
+                            const dateStr = item.date
+                              ? new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                              : '—';
+                            return (
+                              <tr key={item.id}>
+                                <td style={{ fontWeight: 700, color: 'var(--color-primary-navy)' }}>{item.id}</td>
+                                <td>
+                                  <span className="badge badge-pending" style={{ fontSize: '0.725rem' }}>{item.channel}</span>
+                                </td>
+                                <td>
+                                  <div style={{ fontWeight: 600 }}>{item.name || item.id}</div>
+                                </td>
+                                <td>{item.category || '—'}</td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: item.raw, type: item.type })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(item.status)}`}>
+                                      {item.status}
+                                    </span>
+                                  </button>
+                                </td>
+                                <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
+                                <td className="admin-actions-cell">
+                                  <button
+                                    type="button"
+                                    className="admin-action-btn view-btn"
+                                    onClick={() => setDetailModal({ record: item.raw, type: item.type })}
+                                    title="View & Manage Request"
+                                  >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                      <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <span>View</span>
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -842,9 +1212,16 @@ function AdminDashboardContent() {
                                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>{q.location || 'Rivers State'}</div>
                                 </td>
                                 <td>
-                                  <span className={`badge ${getStatusBadgeClass(q.status)}`}>
-                                    {q.status}
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: q, type: 'quote' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(q.status)}`}>
+                                      {q.status}
+                                    </span>
+                                  </button>
                                 </td>
                                 <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
                                 <td className="admin-actions-cell">
@@ -951,9 +1328,16 @@ function AdminDashboardContent() {
                                   <span style={{ fontWeight: 500 }}>{c.subject || 'General Inquiry'}</span>
                                 </td>
                                 <td>
-                                  <span className={`badge ${getStatusBadgeClass(c.status)}`}>
-                                    {c.status}
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: c, type: 'inquiry' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(c.status)}`}>
+                                      {c.status}
+                                    </span>
+                                  </button>
                                 </td>
                                 <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
                                 <td className="admin-actions-cell">
@@ -1063,9 +1447,16 @@ function AdminDashboardContent() {
                                   <span style={{ fontWeight: 600, color: 'var(--color-primary-green)' }}>{p.track}</span>
                                 </td>
                                 <td>
-                                  <span className={`badge ${getStatusBadgeClass(p.status)}`}>
-                                    {p.status}
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: p, type: 'partner' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(p.status)}`}>
+                                      {p.status}
+                                    </span>
+                                  </button>
                                 </td>
                                 <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
                                 <td className="admin-actions-cell">
@@ -1178,9 +1569,16 @@ function AdminDashboardContent() {
                                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>Port Harcourt, Rivers State</div>
                                 </td>
                                 <td>
-                                  <span className={`badge ${getStatusBadgeClass(a.status)}`}>
-                                    {a.status}
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: a, type: 'career' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(a.status)}`}>
+                                      {a.status}
+                                    </span>
+                                  </button>
                                 </td>
                                 <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
                                 <td className="admin-actions-cell">
@@ -1293,9 +1691,16 @@ function AdminDashboardContent() {
                                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>Port Harcourt & Niger Delta</div>
                                 </td>
                                 <td>
-                                  <span className={`badge ${getStatusBadgeClass(c.status)}`}>
-                                    {c.status}
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: c, type: 'consultant' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(c.status)}`}>
+                                      {c.status}
+                                    </span>
+                                  </button>
                                 </td>
                                 <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
                                 <td className="admin-actions-cell">
@@ -1420,7 +1825,7 @@ function AdminDashboardContent() {
       {/* Detail View Modal */}
       {detailModal && (
         <div
-          className="modal-overlay"
+          className="modal-overlay active"
           id="adminDetailModal"
           style={{ display: 'flex' }}
           onClick={e => {
@@ -1777,41 +2182,103 @@ function AdminDashboardContent() {
 
               {/* Status & Actions Bar */}
               <div className="admin-detail-footer">
-                <div className="admin-detail-status-group">
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-primary-navy)' }}>Update Status:</label>
-                  <select
-                    id="updateStatusSelect"
-                    className="form-select"
-                    style={{ display: 'inline-block', width: 'auto', padding: '0.45rem 0.85rem' }}
-                    value={modalCurrentStatus}
-                    onChange={e => setModalCurrentStatus(e.target.value as LeadStatus)}
-                  >
-                    <option value="Pending">Pending</option>
-                    <option value="Reviewed">Reviewed</option>
-                    {detailModal.type === 'partner' ? (
-                      <option value="Empanelled">Empanelled</option>
-                    ) : detailModal.type === 'career' ? (
-                      <>
-                        <option value="Shortlisted">Shortlisted</option>
-                        <option value="Interviewed">Interviewed</option>
-                      </>
-                    ) : detailModal.type === 'consultant' ? (
-                      <>
-                        <option value="Empanelled">Empanelled</option>
-                        <option value="Active Project">Active Project</option>
-                      </>
-                    ) : (
-                      <option value="Contacted">Contacted</option>
-                    )}
-                    <option value="Completed">Completed</option>
-                  </select>
-                  <button
-                    className="btn btn-navy"
-                    id="saveStatusChangeBtn"
-                    onClick={() => handleUpdateStatus(detailModal.type, detailModal.record.id, modalCurrentStatus)}
-                  >
-                    Save Status
-                  </button>
+                <div className="admin-detail-status-section">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.825rem', fontWeight: 700, color: 'var(--color-primary-navy)' }}>
+                      Quick Status:
+                    </span>
+                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                      {getAvailableStatuses(detailModal.type).map(st => {
+                        const isCurrent = modalCurrentStatus === st;
+                        return (
+                          <button
+                            key={st}
+                            type="button"
+                            className={`status-pill-btn ${isCurrent ? getStatusBadgeClass(st) : ''}`}
+                            onClick={() => {
+                              setModalCurrentStatus(st);
+                              handleUpdateStatus(detailModal.type, detailModal.record.id, st);
+                            }}
+                            disabled={isSavingStatus}
+                            title={`Click to set status to ${st}`}
+                            style={{
+                              border: isCurrent ? '2px solid currentColor' : '1px solid #CBD5E1',
+                              background: isCurrent ? undefined : '#FFFFFF',
+                              color: isCurrent ? undefined : '#475569',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '0.35rem',
+                              padding: '0.35rem 0.75rem',
+                              fontSize: '0.8rem'
+                            }}
+                          >
+                            {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'currentColor' }} />}
+                            {st}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="admin-detail-status-group">
+                    <select
+                      id="updateStatusSelect"
+                      className="form-select"
+                      style={{ display: 'inline-block', width: 'auto', padding: '0.45rem 0.85rem', cursor: 'pointer' }}
+                      value={modalCurrentStatus}
+                      onChange={e => setModalCurrentStatus(e.target.value as LeadStatus)}
+                    >
+                      {getAvailableStatuses(detailModal.type).map(st => (
+                        <option key={st} value={st}>{st}</option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      id="saveStatusChangeBtn"
+                      style={{
+                        cursor: isSavingStatus ? 'wait' : 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        padding: '0.5rem 1.25rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 700,
+                        backgroundColor: savedSuccess ? '#10B981' : 'var(--color-primary-green)',
+                        borderColor: savedSuccess ? '#10B981' : 'var(--color-primary-green)',
+                        color: '#ffffff',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 2px 6px rgba(16, 185, 129, 0.3)'
+                      }}
+                      disabled={isSavingStatus}
+                      onClick={() => handleUpdateStatus(detailModal.type, detailModal.record.id, modalCurrentStatus)}
+                    >
+                      {isSavingStatus ? (
+                        <>
+                          <svg className="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                          </svg>
+                          <span>Saving...</span>
+                        </>
+                      ) : savedSuccess ? (
+                        <>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          <span>✓ Saved!</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 3" />
+                            <polyline points="7 3 7 8 15 8" />
+                          </svg>
+                          <span>Save Status</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <button
@@ -1842,7 +2309,7 @@ function AdminDashboardContent() {
       {/* Delete Confirmation Modal */}
       {deletePending && (
         <div
-          className="modal-overlay"
+          className="modal-overlay active"
           id="adminDeleteModal"
           style={{ display: 'flex' }}
           onClick={e => {

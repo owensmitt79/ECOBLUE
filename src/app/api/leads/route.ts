@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { isAdminAuthenticated } from '@/lib/admin-auth';
 
 const TABLE_MAP: Record<string, string> = {
   quotes: 'quotes',
@@ -9,19 +10,27 @@ const TABLE_MAP: Record<string, string> = {
   consultants: 'consultants'
 };
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
+  // Securing customer leads: require admin authentication
+  const auth = isAdminAuthenticated(request);
+  if (!auth.authenticated) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized. Administrative session required to view leads.' },
+      { status: 401 }
+    );
+  }
+
   const supabase = getSupabase();
   if (!supabase) {
     return NextResponse.json({
       success: false,
-      error: 'Supabase is not configured yet. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+      error: 'Supabase is not configured on server. Please set SUPABASE_URL and SUPABASE_ANON_KEY in environment variables.'
     }, { status: 503 });
   }
 
   const { searchParams } = new URL(request.url);
   const type = searchParams.get('type') || 'quotes';
   const table = TABLE_MAP[type];
-
 
   if (!table) {
     return NextResponse.json(
@@ -56,7 +65,7 @@ export async function POST(request: Request) {
     if (!supabase) {
       return NextResponse.json({
         success: false,
-        error: 'Supabase is not configured yet. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+        error: 'Database is not configured on server.'
       }, { status: 503 });
     }
     const body = await request.json();

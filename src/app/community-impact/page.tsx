@@ -10,17 +10,45 @@ export default function CommunityImpactPage() {
 
   return (
     <div>
-      {/* Header */}
-      <section className="page-header" style={{ backgroundColor: 'var(--color-navy-dark)', color: '#fff', padding: '4rem 0', textAlign: 'center' }}>
-        <div className="container">
-          <span className="section-badge" style={{ background: 'rgba(46, 154, 60, 0.25)', color: '#6EE7B7', border: '1px solid rgba(46, 154, 60, 0.4)', marginBottom: '1rem', display: 'inline-block' }}>
-            Measurable Renewal
-          </span>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)', color: '#ffffff', fontWeight: 800, marginBottom: '1rem' }}>
-            Community Impact & Environmental Renewal
+      {/* Header with Community Outreach Photo */}
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.86) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/community-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 35%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
+            Community Impact & <span style={{ color: '#6EE7B7' }}>Environmental Renewal</span>
           </h1>
-          <p style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.1rem', color: '#CBD5E1', lineHeight: 1.6 }}>
-            Direct visual evidence of our intervention: clearing uncontained urban refuse heaps, restoring drainage channels, and building clean neighborhoods.
+          <p
+            style={{
+              maxWidth: '740px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2E8F0',
+              lineHeight: 1.7,
+              textShadow: '0 1px 8px rgba(0, 0, 0, 0.35)'
+            }}
+          >
+            Direct visual evidence of our grassroots intervention: clearing uncontained refuse heaps, restoring urban drainage conduits, and empowering local neighborhoods across Rivers State.
           </p>
         </div>
       </section>
@@ -37,36 +65,21 @@ export default function CommunityImpactPage() {
             </p>
           </div>
 
-          <div style={{ maxWidth: '880px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-            <BeforeAfterSlider
-              beforeImage="/images/street-before.jpg"
-              afterImage="/images/street-after.jpg"
-              title="Urban Transit Corridor Restoration"
-              description="Heavy compactor clearance of illegal roadside dumping, followed by biological deodorization and routine evacuation."
-              beforeLabel="Before Intervention"
-              afterLabel="EcoBlue Cleared"
-              aspectRatio="16/9"
-            />
-
-            <BeforeAfterSlider
-              beforeImage="/images/before-after-street.jpg"
-              afterImage="/images/street-after.jpg"
-              title="Residential Access Road Clearance"
-              description="Complete removal of accumulated industrial refuse blocking vehicular access and municipal drainage conduits."
-              beforeLabel="Unmanaged Dumpsite"
-              afterLabel="Restored Roadway"
-              aspectRatio="16/9"
-            />
-          </div>
+          <BeforeAfterSlider
+            beforeImage="/images/street-before.jpg"
+            afterImage="/images/street-after.jpg"
+            beforeLabel="Prior to Intervention"
+            afterLabel="Post-Intervention Cleared"
+          />
         </div>
       </section>
 
-      {/* Community Engagement Pillars */}
+      {/* Grassroots Advocacy Section */}
       <section className="section" style={{ backgroundColor: 'var(--color-bg-surface-alt)' }}>
         <div className="container">
-          <div className="text-center" style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3rem auto' }}>
+          <div style={{ maxWidth: '840px', margin: '0 auto 3rem auto', textAlign: 'center' }}>
             <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, marginBottom: '12px' }}>
-              Grassroots Environmental Outreach
+              Community Engagement & Public Health
             </h2>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem' }}>
               Long-term environmental sustainability requires behavioral change alongside mechanical evacuation.
@@ -75,7 +88,9 @@ export default function CommunityImpactPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             <div className="card" style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '16px', boxShadow: 'var(--shadow-md)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '16px' }}>🌱</div>
+              <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.3rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '10px' }}>School Recycling Drives</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', lineHeight: 1.65 }}>
                 Educating primary and secondary students across Port Harcourt on plastic segregation, circular materials, and environmental responsibility.
@@ -83,7 +98,9 @@ export default function CommunityImpactPage() {
             </div>
 
             <div className="card" style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '16px', boxShadow: 'var(--shadow-md)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '16px' }}>🤝</div>
+              <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.3rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '10px' }}>Community Clean-Up Days</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', lineHeight: 1.65 }}>
                 Voluntary weekend sanitation drives partnering with local youth groups, youth leaders, and market associations to clear street gutters.
@@ -91,7 +108,9 @@ export default function CommunityImpactPage() {
             </div>
 
             <div className="card" style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '16px', boxShadow: 'var(--shadow-md)' }}>
-              <div style={{ fontSize: '1.8rem', color: 'var(--color-primary-green)', marginBottom: '16px' }}>♻️</div>
+              <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.2a1.8 1.8 0 0 0 1.583-.914.99.99 0 0 0 .017-.95L17.5 12"/><path d="m14 16 3 3 3-3"/><path d="m8.5 2 1.5 3-3 1"/><path d="M9.7 5.5 12 2l4 7h-4.5"/></svg>
+              </div>
               <h3 style={{ fontSize: '1.3rem', color: 'var(--color-primary-navy)', fontWeight: 700, marginBottom: '10px' }}>Informal Collector Support</h3>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', lineHeight: 1.65 }}>
                 Fair-trade pricing and PPE safety gear provision for local informal waste pickers supplying PET polymer bales to our recovery centers.

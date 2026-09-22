@@ -117,14 +117,79 @@ function RequestFormContent() {
   };
 
   return (
-    <div className="request-page-wrapper">
-      <style>{`
-        .request-page-wrapper {
-          max-width: 960px;
-          margin: 0 auto;
-          padding: 3rem 1.25rem 5rem;
-          font-family: var(--font-body, 'Inter', -apple-system, sans-serif);
-        }
+    <div>
+      {/* Page Header */}
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.88) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/request-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 35%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+          <span
+            className="section-badge"
+            style={{
+              background: 'rgba(46, 154, 60, 0.35)',
+              color: '#6EE7B7',
+              border: '1px solid rgba(110, 231, 183, 0.45)',
+              backdropFilter: 'blur(8px)',
+              padding: '6px 16px',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              marginBottom: '1.25rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            Operations & Dispatch Booking
+          </span>
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
+            Schedule an Environmental Service
+          </h1>
+          <p
+            style={{
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2EBF0',
+              lineHeight: 1.65,
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            Book certified municipal evacuation, industrial waste removal, or recycling logistics across Port Harcourt and Rivers State.
+          </p>
+        </div>
+      </section>
+
+      <div className="request-page-wrapper">
+        <style>{`
+          .request-page-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.25rem 5rem;
+            font-family: var(--font-body, 'Inter', -apple-system, sans-serif);
+          }
         .form-header-badge {
           display: inline-flex;
           align-items: center;
@@ -276,19 +341,6 @@ function RequestFormContent() {
           gap: 1rem;
         }
       `}</style>
-
-      {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-        <div className="form-header-badge">
-          Operations & Dispatch Booking
-        </div>
-        <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, color: 'var(--color-primary-navy, #0B4261)', margin: '0 0 0.75rem 0' }}>
-          Schedule an Environmental Service
-        </h1>
-        <p style={{ color: 'var(--color-text-muted, #335368)', fontSize: '1.05rem', maxWidth: '650px', margin: '0 auto', lineHeight: 1.6 }}>
-          Book certified municipal evacuation, industrial waste removal, or recycling logistics across Port Harcourt and Rivers State.
-        </p>
-      </div>
 
       {/* Main Card */}
       <div className="form-main-card">
@@ -519,6 +571,7 @@ function RequestFormContent() {
           &larr; Back to Homepage
         </Link>
       </div>
+    </div>
     </div>
   );
 }

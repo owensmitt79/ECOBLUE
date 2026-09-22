@@ -38,3 +38,7 @@ next-env.d.ts
 dist/
 build/
 .cache/
+scratch/
+tsconfig.tsbuildinfo
+fix-rls.sql
+secure-rls.sql

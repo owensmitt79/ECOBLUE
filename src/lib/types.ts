@@ -1,4 +1,12 @@
-export type LeadStatus = 'Pending' | 'Reviewed' | 'Contacted' | 'Completed';
+export type LeadStatus =
+  | 'Pending'
+  | 'Reviewed'
+  | 'Contacted'
+  | 'Completed'
+  | 'Empanelled'
+  | 'Shortlisted'
+  | 'Interviewed'
+  | 'Active Project';
 
 export interface BaseLead {
   id: string;

@@ -1,4 +1,3 @@
-import { supabase, isSupabaseConfigured } from './supabase';
 import { QuoteLead, InquiryLead, CareerLead, ConsultantLead, PartnershipLead, LeadStatus } from './types';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -37,8 +36,78 @@ function saveLocalList<T>(key: string, list: T[]): void {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Server-Side API Proxies (Protects Supabase credentials from client exposure)
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function submitLeadToApi(type: string, data: any): Promise<any | null> {
+  if (!isBrowser()) return null;
+  try {
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, data })
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return json.record || null;
+    }
+  } catch (err: any) {
+    console.warn(`[EcoBlue API] Lead submission for ${type} failed to sync, preserved locally:`, err?.message);
+  }
+  return null;
+}
+
+async function fetchAdminRecords<T>(type: string): Promise<T[] | null> {
+  if (!isBrowser()) return null;
+  try {
+    const res = await fetch(`/api/admin/records?type=${encodeURIComponent(type)}`, {
+      credentials: 'include',
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return (json.data as T[]) || [];
+    }
+  } catch (err: any) {
+    console.warn(`[EcoBlue API] Admin records fetch for ${type} failed:`, err?.message);
+  }
+  return null;
+}
+
+async function updateAdminRecordStatus<T>(type: string, id: string, status: LeadStatus): Promise<T | null> {
+  if (!isBrowser()) return null;
+  try {
+    const res = await fetch('/api/admin/records', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ type, id, status }),
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return (json.record as T) || null;
+    }
+  } catch (err: any) {
+    console.warn(`[EcoBlue API] Status update for ${type} failed:`, err?.message);
+  }
+  return null;
+}
+
+async function deleteAdminRecord(type: string, id: string): Promise<boolean> {
+  if (!isBrowser()) return false;
+  try {
+    const res = await fetch(`/api/admin/records?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    return res.ok;
+  } catch (err: any) {
+    console.warn(`[EcoBlue API] Delete for ${type} failed:`, err?.message);
+    return false;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // StorageService — Resilient Persistence Layer
-// Syncs to Supabase when configured, with seamless local storage persistence.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const StorageService = {
@@ -46,48 +115,28 @@ export const StorageService = {
   // ── QUOTES ──────────────────────────────────────────────────────────────────
 
   async getQuotes(): Promise<QuoteLead[]> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('quotes')
-          .select('*')
-          .order('createdAt', { ascending: false });
-        if (!error && data && data.length > 0) {
-          saveLocalList(STORAGE_KEYS.QUOTES, data);
-          return data as QuoteLead[];
-        }
-      } catch (err: any) {
-        console.warn('Supabase getQuotes query failed, falling back to local cache:', err?.message);
-      }
+    const remoteData = await fetchAdminRecords<QuoteLead>('quotes');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.QUOTES, remoteData);
+      return remoteData;
     }
     return getLocalList<QuoteLead>(STORAGE_KEYS.QUOTES);
   },
 
   async getQuoteById(id: string): Promise<QuoteLead | undefined> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('quotes')
-          .select('*')
-          .eq('id', id)
-          .single();
-        if (!error && data) {
-          return data as QuoteLead;
-        }
-      } catch (err: any) {
-        console.warn('Supabase getQuoteById failed, checking local cache:', err?.message);
-      }
-    }
     const local = getLocalList<QuoteLead>(STORAGE_KEYS.QUOTES);
-    return local.find(q => q.id === id);
+    const found = local.find(q => q.id === id);
+    if (found) return found;
+    const remote = await this.getQuotes();
+    return remote.find(q => q.id === id);
   },
 
   async saveQuote(quote: Omit<QuoteLead, 'id' | 'createdAt' | 'status'>): Promise<QuoteLead> {
     const local = getLocalList<QuoteLead>(STORAGE_KEYS.QUOTES);
-    const seq = String(local.length + 1).padStart(3, '0');
+    const rand = Math.floor(100 + Math.random() * 900);
     const newQuote: QuoteLead = {
       ...quote,
-      id: `QUO-${new Date().getFullYear()}-${seq}`,
+      id: `QUO-${new Date().getFullYear()}-${String(local.length + 1).padStart(3, '0')}-${rand}`,
       createdAt: new Date().toISOString(),
       status: 'Pending'
     };
@@ -96,16 +145,10 @@ export const StorageService = {
     local.unshift(newQuote);
     saveLocalList(STORAGE_KEYS.QUOTES, local);
 
-    // 2. Persist to Supabase if configured
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('quotes').insert(newQuote).select().single();
-        if (!error && data) {
-          return data as QuoteLead;
-        }
-      } catch (err: any) {
-        console.warn('Supabase saveQuote failed, kept in local storage:', err?.message);
-      }
+    // 2. Persist to server API (which securely synchronizes with Supabase)
+    const synced = await submitLeadToApi('quotes', newQuote);
+    if (synced) {
+      return synced as QuoteLead;
     }
 
     return newQuote;
@@ -119,18 +162,9 @@ export const StorageService = {
       saveLocalList(STORAGE_KEYS.QUOTES, local);
     }
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('quotes')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as QuoteLead;
-      } catch (err: any) {
-        console.warn('Supabase updateQuoteStatus failed:', err?.message);
-      }
+    const updated = await updateAdminRecordStatus<QuoteLead>('quotes', id, status);
+    if (updated) {
+      return updated;
     }
 
     return idx !== -1 ? local[idx] : undefined;
@@ -139,43 +173,27 @@ export const StorageService = {
   async deleteQuote(id: string): Promise<boolean> {
     const local = getLocalList<QuoteLead>(STORAGE_KEYS.QUOTES).filter(q => q.id !== id);
     saveLocalList(STORAGE_KEYS.QUOTES, local);
-
-    if (isSupabaseConfigured()) {
-      try {
-        await supabase.from('quotes').delete().eq('id', id);
-      } catch (err: any) {
-        console.warn('Supabase deleteQuote failed:', err?.message);
-      }
-    }
+    await deleteAdminRecord('quotes', id);
     return true;
   },
 
   // ── INQUIRIES ────────────────────────────────────────────────────────────────
 
   async getInquiries(): Promise<InquiryLead[]> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('inquiries')
-          .select('*')
-          .order('createdAt', { ascending: false });
-        if (!error && data && data.length > 0) {
-          saveLocalList(STORAGE_KEYS.INQUIRIES, data);
-          return data as InquiryLead[];
-        }
-      } catch (err: any) {
-        console.warn('Supabase getInquiries failed, using local cache:', err?.message);
-      }
+    const remoteData = await fetchAdminRecords<InquiryLead>('inquiries');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.INQUIRIES, remoteData);
+      return remoteData;
     }
     return getLocalList<InquiryLead>(STORAGE_KEYS.INQUIRIES);
   },
 
   async saveInquiry(inquiry: Omit<InquiryLead, 'id' | 'createdAt' | 'status'>): Promise<InquiryLead> {
     const local = getLocalList<InquiryLead>(STORAGE_KEYS.INQUIRIES);
-    const seq = String(local.length + 101).padStart(3, '0');
+    const rand = Math.floor(100 + Math.random() * 900);
     const newInquiry: InquiryLead = {
       ...inquiry,
-      id: `INQ-${new Date().getFullYear()}-${seq}`,
+      id: `INQ-${new Date().getFullYear()}-${String(local.length + 1).padStart(3, '0')}-${rand}`,
       createdAt: new Date().toISOString(),
       status: 'Pending'
     };
@@ -183,13 +201,9 @@ export const StorageService = {
     local.unshift(newInquiry);
     saveLocalList(STORAGE_KEYS.INQUIRIES, local);
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('inquiries').insert(newInquiry).select().single();
-        if (!error && data) return data as InquiryLead;
-      } catch (err: any) {
-        console.warn('Supabase saveInquiry failed:', err?.message);
-      }
+    const synced = await submitLeadToApi('inquiries', newInquiry);
+    if (synced) {
+      return synced as InquiryLead;
     }
 
     return newInquiry;
@@ -203,19 +217,8 @@ export const StorageService = {
       saveLocalList(STORAGE_KEYS.INQUIRIES, local);
     }
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('inquiries')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as InquiryLead;
-      } catch (err: any) {
-        console.warn('Supabase updateInquiryStatus failed:', err?.message);
-      }
-    }
+    const updated = await updateAdminRecordStatus<InquiryLead>('inquiries', id, status);
+    if (updated) return updated;
 
     return idx !== -1 ? local[idx] : undefined;
   },
@@ -223,43 +226,27 @@ export const StorageService = {
   async deleteInquiry(id: string): Promise<boolean> {
     const local = getLocalList<InquiryLead>(STORAGE_KEYS.INQUIRIES).filter(i => i.id !== id);
     saveLocalList(STORAGE_KEYS.INQUIRIES, local);
-
-    if (isSupabaseConfigured()) {
-      try {
-        await supabase.from('inquiries').delete().eq('id', id);
-      } catch (err: any) {
-        console.warn('Supabase deleteInquiry failed:', err?.message);
-      }
-    }
+    await deleteAdminRecord('inquiries', id);
     return true;
   },
 
   // ── PARTNERSHIPS ─────────────────────────────────────────────────────────────
 
   async getPartnerships(): Promise<PartnershipLead[]> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('partnerships')
-          .select('*')
-          .order('createdAt', { ascending: false });
-        if (!error && data && data.length > 0) {
-          saveLocalList(STORAGE_KEYS.PARTNERSHIPS, data);
-          return data as PartnershipLead[];
-        }
-      } catch (err: any) {
-        console.warn('Supabase getPartnerships failed, using local cache:', err?.message);
-      }
+    const remoteData = await fetchAdminRecords<PartnershipLead>('partnerships');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.PARTNERSHIPS, remoteData);
+      return remoteData;
     }
     return getLocalList<PartnershipLead>(STORAGE_KEYS.PARTNERSHIPS);
   },
 
   async savePartnership(p: Omit<PartnershipLead, 'id' | 'createdAt' | 'status'>): Promise<PartnershipLead> {
     const local = getLocalList<PartnershipLead>(STORAGE_KEYS.PARTNERSHIPS);
-    const seq = String(local.length + 501).padStart(3, '0');
+    const rand = Math.floor(100 + Math.random() * 900);
     const newP: PartnershipLead = {
       ...p,
-      id: `PRT-${new Date().getFullYear()}-${seq}`,
+      id: `PRT-${new Date().getFullYear()}-${String(local.length + 1).padStart(3, '0')}-${rand}`,
       createdAt: new Date().toISOString(),
       status: 'Pending'
     };
@@ -267,13 +254,9 @@ export const StorageService = {
     local.unshift(newP);
     saveLocalList(STORAGE_KEYS.PARTNERSHIPS, local);
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('partnerships').insert(newP).select().single();
-        if (!error && data) return data as PartnershipLead;
-      } catch (err: any) {
-        console.warn('Supabase savePartnership failed:', err?.message);
-      }
+    const synced = await submitLeadToApi('partnerships', newP);
+    if (synced) {
+      return synced as PartnershipLead;
     }
 
     return newP;
@@ -287,19 +270,8 @@ export const StorageService = {
       saveLocalList(STORAGE_KEYS.PARTNERSHIPS, local);
     }
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('partnerships')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as PartnershipLead;
-      } catch (err: any) {
-        console.warn('Supabase updatePartnershipStatus failed:', err?.message);
-      }
-    }
+    const updated = await updateAdminRecordStatus<PartnershipLead>('partnerships', id, status);
+    if (updated) return updated;
 
     return idx !== -1 ? local[idx] : undefined;
   },
@@ -307,43 +279,27 @@ export const StorageService = {
   async deletePartnership(id: string): Promise<boolean> {
     const local = getLocalList<PartnershipLead>(STORAGE_KEYS.PARTNERSHIPS).filter(p => p.id !== id);
     saveLocalList(STORAGE_KEYS.PARTNERSHIPS, local);
-
-    if (isSupabaseConfigured()) {
-      try {
-        await supabase.from('partnerships').delete().eq('id', id);
-      } catch (err: any) {
-        console.warn('Supabase deletePartnership failed:', err?.message);
-      }
-    }
+    await deleteAdminRecord('partnerships', id);
     return true;
   },
 
   // ── CAREERS ──────────────────────────────────────────────────────────────────
 
   async getCareers(): Promise<CareerLead[]> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('careers')
-          .select('*')
-          .order('createdAt', { ascending: false });
-        if (!error && data && data.length > 0) {
-          saveLocalList(STORAGE_KEYS.CAREERS, data);
-          return data as CareerLead[];
-        }
-      } catch (err: any) {
-        console.warn('Supabase getCareers failed, using local cache:', err?.message);
-      }
+    const remoteData = await fetchAdminRecords<CareerLead>('careers');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.CAREERS, remoteData);
+      return remoteData;
     }
     return getLocalList<CareerLead>(STORAGE_KEYS.CAREERS);
   },
 
   async saveCareer(c: Omit<CareerLead, 'id' | 'createdAt' | 'status'>): Promise<CareerLead> {
     const local = getLocalList<CareerLead>(STORAGE_KEYS.CAREERS);
-    const seq = String(local.length + 201).padStart(3, '0');
+    const rand = Math.floor(100 + Math.random() * 900);
     const newC: CareerLead = {
       ...c,
-      id: `APP-${new Date().getFullYear()}-${seq}`,
+      id: `APP-${new Date().getFullYear()}-${String(local.length + 1).padStart(3, '0')}-${rand}`,
       createdAt: new Date().toISOString(),
       status: 'Pending'
     };
@@ -351,13 +307,9 @@ export const StorageService = {
     local.unshift(newC);
     saveLocalList(STORAGE_KEYS.CAREERS, local);
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('careers').insert(newC).select().single();
-        if (!error && data) return data as CareerLead;
-      } catch (err: any) {
-        console.warn('Supabase saveCareer failed:', err?.message);
-      }
+    const synced = await submitLeadToApi('careers', newC);
+    if (synced) {
+      return synced as CareerLead;
     }
 
     return newC;
@@ -371,19 +323,8 @@ export const StorageService = {
       saveLocalList(STORAGE_KEYS.CAREERS, local);
     }
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('careers')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as CareerLead;
-      } catch (err: any) {
-        console.warn('Supabase updateCareerStatus failed:', err?.message);
-      }
-    }
+    const updated = await updateAdminRecordStatus<CareerLead>('careers', id, status);
+    if (updated) return updated;
 
     return idx !== -1 ? local[idx] : undefined;
   },
@@ -391,43 +332,27 @@ export const StorageService = {
   async deleteCareer(id: string): Promise<boolean> {
     const local = getLocalList<CareerLead>(STORAGE_KEYS.CAREERS).filter(c => c.id !== id);
     saveLocalList(STORAGE_KEYS.CAREERS, local);
-
-    if (isSupabaseConfigured()) {
-      try {
-        await supabase.from('careers').delete().eq('id', id);
-      } catch (err: any) {
-        console.warn('Supabase deleteCareer failed:', err?.message);
-      }
-    }
+    await deleteAdminRecord('careers', id);
     return true;
   },
 
   // ── CONSULTANTS ──────────────────────────────────────────────────────────────
 
   async getConsultants(): Promise<ConsultantLead[]> {
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('consultants')
-          .select('*')
-          .order('createdAt', { ascending: false });
-        if (!error && data && data.length > 0) {
-          saveLocalList(STORAGE_KEYS.CONSULTANTS, data);
-          return data as ConsultantLead[];
-        }
-      } catch (err: any) {
-        console.warn('Supabase getConsultants failed, using local cache:', err?.message);
-      }
+    const remoteData = await fetchAdminRecords<ConsultantLead>('consultants');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.CONSULTANTS, remoteData);
+      return remoteData;
     }
     return getLocalList<ConsultantLead>(STORAGE_KEYS.CONSULTANTS);
   },
 
   async saveConsultant(c: Omit<ConsultantLead, 'id' | 'createdAt' | 'status'>): Promise<ConsultantLead> {
     const local = getLocalList<ConsultantLead>(STORAGE_KEYS.CONSULTANTS);
-    const seq = String(local.length + 301).padStart(3, '0');
+    const rand = Math.floor(100 + Math.random() * 900);
     const newC: ConsultantLead = {
       ...c,
-      id: `CST-${new Date().getFullYear()}-${seq}`,
+      id: `CST-${new Date().getFullYear()}-${String(local.length + 1).padStart(3, '0')}-${rand}`,
       createdAt: new Date().toISOString(),
       status: 'Pending'
     };
@@ -435,13 +360,9 @@ export const StorageService = {
     local.unshift(newC);
     saveLocalList(STORAGE_KEYS.CONSULTANTS, local);
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('consultants').insert(newC).select().single();
-        if (!error && data) return data as ConsultantLead;
-      } catch (err: any) {
-        console.warn('Supabase saveConsultant failed:', err?.message);
-      }
+    const synced = await submitLeadToApi('consultants', newC);
+    if (synced) {
+      return synced as ConsultantLead;
     }
 
     return newC;
@@ -455,19 +376,8 @@ export const StorageService = {
       saveLocalList(STORAGE_KEYS.CONSULTANTS, local);
     }
 
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase
-          .from('consultants')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as ConsultantLead;
-      } catch (err: any) {
-        console.warn('Supabase updateConsultantStatus failed:', err?.message);
-      }
-    }
+    const updated = await updateAdminRecordStatus<ConsultantLead>('consultants', id, status);
+    if (updated) return updated;
 
     return idx !== -1 ? local[idx] : undefined;
   },
@@ -475,14 +385,7 @@ export const StorageService = {
   async deleteConsultant(id: string): Promise<boolean> {
     const local = getLocalList<ConsultantLead>(STORAGE_KEYS.CONSULTANTS).filter(c => c.id !== id);
     saveLocalList(STORAGE_KEYS.CONSULTANTS, local);
-
-    if (isSupabaseConfigured()) {
-      try {
-        await supabase.from('consultants').delete().eq('id', id);
-      } catch (err: any) {
-        console.warn('Supabase deleteConsultant failed:', err?.message);
-      }
-    }
+    await deleteAdminRecord('consultants', id);
     return true;
   }
 };

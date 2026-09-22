@@ -62,7 +62,6 @@ export default function Footer() {
               <Link href="/consultation" className="footer-link">EIA & Advisory Consultation</Link>
               <Link href="/services#logistics" className="footer-link">Logistics & Skip Containers</Link>
               <Link href="/community-impact" className="footer-link">Community Impact</Link>
-              <Link href="/admin" className="footer-link" style={{ color: 'var(--color-green-light)', fontWeight: 600 }}>Staff Admin Portal</Link>
             </div>
           </div>
 

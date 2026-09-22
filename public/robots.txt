@@ -1,6 +1,7 @@
 # Robots.txt for EcoBlue Environmental Services Ltd.
 User-agent: *
 Allow: /
-Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/admin
 
 Sitemap: https://ecoblueenvironmental.com/sitemap.xml

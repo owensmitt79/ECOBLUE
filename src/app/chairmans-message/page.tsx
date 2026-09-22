@@ -10,19 +10,71 @@ export default function ChairmansMessagePage() {
   return (
     <div>
       {/* Page Header */}
-      <section className="page-header" style={{ backgroundColor: 'var(--color-navy-dark)', color: '#fff', padding: '4rem 0', textAlign: 'center' }}>
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '0.9rem', color: '#94A3B8', marginBottom: '12px' }}>
-            <Link href="/" style={{ color: '#CBD5E1' }}>Home</Link>
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.88) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/chairmans-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 35%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '0.9rem', color: '#94A3B8', marginBottom: '16px' }}>
+            <Link href="/" style={{ color: '#CBD5E1', textDecoration: 'none' }}>Home</Link>
             <span>/</span>
-            <Link href="/about" style={{ color: '#CBD5E1' }}>About Us</Link>
+            <Link href="/about" style={{ color: '#CBD5E1', textDecoration: 'none' }}>About Us</Link>
             <span>/</span>
-            <span style={{ color: 'var(--color-green-light)' }}>Chairman's Message</span>
+            <span style={{ color: '#6EE7B7', fontWeight: 600 }}>Chairman's Message</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)', color: '#ffffff', fontWeight: 800, marginBottom: '1rem' }}>
+          <span
+            className="section-badge"
+            style={{
+              background: 'rgba(46, 154, 60, 0.35)',
+              color: '#6EE7B7',
+              border: '1px solid rgba(110, 231, 183, 0.45)',
+              backdropFilter: 'blur(8px)',
+              padding: '6px 16px',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              marginBottom: '1.25rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            Executive Leadership Address
+          </span>
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
             Chairman's Message
           </h1>
-          <p style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.1rem', color: '#CBD5E1', lineHeight: 1.6 }}>
+          <p
+            style={{
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2EBF0',
+              lineHeight: 1.65,
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)'
+            }}
+          >
             A strategic mandate on environmental stewardship, modern compactor logistics, and sustainable economic transformation in Rivers State.
           </p>
         </div>

@@ -215,28 +215,26 @@ function ConfirmationContent() {
           </div>
         </div>
 
-        <Link
-          href={`/admin?tab=tabQuotes&view=${quote.id}`}
-          className="btn btn-primary"
+        <div
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
             fontSize: '0.875rem',
-            fontWeight: 600,
+            fontWeight: 700,
+            color: 'var(--color-primary-green)',
+            background: 'var(--color-green-subtle)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
             whiteSpace: 'nowrap'
           }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-            <circle cx="12" cy="12" r="3" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span>View in Admin Console</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </Link>
+          <span>Queued for Field Evacuation</span>
+        </div>
       </div>
 
       {/* Booking Dossier Details */}

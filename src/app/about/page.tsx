@@ -10,15 +10,43 @@ export default function AboutPage() {
   return (
     <div>
       {/* Page Header */}
-      <section className="page-header" style={{ backgroundColor: 'var(--color-navy-dark)', color: '#fff', padding: '4rem 0', textAlign: 'center' }}>
-        <div className="container">
-          <span className="section-badge" style={{ background: 'rgba(46, 154, 60, 0.25)', color: '#6EE7B7', border: '1px solid rgba(46, 154, 60, 0.4)', marginBottom: '1rem', display: 'inline-block' }}>
-            Corporate Profile
-          </span>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)', color: '#ffffff', fontWeight: 800, marginBottom: '1rem' }}>
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.88) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/about-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 35%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
             About EcoBlue Environmental Services Ltd.
           </h1>
-          <p style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.1rem', color: '#CBD5E1', lineHeight: 1.6 }}>
+          <p
+            style={{
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2EBF0',
+              lineHeight: 1.65,
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)'
+            }}
+          >
             A leading environmental solutions provider incorporated under the Companies and Allied Matters Act 2020. Headquartered in Port Harcourt, Rivers State.
           </p>
         </div>

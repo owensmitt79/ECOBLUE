@@ -108,7 +108,7 @@ ECOBLUE/
      - Unmanaged dump sites &rarr; Cleared, sanitized spaces.
 
 4. **Staff Admin Console (`/admin`):**
-   - Protected staff authentication screen (`admin@ecoblue.com` / `ecoblue2026`).
+   - Protected staff authentication screen (configured via server-side environment variables).
    - Real-time overview metrics: Total Requests, Pending Review, Quotes, and Inquiries.
    - Tabbed management across:
      - **Quote Requests** (`QUO-...`)
@@ -152,11 +152,11 @@ npm run start
 
 ---
 
-## 6. Staff Admin Credentials (Demo)
+## 6. Staff Admin Portal Access
 
-- **Portal Route:** [/admin](http://localhost:3000/admin)
-- **Staff Email:** `admin@ecoblue.com`
-- **Password:** `ecoblue2026`
+- **Portal Route:** `/admin`
+- **Authentication:** Configured securely via server-side environment variables (`ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in `.env.local`).
+- **Security Protections:** Enforces server-side HMAC-SHA256 session cookies, IP-based brute-force rate limiting, timing-attack resistance, and crawler `noindex` directives.
 
 ---
 

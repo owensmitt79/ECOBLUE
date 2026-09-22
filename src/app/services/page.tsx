@@ -10,29 +10,54 @@ export default function ServicesPage() {
   return (
     <div>
       {/* Header */}
-      <section className="page-header" style={{ backgroundColor: 'var(--color-navy-dark)', color: '#fff', padding: '4rem 0', textAlign: 'center' }}>
-        <div className="container">
-          <span className="section-badge" style={{ background: 'rgba(46, 154, 60, 0.25)', color: '#6EE7B7', border: '1px solid rgba(46, 154, 60, 0.4)', marginBottom: '1rem', display: 'inline-block' }}>
-            Operational Divisions
-          </span>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)', color: '#ffffff', fontWeight: 800, marginBottom: '1rem' }}>
+      <section
+        className="page-header"
+        style={{
+          position: 'relative',
+          backgroundImage: "linear-gradient(135deg, rgba(6, 44, 67, 0.88) 0%, rgba(11, 66, 97, 0.82) 100%), url('/images/services-hero.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          backgroundRepeat: 'no-repeat',
+          color: '#ffffff',
+          padding: 'clamp(4.5rem, 8vw, 6.5rem) 1.25rem',
+          textAlign: 'center',
+          boxShadow: 'inset 0 -30px 40px -20px rgba(6, 44, 67, 0.8)'
+        }}
+      >
+        <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
+          <h1
+            style={{
+              fontSize: 'clamp(2.3rem, 4.5vw, 3.5rem)',
+              color: '#ffffff',
+              fontWeight: 800,
+              lineHeight: 1.18,
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)'
+            }}
+          >
             Comprehensive Environmental Services
           </h1>
-          <p style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.1rem', color: '#CBD5E1', lineHeight: 1.6 }}>
+          <p
+            style={{
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '1.15rem',
+              color: '#E2EBF0',
+              lineHeight: 1.65,
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)'
+            }}
+          >
             Reliable waste collection, advanced material recovery, industrial sanitation, and logistics across Port Harcourt and Rivers State.
           </p>
         </div>
       </section>
 
-      {/* Division 1: Municipal & Residential */}
+      {/* Municipal & Residential */}
       <section className="section" style={{ backgroundColor: '#FFFFFF' }} id="waste-collection">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
             <div>
-              <span className="section-badge" style={{ color: 'var(--color-primary-green)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>
-                Division 01
-              </span>
-              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '8px 0 16px 0' }}>
+              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '0 0 16px 0' }}>
                 Municipal & Residential Waste Collection
               </h2>
               <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '16px' }}>
@@ -66,15 +91,12 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Division 2: Recycling & Materials Recovery */}
+      {/* Recycling & Materials Recovery */}
       <section className="section" style={{ backgroundColor: 'var(--color-bg-surface-alt)' }} id="recycling">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
             <div style={{ order: 2 }}>
-              <span className="section-badge" style={{ color: 'var(--color-primary-green)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>
-                Division 02
-              </span>
-              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '8px 0 16px 0' }}>
+              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '0 0 16px 0' }}>
                 Material Recovery & Recycling Operations
               </h2>
               <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '16px' }}>
@@ -108,15 +130,12 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Division 3: Commercial & Environmental */}
+      {/* Commercial & Environmental */}
       <section className="section" style={{ backgroundColor: '#FFFFFF' }} id="environmental">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
             <div>
-              <span className="section-badge" style={{ color: 'var(--color-primary-green)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>
-                Division 03
-              </span>
-              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '8px 0 16px 0' }}>
+              <h2 style={{ fontSize: '2.2rem', color: 'var(--color-primary-navy)', fontWeight: 800, margin: '0 0 16px 0' }}>
                 Commercial Facilities & Industrial Sanitation
               </h2>
               <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '16px' }}>
