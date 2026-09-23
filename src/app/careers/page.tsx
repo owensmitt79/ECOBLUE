@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useToast } from '@/components/Toast';
 import { StorageService } from '@/lib/storage';
 
@@ -126,6 +127,100 @@ export default function CareersPage() {
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
                 Timely, competitive remuneration with hazard allowances, performance incentives, and pension compliance.
               </p>
+            </div>
+          </div>
+
+          {/* Dedicated Employment Bar for Drivers */}
+          <div
+            style={{
+              maxWidth: '920px',
+              margin: '0 auto 3.5rem auto',
+              background: 'linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-primary-navy) 60%, rgba(46, 154, 60, 0.95) 100%)',
+              borderRadius: '20px',
+              padding: '36px 32px',
+              color: '#ffffff',
+              boxShadow: '0 12px 35px -8px rgba(6, 44, 67, 0.45)',
+              position: 'relative',
+              overflow: 'hidden',
+              border: '1px solid rgba(255, 255, 255, 0.15)'
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '-40px',
+                width: '180px',
+                height: '180px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(110, 231, 183, 0.2) 0%, transparent 70%)',
+                pointerEvents: 'none'
+              }}
+            />
+
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '24px',
+                position: 'relative',
+                zIndex: 1
+              }}
+            >
+              <div style={{ flex: '1 1 540px' }}>
+
+
+                <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)', color: '#ffffff', fontWeight: 800, lineHeight: 1.25, marginBottom: '10px' }}>
+                  Employment for Commercial & Compactor Truck Drivers
+                </h3>
+
+                <p style={{ color: '#E2E8F0', fontSize: '0.98rem', lineHeight: 1.6, marginBottom: '18px', maxWidth: '620px' }}>
+                  EcoBlue is actively recruiting professional drivers for our hydraulic compactor fleet, roll-on/roll-off skip haulage, and municipal sanitation trucks across Port Harcourt. Enjoy competitive monthly salary, daily route hazard allowances, health insurance, and structured day/night shifts.
+                </p>
+
+                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '0.85rem', color: '#CBD5E1' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6EE7B7" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Class-E / Commercial License</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6EE7B7" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Full PPE & Medical Testing</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6EE7B7" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Port Harcourt Day & Night Shifts</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ flex: '0 0 auto' }}>
+                <Link
+                  href="/careers/driver-application"
+                  className="btn btn-primary"
+                  style={{
+                    padding: '16px 32px',
+                    fontSize: '1rem',
+                    fontWeight: 800,
+                    borderRadius: '12px',
+                    background: '#2ecc71',
+                    borderColor: '#2ecc71',
+                    color: '#ffffff',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    boxShadow: '0 8px 24px rgba(46, 204, 113, 0.4)'
+                  }}
+                >
+                  <span>Open Driver Application Form</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
 

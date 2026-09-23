@@ -154,6 +154,20 @@ export default function Navbar() {
                     <div className="dropdown-item-desc">Technical advisory roster</div>
                   </div>
                 </Link>
+                <Link href="/careers/driver-application" className="dropdown-item">
+                  <div className="dropdown-item-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="1" y="3" width="15" height="13" />
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                      <circle cx="5.5" cy="18.5" r="2.5" />
+                      <circle cx="18.5" cy="18.5" r="2.5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="dropdown-item-title">Driver Application</div>
+                    <div className="dropdown-item-desc">Compactor truck & haulage recruitment</div>
+                  </div>
+                </Link>
               </div>
             </div>
 
@@ -271,6 +285,9 @@ export default function Navbar() {
           </Link>
           <Link href="/careers" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             Careers
+          </Link>
+          <Link href="/careers/driver-application" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Driver Application
           </Link>
           <Link href="/consultants" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             Consultants

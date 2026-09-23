@@ -68,8 +68,8 @@ CREATE INDEX IF NOT EXISTS idx_partnerships_status ON public.partnerships (statu
 
 -- ------------------------------------------------------------------------------
 -- 4. CAREERS TABLE
--- Stores: Job applications submitted through /careers
--- Generated ID format: APP-YYYY-XXX
+-- Stores: General job applications submitted through /careers
+-- Generated ID format: CAR-YYYY-XXX
 -- ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.careers (
   id TEXT PRIMARY KEY,
@@ -87,6 +87,106 @@ CREATE TABLE IF NOT EXISTS public.careers (
 
 CREATE INDEX IF NOT EXISTS idx_careers_created_at ON public.careers ("createdAt" DESC);
 CREATE INDEX IF NOT EXISTS idx_careers_status ON public.careers (status);
+
+-- ------------------------------------------------------------------------------
+-- 5. DRIVER APPLICATIONS TABLE
+-- Stores: Official 8-section driver recruitment dossiers from /careers/driver-application
+-- Generated ID format: DRV-YYYY-XXXX
+-- Run ALTER TABLE if upgrading from the old careers-only approach
+-- ------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.driver_applications (
+  -- Core Identifiers
+  id TEXT PRIMARY KEY,
+  "createdAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  status TEXT DEFAULT 'Pending' NOT NULL,
+
+  -- SECTION 1: Personal Information
+  "fullName" TEXT NOT NULL,
+  dob DATE,
+  gender TEXT,
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL,
+  "residentialAddress" TEXT,
+  "stateOfOrigin" TEXT,
+  lga TEXT,
+  nationality TEXT DEFAULT 'Nigerian',
+  "maritalStatus" TEXT,
+  dependants INTEGER DEFAULT 0,
+
+  -- SECTION 2: Identification & Licensing
+  nin TEXT,
+  "licenseNumber" TEXT,
+  "licenseClass" TEXT,
+  "licenseIssueDate" DATE,
+  "licenseExpiryDate" DATE,
+
+  -- SECTION 3: Driving Experience & Track Record
+  "yearsExperience" TEXT,
+  "drivingTypes" TEXT,                 -- Comma-separated list of experience types
+  "previousCompany" TEXT,
+  "previousPosition" TEXT,
+  "yearsWorked" TEXT,
+  "familiarRoutes" TEXT,
+  "drivingOutsideState" TEXT DEFAULT 'No',
+  "accidentHistory" TEXT DEFAULT 'No',
+  "accidentDetails" TEXT,
+  "trafficViolation" TEXT DEFAULT 'No',
+  "violationDetails" TEXT,
+
+  -- SECTION 4: Vehicle Particulars
+  "ownsVehicle" TEXT DEFAULT 'No',
+  "vehicleOwnerName" TEXT,
+  "vehicleType" TEXT,
+  "vehicleMake" TEXT,
+  "vehicleModel" TEXT,
+  "vehicleYear" TEXT,
+  "vehicleColour" TEXT,
+  "plateNumber" TEXT,
+  "vehicleRegNumber" TEXT,
+  "insurancePolicyNumber" TEXT,
+  "insuranceExpiryDate" DATE,
+
+  -- SECTION 5: Employment Preferences
+  "positionApplied" TEXT,
+  "preferredLocation" TEXT,
+  "preferredHours" TEXT,
+  "employmentType" TEXT,
+  "expectedSalary" TEXT,
+  "availableStartDate" DATE,
+  "prevEmployerName" TEXT,
+  "prevEmployerPhone" TEXT,
+  "reasonForLeaving" TEXT,
+
+  -- SECTION 6: Emergency Contact
+  "emergencyName" TEXT,
+  "emergencyRelationship" TEXT,
+  "emergencyPhone" TEXT,
+  "emergencyAltPhone" TEXT,
+  "emergencyAddress" TEXT,
+
+  -- SECTION 7: Guarantor Information
+  "guarantorName" TEXT,
+  "guarantorPhone" TEXT,
+  "guarantorEmail" TEXT,
+  "guarantorAddress" TEXT,
+  "guarantorOccupation" TEXT,
+  "guarantorEmployer" TEXT,
+  "guarantorRelationship" TEXT,
+  "guarantorAttestation" BOOLEAN DEFAULT FALSE,
+
+  -- SECTION 8: Documents Submitted (file names for reference)
+  "passportPhotoFile" TEXT,
+  "driverLicenseFile" TEXT,
+  "nationalIdFile" TEXT,
+  "roadworthinessCertFile" TEXT,
+
+  -- Full Dossier Text (kept for legacy/backup admin viewing)
+  "fullDossier" TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_driver_applications_created_at ON public.driver_applications ("createdAt" DESC);
+CREATE INDEX IF NOT EXISTS idx_driver_applications_status ON public.driver_applications (status);
+CREATE INDEX IF NOT EXISTS idx_driver_applications_email ON public.driver_applications (email);
 
 -- ------------------------------------------------------------------------------
 -- 5. CONSULTANTS TABLE
@@ -118,12 +218,14 @@ GRANT ALL ON TABLE public.quotes TO anon, authenticated;
 GRANT ALL ON TABLE public.inquiries TO anon, authenticated;
 GRANT ALL ON TABLE public.partnerships TO anon, authenticated;
 GRANT ALL ON TABLE public.careers TO anon, authenticated;
+GRANT ALL ON TABLE public.driver_applications TO anon, authenticated;
 GRANT ALL ON TABLE public.consultants TO anon, authenticated;
 
 ALTER TABLE public.quotes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.partnerships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.careers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.driver_applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.consultants ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Public access for quotes" ON public.quotes;
@@ -138,5 +240,9 @@ CREATE POLICY "Public access for partnerships" ON public.partnerships FOR ALL TO
 DROP POLICY IF EXISTS "Public access for careers" ON public.careers;
 CREATE POLICY "Public access for careers" ON public.careers FOR ALL TO public USING (true) WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Public access for driver_applications" ON public.driver_applications;
+CREATE POLICY "Public access for driver_applications" ON public.driver_applications FOR ALL TO public USING (true) WITH CHECK (true);
+
 DROP POLICY IF EXISTS "Public access for consultants" ON public.consultants;
 CREATE POLICY "Public access for consultants" ON public.consultants FOR ALL TO public USING (true) WITH CHECK (true);
+
