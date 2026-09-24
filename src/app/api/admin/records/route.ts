@@ -7,6 +7,7 @@ const TABLE_MAP: Record<string, string> = {
   inquiries: 'inquiries',
   partnerships: 'partnerships',
   careers: 'careers',
+  driver_applications: 'driver_applications',
   consultants: 'consultants',
 };
 

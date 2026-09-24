@@ -6,7 +6,8 @@ export type LeadStatus =
   | 'Empanelled'
   | 'Shortlisted'
   | 'Interviewed'
-  | 'Active Project';
+  | 'Active Project'
+  | 'Hired';
 
 export interface BaseLead {
   id: string;
@@ -64,10 +65,79 @@ export interface PartnershipLead extends BaseLead {
   scopeSummary: string;
 }
 
+export interface DriverApplicationLead extends BaseLead {
+  fullName: string;
+  dob?: string | null;
+  gender?: string;
+  phone: string;
+  email: string;
+  residentialAddress?: string;
+  stateOfOrigin?: string;
+  lga?: string;
+  nationality?: string;
+  maritalStatus?: string;
+  dependants?: number;
+  nin?: string;
+  licenseNumber?: string;
+  licenseClass?: string;
+  licenseIssueDate?: string | null;
+  licenseExpiryDate?: string | null;
+  yearsExperience?: string;
+  drivingTypes?: string;
+  previousCompany?: string;
+  previousPosition?: string;
+  yearsWorked?: string;
+  familiarRoutes?: string;
+  drivingOutsideState?: string;
+  accidentHistory?: string;
+  accidentDetails?: string;
+  trafficViolation?: string;
+  violationDetails?: string;
+  ownsVehicle?: string;
+  vehicleOwnerName?: string;
+  vehicleType?: string;
+  vehicleMake?: string;
+  vehicleModel?: string;
+  vehicleYear?: string;
+  vehicleColour?: string;
+  plateNumber?: string;
+  vehicleRegNumber?: string;
+  insurancePolicyNumber?: string;
+  insuranceExpiryDate?: string | null;
+  positionApplied?: string;
+  preferredLocation?: string;
+  preferredHours?: string;
+  employmentType?: string;
+  expectedSalary?: string;
+  availableStartDate?: string | null;
+  prevEmployerName?: string;
+  prevEmployerPhone?: string;
+  reasonForLeaving?: string;
+  emergencyName?: string;
+  emergencyRelationship?: string;
+  emergencyPhone?: string;
+  emergencyAltPhone?: string;
+  emergencyAddress?: string;
+  guarantorName?: string;
+  guarantorPhone?: string;
+  guarantorEmail?: string;
+  guarantorAddress?: string;
+  guarantorOccupation?: string;
+  guarantorEmployer?: string;
+  guarantorRelationship?: string;
+  guarantorAttestation?: boolean;
+  passportPhotoFile?: string;
+  driverLicenseFile?: string;
+  nationalIdFile?: string;
+  roadworthinessCertFile?: string;
+  fullDossier?: string;
+}
+
 export interface StorageData {
   quotes: QuoteLead[];
   inquiries: InquiryLead[];
   careers: CareerLead[];
   consultants: ConsultantLead[];
   partnerships: PartnershipLead[];
+  driverApplications: DriverApplicationLead[];
 }

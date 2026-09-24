@@ -46,6 +46,7 @@ export default function Footer() {
               <Link href="/services" className="footer-link">Services</Link>
               <Link href="/consultation" className="footer-link">Request Consultation</Link>
               <Link href="/careers" className="footer-link">Careers</Link>
+              <Link href="/careers/driver-application" className="footer-link">Driver Recruitment</Link>
               <Link href="/consultants" className="footer-link">Consultants</Link>
               <Link href="/partnerships" className="footer-link">Partnerships</Link>
               <Link href="/contact" className="footer-link">Contact</Link>

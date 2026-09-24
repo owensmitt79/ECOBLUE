@@ -1,4 +1,4 @@
-import { QuoteLead, InquiryLead, CareerLead, ConsultantLead, PartnershipLead, LeadStatus } from './types';
+import { QuoteLead, InquiryLead, CareerLead, ConsultantLead, PartnershipLead, DriverApplicationLead, LeadStatus } from './types';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Storage Keys & Local Fallback Helpers
@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
   INQUIRIES: 'ecoblue_inquiries_v1',
   PARTNERSHIPS: 'ecoblue_partnerships_v1',
   CAREERS: 'ecoblue_careers_v1',
-  CONSULTANTS: 'ecoblue_consultants_v1'
+  CONSULTANTS: 'ecoblue_consultants_v1',
+  DRIVER_APPLICATIONS: 'ecoblue_driver_applications_v1'
 } as const;
 
 function isBrowser(): boolean {
@@ -387,5 +388,59 @@ export const StorageService = {
     saveLocalList(STORAGE_KEYS.CONSULTANTS, local);
     await deleteAdminRecord('consultants', id);
     return true;
+  },
+
+  // ── DRIVER APPLICATIONS ──────────────────────────────────────────────────────
+
+  async getDriverApplications(): Promise<DriverApplicationLead[]> {
+    const remoteData = await fetchAdminRecords<DriverApplicationLead>('driver_applications');
+    if (remoteData) {
+      saveLocalList(STORAGE_KEYS.DRIVER_APPLICATIONS, remoteData);
+      return remoteData;
+    }
+    return getLocalList<DriverApplicationLead>(STORAGE_KEYS.DRIVER_APPLICATIONS);
+  },
+
+  async saveDriverApplication(d: Omit<DriverApplicationLead, 'id' | 'createdAt' | 'status'> & { id?: string; status?: LeadStatus }): Promise<DriverApplicationLead> {
+    const local = getLocalList<DriverApplicationLead>(STORAGE_KEYS.DRIVER_APPLICATIONS);
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    const newD: DriverApplicationLead = {
+      ...d,
+      id: d.id || `DRV-${new Date().getFullYear()}-${rand}`,
+      createdAt: new Date().toISOString(),
+      status: d.status || 'Pending'
+    };
+
+    local.unshift(newD);
+    saveLocalList(STORAGE_KEYS.DRIVER_APPLICATIONS, local);
+
+    const synced = await submitLeadToApi('driver_applications', newD);
+    if (synced) {
+      return synced as DriverApplicationLead;
+    }
+
+    return newD;
+  },
+
+  async updateDriverApplicationStatus(id: string, status: LeadStatus): Promise<DriverApplicationLead | undefined> {
+    const local = getLocalList<DriverApplicationLead>(STORAGE_KEYS.DRIVER_APPLICATIONS);
+    const idx = local.findIndex(d => d.id === id);
+    if (idx !== -1) {
+      local[idx].status = status;
+      saveLocalList(STORAGE_KEYS.DRIVER_APPLICATIONS, local);
+    }
+
+    const updated = await updateAdminRecordStatus<DriverApplicationLead>('driver_applications', id, status);
+    if (updated) return updated;
+
+    return idx !== -1 ? local[idx] : undefined;
+  },
+
+  async deleteDriverApplication(id: string): Promise<boolean> {
+    const local = getLocalList<DriverApplicationLead>(STORAGE_KEYS.DRIVER_APPLICATIONS).filter(d => d.id !== id);
+    saveLocalList(STORAGE_KEYS.DRIVER_APPLICATIONS, local);
+    await deleteAdminRecord('driver_applications', id);
+    return true;
   }
 };
+

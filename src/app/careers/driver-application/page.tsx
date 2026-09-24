@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useToast } from '@/components/Toast';
+import { StorageService } from '@/lib/storage';
 
 interface FileUploadState {
   passportPhoto?: File | null;
@@ -274,17 +275,11 @@ export default function DriverApplicationPage() {
         fullDossier
       };
 
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'driver_applications', data: driverPayload })
-      });
+      // Persist to local cache and synchronize with Supabase database
+      const created = await StorageService.saveDriverApplication(driverPayload);
+      const finalRefId = created?.id || driverRefId;
 
-      if (!res.ok) {
-        throw new Error('Failed to record driver application.');
-      }
-
-      setSubmittedRef(driverRefId);
+      setSubmittedRef(finalRefId);
       showToast('Application Logged', 'Your driver registration has been securely queued.', 'success');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {

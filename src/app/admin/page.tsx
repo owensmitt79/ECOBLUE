@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/Toast';
 import { StorageService } from '@/lib/storage';
-import { QuoteLead, InquiryLead, CareerLead, ConsultantLead, PartnershipLead, LeadStatus } from '@/lib/types';
+import { QuoteLead, InquiryLead, CareerLead, ConsultantLead, PartnershipLead, DriverApplicationLead, LeadStatus } from '@/lib/types';
 
 type TabId =
   | 'tabOverview'
@@ -13,6 +13,7 @@ type TabId =
   | 'tabInquiries'
   | 'tabPartnerships'
   | 'tabCareers'
+  | 'tabDrivers'
   | 'tabConsultants'
   | 'tabFleet'
   | 'tabLogs';
@@ -57,6 +58,7 @@ function AdminDashboardContent() {
   const [partnerships, setPartnerships] = useState<PartnershipLead[]>([]);
   const [careers, setCareers] = useState<CareerLead[]>([]);
   const [consultants, setConsultants] = useState<ConsultantLead[]>([]);
+  const [driverApplications, setDriverApplications] = useState<DriverApplicationLead[]>([]);
 
   // Search & Filters
   const [quoteSearch, setQuoteSearch] = useState('');
@@ -74,6 +76,9 @@ function AdminDashboardContent() {
   const [consultantSearch, setConsultantSearch] = useState('');
   const [consultantStatus, setConsultantStatus] = useState('all');
 
+  const [driverSearch, setDriverSearch] = useState('');
+  const [driverStatus, setDriverStatus] = useState('all');
+
   // Modals
   const [detailModal, setDetailModal] = useState<{ record: any; type: string } | null>(null);
   const [modalCurrentStatus, setModalCurrentStatus] = useState<LeadStatus>('Pending');
@@ -88,6 +93,8 @@ function AdminDashboardContent() {
         return ['Pending', 'Reviewed', 'Empanelled', 'Completed'];
       case 'career':
         return ['Pending', 'Reviewed', 'Shortlisted', 'Interviewed', 'Completed'];
+      case 'driver':
+        return ['Pending', 'Reviewed', 'Shortlisted', 'Interviewed', 'Hired', 'Completed'];
       case 'consultant':
         return ['Pending', 'Reviewed', 'Empanelled', 'Active Project', 'Completed'];
       case 'quote':
@@ -99,18 +106,20 @@ function AdminDashboardContent() {
 
   const loadData = async () => {
     try {
-      const [q, inq, p, c, cons] = await Promise.all([
+      const [q, inq, p, c, cons, drv] = await Promise.all([
         StorageService.getQuotes(),
         StorageService.getInquiries(),
         StorageService.getPartnerships(),
         StorageService.getCareers(),
         StorageService.getConsultants(),
+        StorageService.getDriverApplications(),
       ]);
       setQuotes(q || []);
       setInquiries(inq || []);
       setPartnerships(p || []);
       setCareers(c || []);
       setConsultants(cons || []);
+      setDriverApplications(drv || []);
     } catch (err) {
       console.error('Failed to load admin records:', err);
     }
@@ -209,8 +218,15 @@ function AdminDashboardContent() {
         setConsultantSearch(viewParam);
         return;
       }
+      const drv = driverApplications.find(item => item.id === viewParam);
+      if (drv) {
+        setActiveTab('tabDrivers');
+        setDetailModal({ record: drv, type: 'driver' });
+        setDriverSearch(viewParam);
+        return;
+      }
     }
-  }, [tabParam, viewParam, quotes, inquiries, partnerships, careers, consultants, isAuthenticated]);
+  }, [tabParam, viewParam, quotes, inquiries, partnerships, careers, consultants, driverApplications, isAuthenticated]);
 
   // Handle ESC key to close modals
   useEffect(() => {
@@ -269,9 +285,11 @@ function AdminDashboardContent() {
       totalInquiries: inquiries.length,
       totalPartners: partnerships.length,
       totalCareers: careers.length,
-      totalConsultants: consultants.length
+      totalConsultants: consultants.length,
+      totalDrivers: driverApplications.length,
+      pendingDrivers: driverApplications.filter(d => d.status === 'Pending').length,
     };
-  }, [quotes, inquiries, partnerships, careers, consultants]);
+  }, [quotes, inquiries, partnerships, careers, consultants, driverApplications]);
 
   // Combined Recent Submissions for Overview Live Stream
   const recentSubmissions = useMemo(() => {
@@ -279,7 +297,7 @@ function AdminDashboardContent() {
       id: string;
       name: string;
       channel: string;
-      type: 'quote' | 'inquiry' | 'partner' | 'career' | 'consultant';
+      type: 'quote' | 'inquiry' | 'partner' | 'career' | 'consultant' | 'driver';
       category: string;
       status: LeadStatus;
       date?: string;
@@ -346,11 +364,23 @@ function AdminDashboardContent() {
         raw: c
       })
     );
+    driverApplications.forEach(d =>
+      list.push({
+        id: d.id,
+        name: d.fullName,
+        channel: 'Driver Application',
+        type: 'driver',
+        category: d.positionApplied || 'Fleet Driver',
+        status: d.status,
+        date: d.createdAt,
+        raw: d
+      })
+    );
 
     return list
       .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
       .slice(0, 10);
-  }, [quotes, inquiries, partnerships, careers, consultants]);
+  }, [quotes, inquiries, partnerships, careers, consultants, driverApplications]);
 
   // Filtered Quotes
   const filteredQuotes = useMemo(() => {
@@ -416,6 +446,23 @@ function AdminDashboardContent() {
     });
   }, [careers, careerStatus, careerSearch]);
 
+  // Filtered Driver Applications
+  const filteredDriverApplications = useMemo(() => {
+    return driverApplications.filter(item => {
+      if (driverStatus !== 'all' && item.status.toLowerCase() !== driverStatus.toLowerCase()) return false;
+      if (!driverSearch.trim()) return true;
+      const q = driverSearch.toLowerCase();
+      return (
+        item.id.toLowerCase().includes(q) ||
+        (item.fullName && item.fullName.toLowerCase().includes(q)) ||
+        (item.positionApplied && item.positionApplied.toLowerCase().includes(q)) ||
+        (item.phone && item.phone.toLowerCase().includes(q)) ||
+        (item.licenseNumber && item.licenseNumber.toLowerCase().includes(q)) ||
+        (item.email && item.email.toLowerCase().includes(q))
+      );
+    });
+  }, [driverApplications, driverStatus, driverSearch]);
+
   // Filtered Consultants
   const filteredConsultants = useMemo(() => {
     return consultants.filter(item => {
@@ -441,6 +488,7 @@ function AdminDashboardContent() {
       else if (type === 'partner') await StorageService.updatePartnershipStatus(id, newStatus);
       else if (type === 'career') await StorageService.updateCareerStatus(id, newStatus);
       else if (type === 'consultant') await StorageService.updateConsultantStatus(id, newStatus);
+      else if (type === 'driver') await StorageService.updateDriverApplicationStatus(id, newStatus);
 
       await loadData();
       if (detailModal && detailModal.record.id === id) {
@@ -470,6 +518,7 @@ function AdminDashboardContent() {
     else if (type === 'partner') await StorageService.deletePartnership(id);
     else if (type === 'career') await StorageService.deleteCareer(id);
     else if (type === 'consultant') await StorageService.deleteConsultant(id);
+    else if (type === 'driver') await StorageService.deleteDriverApplication(id);
 
     await loadData();
     setDeletePending(null);
@@ -506,6 +555,57 @@ function AdminDashboardContent() {
     a.click();
     URL.revokeObjectURL(url);
     showToast('CSV Exported', `Downloaded ${quotes.length} quotes.`, 'success');
+  };
+
+  // CSV Export for Driver Applications
+  const exportDriversCSV = () => {
+    if (driverApplications.length === 0) {
+      showToast('Export Notice', 'No driver applications to export.', 'info');
+      return;
+    }
+    const headers = [
+      'App ID',
+      'Full Name',
+      'Phone',
+      'Email',
+      'Position Applied',
+      'License Class',
+      'License Number',
+      'Years Experience',
+      'State / LGA',
+      'Accident History',
+      'Traffic Violations',
+      'Owns Vehicle',
+      'Guarantor Name',
+      'Status',
+      'Date'
+    ];
+    const rows = driverApplications.map(d => [
+      d.id,
+      `"${(d.fullName || '').replace(/"/g, '""')}"`,
+      d.phone,
+      d.email,
+      `"${(d.positionApplied || '').replace(/"/g, '""')}"`,
+      `"${(d.licenseClass || '').replace(/"/g, '""')}"`,
+      `"${(d.licenseNumber || '').replace(/"/g, '""')}"`,
+      `"${(d.yearsExperience || '').replace(/"/g, '""')}"`,
+      `"${((d.lga ? `${d.lga}, ` : '') + (d.stateOfOrigin || '')).replace(/"/g, '""')}"`,
+      d.accidentHistory || 'No',
+      d.trafficViolation || 'No',
+      d.ownsVehicle || 'No',
+      `"${(d.guarantorName || '').replace(/"/g, '""')}"`,
+      d.status,
+      d.createdAt ? d.createdAt.slice(0, 10) : ''
+    ]);
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ecoblue_driver_applications_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('CSV Exported', `Downloaded ${driverApplications.length} driver dossiers.`, 'success');
   };
 
   const getStatusBadgeClass = (status?: string) => {
@@ -824,6 +924,27 @@ function AdminDashboardContent() {
             </div>
 
             <div
+              className={`admin-nav-item ${activeTab === 'tabDrivers' ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab('tabDrivers');
+                setIsSidebarOpen(false);
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+              <span>Driver Applications</span>
+              {metrics.pendingDrivers > 0 && (
+                <span style={{ marginLeft: 'auto', backgroundColor: '#EF4444', color: '#fff', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 700, padding: '1px 7px', minWidth: '18px', textAlign: 'center' }}>
+                  {metrics.pendingDrivers}
+                </span>
+              )}
+            </div>
+
+            <div
               className={`admin-nav-item ${activeTab === 'tabConsultants' ? 'active' : ''}`}
               onClick={() => {
                 setActiveTab('tabConsultants');
@@ -1020,6 +1141,21 @@ function AdminDashboardContent() {
                         <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                         <circle cx="8.5" cy="7" r="4" />
                         <polyline points="17 11 19 13 23 9" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('tabDrivers')}>
+                    <div className="stat-card-info">
+                      <h5>Driver Applications</h5>
+                      <div className="stat-number" id="statTotalDrivers">{metrics.totalDrivers}</div>
+                    </div>
+                    <div className="stat-card-icon amber">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="1" y="3" width="15" height="13" />
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                        <circle cx="5.5" cy="18.5" r="2.5" />
+                        <circle cx="18.5" cy="18.5" r="2.5" />
                       </svg>
                     </div>
                   </div>
@@ -1617,7 +1753,241 @@ function AdminDashboardContent() {
               </div>
             )}
 
-            {/* 6. Consultants Tab */}
+            {/* 6. Driver Applications Tab */}
+            {activeTab === 'tabDrivers' && (
+              <div className="admin-tab-panel" id="tabDrivers">
+                <div className="admin-card">
+                  <div className="admin-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <h3 style={{ fontSize: '1.15rem', color: 'var(--color-primary-navy)', margin: 0 }}>Driver Applications & Fleet Recruitment Pipeline</h3>
+                        <span className="badge badge-completed" style={{ fontSize: '0.75rem' }}>
+                          {filteredDriverApplications.length} of {driverApplications.length} records
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--color-text-subtle)', margin: '0.25rem 0 0 0' }}>
+                        Recruitment submissions for hydraulic compactor trucks, roll-on skip haulage, and municipal logistics across Port Harcourt.
+                      </p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <input
+                        type="text"
+                        id="driverSearchInput"
+                        placeholder="Search candidate, license, ID, route..."
+                        className="form-input"
+                        style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem', width: '230px' }}
+                        value={driverSearch}
+                        onChange={e => setDriverSearch(e.target.value)}
+                      />
+                      <select
+                        id="driverStatusFilter"
+                        className="form-select"
+                        style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem', width: 'auto' }}
+                        value={driverStatus}
+                        onChange={e => setDriverStatus(e.target.value)}
+                      >
+                        <option value="all">All Statuses ({driverApplications.length})</option>
+                        <option value="Pending">Pending ({driverApplications.filter(d => d.status === 'Pending').length})</option>
+                        <option value="Reviewed">Reviewed ({driverApplications.filter(d => d.status === 'Reviewed').length})</option>
+                        <option value="Shortlisted">Shortlisted ({driverApplications.filter(d => d.status === 'Shortlisted').length})</option>
+                        <option value="Interviewed">Interviewed ({driverApplications.filter(d => d.status === 'Interviewed').length})</option>
+                        <option value="Hired">Hired ({driverApplications.filter(d => d.status === 'Hired').length})</option>
+                        <option value="Completed">Completed ({driverApplications.filter(d => d.status === 'Completed').length})</option>
+                      </select>
+                      <button
+                        type="button"
+                        onClick={exportDriversCSV}
+                        className="admin-action-btn view-btn"
+                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.825rem', height: 'auto' }}
+                        title="Download CSV of all driver applications"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span>Export CSV</span>
+                      </button>
+                      <Link
+                        href="/careers/driver-application"
+                        target="_blank"
+                        className="admin-action-btn"
+                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.825rem', height: 'auto', textDecoration: 'none', background: '#F1F5F9', color: 'var(--color-primary-navy)', border: '1px solid #CBD5E1' }}
+                        title="Open live public driver application form in new tab"
+                      >
+                        <span>Live Form ↗</span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="table-responsive">
+                    <table className="admin-table">
+                      <thead>
+                        <tr>
+                          <th>App ID</th>
+                          <th>Candidate & Contact</th>
+                          <th>Role & License</th>
+                          <th>Experience & Origin</th>
+                          <th>Safety Record</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="driversTableBody">
+                        {filteredDriverApplications.length === 0 ? (
+                          <tr>
+                            <td colSpan={8} style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--color-text-subtle)' }}>
+                              <div style={{ maxWidth: '380px', margin: '0 auto' }}>
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" style={{ margin: '0 auto 0.75rem auto', display: 'block' }}>
+                                  <rect x="1" y="3" width="15" height="13" />
+                                  <polygon points="16 8 20 8 23 11 23 16 16 16 8" />
+                                  <circle cx="5.5" cy="18.5" r="2.5" />
+                                  <circle cx="18.5" cy="18.5" r="2.5" />
+                                </svg>
+                                <div style={{ fontWeight: 700, color: 'var(--color-primary-navy)', marginBottom: '0.35rem' }}>No Driver Applications Found</div>
+                                <p style={{ fontSize: '0.85rem', marginBottom: '1rem', color: '#64748B' }}>
+                                  {driverSearch || driverStatus !== 'all'
+                                    ? 'No dossiers match your current filter criteria. Try clearing your search.'
+                                    : 'No commercial driver recruitment submissions have been recorded yet.'}
+                                </p>
+                                {(driverSearch || driverStatus !== 'all') ? (
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    style={{ padding: '0.4rem 0.9rem', fontSize: '0.825rem' }}
+                                    onClick={() => { setDriverSearch(''); setDriverStatus('all'); }}
+                                  >
+                                    Reset Filters
+                                  </button>
+                                ) : (
+                                  <Link
+                                    href="/careers/driver-application"
+                                    target="_blank"
+                                    className="btn btn-primary"
+                                    style={{ padding: '0.45rem 1rem', fontSize: '0.825rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+                                  >
+                                    <span>Submit Test Application</span>
+                                    <span>↗</span>
+                                  </Link>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ) : (
+                          filteredDriverApplications.map(d => {
+                            const dateStr = d.createdAt ? new Date(d.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+                            const waUrl = getWhatsAppUrl(d.phone, d.fullName, d.id);
+                            const hasIncident = (d.accidentHistory && d.accidentHistory.toLowerCase() === 'yes') || (d.trafficViolation && d.trafficViolation.toLowerCase() === 'yes');
+                            return (
+                              <tr key={d.id}>
+                                <td style={{ fontWeight: 700, color: 'var(--color-primary-navy)' }}>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: d, type: 'driver' })}
+                                    style={{ background: 'none', border: 'none', padding: 0, color: 'var(--color-primary-navy)', fontWeight: 700, cursor: 'pointer', textAlign: 'left', textDecoration: 'underline' }}
+                                    title="View candidate dossier"
+                                  >
+                                    {d.id}
+                                  </button>
+                                </td>
+                                <td>
+                                  <div style={{ fontWeight: 600 }}>{d.fullName}</div>
+                                  <div style={{ fontSize: '0.78rem', color: 'var(--color-text-subtle)' }}>
+                                    {d.phone} • {d.email}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div style={{ fontWeight: 600, color: 'var(--color-primary-navy)' }}>{d.positionApplied || 'Fleet Driver'}</div>
+                                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>
+                                    Class: <span style={{ fontWeight: 600 }}>{d.licenseClass || '—'}</span> • No: {d.licenseNumber || '—'}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div>{d.yearsExperience ? `${d.yearsExperience} Exp` : 'Exp: N/A'}</div>
+                                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>
+                                    {d.lga ? `${d.lga}, ` : ''}{d.stateOfOrigin || 'Rivers State'}
+                                  </div>
+                                </td>
+                                <td>
+                                  {hasIncident ? (
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 600, color: '#DC2626', background: '#FEF2F2', padding: '2px 8px', borderRadius: '4px' }}>
+                                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                      Has Records
+                                    </span>
+                                  ) : (
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 600, color: '#16A34A', background: '#F0FDF4', padding: '2px 8px', borderRadius: '4px' }}>
+                                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                      Clean Record
+                                    </span>
+                                  )}
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailModal({ record: d, type: 'driver' })}
+                                    style={{ cursor: 'pointer', border: 'none', background: 'transparent', padding: 0 }}
+                                    title="Click to view & change status"
+                                  >
+                                    <span className={`badge ${getStatusBadgeClass(d.status)}`}>
+                                      {d.status}
+                                    </span>
+                                  </button>
+                                </td>
+                                <td style={{ fontSize: '0.825rem', color: 'var(--color-text-subtle)' }}>{dateStr}</td>
+                                <td className="admin-actions-cell">
+                                  <div className="admin-action-btn-group">
+                                    <button
+                                      type="button"
+                                      className="admin-action-btn view-btn"
+                                      onClick={() => setDetailModal({ record: d, type: 'driver' })}
+                                      title="Review Full 8-Part Dossier"
+                                    >
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                      </svg>
+                                      <span>Review</span>
+                                    </button>
+                                    {waUrl && (
+                                      <a
+                                        href={waUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="admin-action-btn"
+                                        style={{ color: '#16A34A', borderColor: '#BBF7D0', background: '#F0FDF4' }}
+                                        title="Chat with driver candidate on WhatsApp"
+                                      >
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                                          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z" />
+                                        </svg>
+                                      </a>
+                                    )}
+                                    <button
+                                      type="button"
+                                      className="admin-action-btn delete-btn"
+                                      onClick={() => setDeletePending({ type: 'driver', id: d.id, name: `${d.fullName} (${d.id})` })}
+                                      title="Delete Dossier"
+                                    >
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <polyline points="3 6 5 6 21 6" />
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 7. Consultants Tab */}
             {activeTab === 'tabConsultants' && (
               <div className="admin-tab-panel" id="tabConsultants">
                 <div className="admin-card">
@@ -1841,6 +2211,7 @@ function AdminDashboardContent() {
                   {detailModal.type === 'partner' && `Partnership Proposal — ${detailModal.record.id}`}
                   {detailModal.type === 'career' && `Candidate Dossier — ${detailModal.record.id}`}
                   {detailModal.type === 'consultant' && `Consultant Dossier — ${detailModal.record.id}`}
+                  {detailModal.type === 'driver' && `Driver Dossier — ${detailModal.record.id}`}
                 </h3>
                 <span className={`badge ${getStatusBadgeClass(detailModal.record.status)}`}>
                   {detailModal.record.status}
@@ -2175,6 +2546,456 @@ function AdminDashboardContent() {
                     <div className="admin-detail-box">
                       <div className="admin-detail-box-title">Profile Summary & Expertise</div>
                       <p className="admin-detail-box-text">{item.profileSummary || 'No profile summary provided.'}</p>
+                    </div>
+                  </>
+                );
+              })()}
+
+              {/* DRIVER DOSSIER VIEW */}
+              {detailModal.type === 'driver' && (() => {
+                const item = detailModal.record as DriverApplicationLead;
+                const waUrl = getWhatsAppUrl(item.phone, item.fullName, item.id);
+                const hasAccident = item.accidentHistory && item.accidentHistory.toLowerCase() === 'yes';
+                const hasViolation = item.trafficViolation && item.trafficViolation.toLowerCase() === 'yes';
+                const typesList = item.drivingTypes ? item.drivingTypes.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+                return (
+                  <>
+                    {/* Header Candidate Banner */}
+                    <div className="dossier-header-bar">
+                      <div>
+                        <h4 className="dossier-candidate-title">{item.fullName}</h4>
+                        <div className="dossier-candidate-sub">
+                          <span className="role-badge">{item.positionApplied || 'Fleet Driver'}</span>
+                          <span>Ref: <strong>{item.id}</strong></span>
+                          <span>•</span>
+                          <span>License: <strong>Class {item.licenseClass || '—'}</strong> ({item.licenseNumber || 'N/A'})</span>
+                        </div>
+                      </div>
+                      <div className="admin-contact-chips" style={{ margin: 0 }}>
+                        {item.phone && (
+                          <a href={`tel:${item.phone}`} className="admin-contact-chip" style={{ background: '#ffffff', color: '#062C43' }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            Call ({item.phone})
+                          </a>
+                        )}
+                        {waUrl && (
+                          <a href={waUrl} target="_blank" rel="noopener noreferrer" className="admin-contact-chip whatsapp">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z" />
+                            </svg>
+                            WhatsApp
+                          </a>
+                        )}
+                        {item.email && (
+                          <a href={`mailto:${item.email}`} className="admin-contact-chip" style={{ background: '#ffffff', color: '#062C43' }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                              <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            Email
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => window.print()}
+                          className="admin-contact-chip"
+                          style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                          title="Print official candidate dossier"
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polyline points="6 9 6 2 18 2 18 9" />
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                            <rect x="6" y="14" width="12" height="8" />
+                          </svg>
+                          Print Dossier
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="dossier-sections-stack">
+                      {/* SECTION 1: Personal & Identification Profile */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                          </svg>
+                          <span>Section 1: Personal Profile & Identification</span>
+                        </div>
+                        <div className="dossier-grid-3">
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Date of Birth / Gender</span>
+                            <span className="dossier-field-val">{item.dob || '—'} • {item.gender || '—'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Marital Status / Dependants</span>
+                            <span className="dossier-field-val">{item.maritalStatus || 'Single'} • {item.dependants || 0} Dependant(s)</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Nationality & State of Origin</span>
+                            <span className="dossier-field-val">{item.nationality || 'Nigerian'} • {item.stateOfOrigin || '—'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">LGA of Origin</span>
+                            <span className="dossier-field-val">{item.lga || '—'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">National Identity No (NIN)</span>
+                            <span className="dossier-field-val highlight" style={{ letterSpacing: '0.05em' }}>{item.nin || 'Not Provided'}</span>
+                          </div>
+                          <div className="dossier-field" style={{ gridColumn: 'span 2' }}>
+                            <span className="dossier-field-label">Residential Address</span>
+                            <span className="dossier-field-val">{item.residentialAddress || '—'}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 2: Licensing & Professional Driving */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                            <line x1="1" y1="10" x2="23" y2="10" />
+                          </svg>
+                          <span>Section 2: Professional Driving Credentials</span>
+                        </div>
+                        <div className="dossier-grid-3">
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Driver&apos;s License Number</span>
+                            <span className="dossier-field-val highlight">{item.licenseNumber || '—'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">License Class</span>
+                            <span className="dossier-field-val">Class {item.licenseClass || 'Commercial'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">License Validity Period</span>
+                            <span className="dossier-field-val">
+                              {item.licenseIssueDate || '—'} to {item.licenseExpiryDate || '—'}
+                            </span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Commercial Experience</span>
+                            <span className="dossier-field-val highlight">{item.yearsExperience || 'N/A'}</span>
+                          </div>
+                          <div className="dossier-field" style={{ gridColumn: 'span 2' }}>
+                            <span className="dossier-field-label">Vehicles & Equipment Operated</span>
+                            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.2rem' }}>
+                              {typesList.length > 0 ? (
+                                typesList.map((t, idx) => (
+                                  <span key={idx} className="dossier-pill">{t}</span>
+                                ))
+                              ) : (
+                                <span className="dossier-field-val">Commercial Trucks / Haulage</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 3: Operations & Route Familiarity */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                            <line x1="8" y1="2" x2="8" y2="18" />
+                            <line x1="16" y1="6" x2="16" y2="22" />
+                          </svg>
+                          <span>Section 3: Route Knowledge & Past Operations</span>
+                        </div>
+                        <div className="dossier-grid-2">
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Familiar Port Harcourt & Rivers State Routes</span>
+                            <span className="dossier-field-val">{item.familiarRoutes || 'Greater Port Harcourt routes'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Available For Outside-State / Long Haul</span>
+                            <span className="dossier-field-val highlight">{item.drivingOutsideState || 'No'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Previous Company / Employer</span>
+                            <span className="dossier-field-val">{item.previousCompany || '—'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Previous Role & Duration</span>
+                            <span className="dossier-field-val">{item.previousPosition || 'Driver'} • {item.yearsWorked || '—'}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 4: Safety & Traffic Incident Record */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                          </svg>
+                          <span>Section 4: Safety Record & Compliance Audit</span>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          <div className={`dossier-alert-box ${hasAccident ? 'warning' : 'clean'}`}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0, marginTop: '2px' }}>
+                              {hasAccident ? (
+                                <>
+                                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                  <line x1="12" y1="9" x2="12" y2="13" />
+                                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                                </>
+                              ) : (
+                                <polyline points="20 6 9 17 4 12" />
+                              )}
+                            </svg>
+                            <div>
+                              <div style={{ fontWeight: 700 }}>
+                                Accident History: {item.accidentHistory || 'No'}
+                              </div>
+                              {hasAccident && item.accidentDetails && (
+                                <div style={{ marginTop: '0.25rem', fontSize: '0.825rem' }}>
+                                  <strong>Incident Details:</strong> {item.accidentDetails}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className={`dossier-alert-box ${hasViolation ? 'warning' : 'clean'}`}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0, marginTop: '2px' }}>
+                              {hasViolation ? (
+                                <>
+                                  <circle cx="12" cy="12" r="10" />
+                                  <line x1="12" y1="8" x2="12" y2="12" />
+                                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                                </>
+                              ) : (
+                                <polyline points="20 6 9 17 4 12" />
+                              )}
+                            </svg>
+                            <div>
+                              <div style={{ fontWeight: 700 }}>
+                                FRSC Traffic Violations: {item.trafficViolation || 'No'}
+                              </div>
+                              {hasViolation && item.violationDetails && (
+                                <div style={{ marginTop: '0.25rem', fontSize: '0.825rem' }}>
+                                  <strong>Violation Details:</strong> {item.violationDetails}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 5: Vehicle Ownership / Fleet */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <rect x="1" y="3" width="15" height="13" />
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                          </svg>
+                          <span>Section 5: Vehicle Ownership & Fleet Particulars</span>
+                        </div>
+                        {item.ownsVehicle === 'Yes' ? (
+                          <div className="dossier-grid-3">
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Vehicle Ownership</span>
+                              <span className="dossier-field-val highlight">Applicant Owned ({item.vehicleOwnerName || item.fullName})</span>
+                            </div>
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Make & Model</span>
+                              <span className="dossier-field-val">{item.vehicleMake || '—'} {item.vehicleModel || '—'} ({item.vehicleYear || '—'})</span>
+                            </div>
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Plate / Reg Number</span>
+                              <span className="dossier-field-val highlight">{item.plateNumber || '—'} / {item.vehicleRegNumber || '—'}</span>
+                            </div>
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Vehicle Colour / Type</span>
+                              <span className="dossier-field-val">{item.vehicleColour || '—'} • {item.vehicleType || 'Commercial'}</span>
+                            </div>
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Insurance Policy Number</span>
+                              <span className="dossier-field-val">{item.insurancePolicyNumber || '—'}</span>
+                            </div>
+                            <div className="dossier-field">
+                              <span className="dossier-field-label">Insurance Expiry Date</span>
+                              <span className="dossier-field-val">{item.insuranceExpiryDate || '—'}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{ padding: '0.5rem 0', color: 'var(--color-text-subtle)', fontSize: '0.875rem' }}>
+                            Candidate does not own a commercial vehicle. Applying for assignment to <strong>EcoBlue Company Fleet</strong> (Compactor Trucks, Skip Haulers, or Sanitation Sweepers).
+                          </div>
+                        )}
+                      </div>
+
+                      {/* SECTION 6: Employment Terms & Availability */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                          </svg>
+                          <span>Section 6: Employment Preferences & Availability</span>
+                        </div>
+                        <div className="dossier-grid-3">
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Position Applied</span>
+                            <span className="dossier-field-val highlight">{item.positionApplied || 'Fleet Driver'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Employment Type</span>
+                            <span className="dossier-field-val">{item.employmentType || 'Full-time'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Preferred Location</span>
+                            <span className="dossier-field-val">{item.preferredLocation || 'Greater Port Harcourt'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Shift Hours Preference</span>
+                            <span className="dossier-field-val">{item.preferredHours || 'Standard Day Shifts'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Expected Salary</span>
+                            <span className="dossier-field-val highlight">{item.expectedSalary || 'Negotiable'}</span>
+                          </div>
+                          <div className="dossier-field">
+                            <span className="dossier-field-label">Available Start Date</span>
+                            <span className="dossier-field-val">{item.availableStartDate || 'Immediate'}</span>
+                          </div>
+                          {item.prevEmployerName && (
+                            <div className="dossier-field" style={{ gridColumn: 'span 3' }}>
+                              <span className="dossier-field-label">Previous Employer & Leaving Reason</span>
+                              <span className="dossier-field-val">
+                                {item.prevEmployerName} {item.prevEmployerPhone ? `(${item.prevEmployerPhone})` : ''} — <em>{item.reasonForLeaving || 'Career progression'}</em>
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* SECTION 7: Next of Kin & Guarantor */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                          </svg>
+                          <span>Section 7: Emergency Contact & Verified Guarantor</span>
+                        </div>
+                        <div className="dossier-grid-2">
+                          <div style={{ background: '#F8FAFC', padding: '0.85rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+                            <div style={{ fontWeight: 700, fontSize: '0.825rem', color: 'var(--color-primary-navy)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                              Emergency Next of Kin
+                            </div>
+                            <div style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+                              <div><strong>Name:</strong> {item.emergencyName || '—'}</div>
+                              <div><strong>Relationship:</strong> {item.emergencyRelationship || '—'}</div>
+                              <div><strong>Phone:</strong> {item.emergencyPhone || '—'} {item.emergencyAltPhone ? `• ${item.emergencyAltPhone}` : ''}</div>
+                              <div><strong>Address:</strong> {item.emergencyAddress || '—'}</div>
+                            </div>
+                          </div>
+
+                          <div style={{ background: '#F8FAFC', padding: '0.85rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                              <span style={{ fontWeight: 700, fontSize: '0.825rem', color: 'var(--color-primary-navy)', textTransform: 'uppercase' }}>
+                                Legal Guarantor
+                              </span>
+                              <span style={{ fontSize: '0.725rem', fontWeight: 700, color: '#16A34A', background: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
+                                Attested
+                              </span>
+                            </div>
+                            <div style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+                              <div><strong>Name:</strong> {item.guarantorName || '—'} ({item.guarantorRelationship || 'Guarantor'})</div>
+                              <div><strong>Occupation/Employer:</strong> {item.guarantorOccupation || '—'} • {item.guarantorEmployer || '—'}</div>
+                              <div><strong>Contact:</strong> {item.guarantorPhone || '—'} • {item.guarantorEmail || '—'}</div>
+                              <div><strong>Address:</strong> {item.guarantorAddress || '—'}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 8: Submitted Documents */}
+                      <div className="dossier-section-card">
+                        <div className="dossier-section-title">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                          </svg>
+                          <span>Section 8: Attached Credentials & Compliance Files</span>
+                        </div>
+                        <div className="dossier-docs-list">
+                          <div className={`dossier-doc-chip ${item.passportPhotoFile ? 'uploaded' : ''}`}>
+                            <div className="dossier-doc-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>Passport Photograph</div>
+                              <div style={{ fontSize: '0.825rem', fontWeight: 600, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                                {item.passportPhotoFile || 'Pending Physical Copy'}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className={`dossier-doc-chip ${item.driverLicenseFile ? 'uploaded' : ''}`}>
+                            <div className="dossier-doc-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>Driver&apos;s License Scan</div>
+                              <div style={{ fontSize: '0.825rem', fontWeight: 600, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                                {item.driverLicenseFile || 'Pending Verification'}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className={`dossier-doc-chip ${item.nationalIdFile ? 'uploaded' : ''}`}>
+                            <div className="dossier-doc-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>National ID (NIN Slip)</div>
+                              <div style={{ fontSize: '0.825rem', fontWeight: 600, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                                {item.nationalIdFile || 'Pending Verification'}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className={`dossier-doc-chip ${item.roadworthinessCertFile ? 'uploaded' : ''}`}>
+                            <div className="dossier-doc-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div style={{ overflow: 'hidden' }}>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-subtle)' }}>Roadworthiness Cert</div>
+                              <div style={{ fontSize: '0.825rem', fontWeight: 600, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                                {item.roadworthinessCertFile || 'N/A (Fleet Vehicle)'}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Compiled Transcript */}
+                      {item.fullDossier && (
+                        <div className="dossier-section-card">
+                          <div className="dossier-section-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <polyline points="4 17 10 11 4 5" />
+                              <line x1="12" y1="19" x2="20" y2="19" />
+                            </svg>
+                            <span>Dossier Transcript & Notes</span>
+                          </div>
+                          <div className="dossier-transcript">
+                            {item.fullDossier}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </>
                 );
