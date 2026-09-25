@@ -655,11 +655,6 @@ function AdminDashboardContent() {
               </svg>
               <span>Back to EcoBlue Site</span>
             </Link>
-
-            <div className="admin-login-badge">
-              <span className="admin-pulse-dot" />
-              <span>Port Harcourt Operations Dispatch</span>
-            </div>
           </div>
 
           {/* Main Clean Enterprise Card */}
@@ -742,7 +737,7 @@ function AdminDashboardContent() {
                   <input
                     type="email"
                     className="admin-input-field"
-                    placeholder="ecoblueenvironmentalservice@gmail.com"
+                    placeholder="Enter staff email or ID"
                     value={adminEmail}
                     onChange={e => setAdminEmail(e.target.value)}
                     required
@@ -832,29 +827,8 @@ function AdminDashboardContent() {
               </button>
             </form>
 
-            <div className="admin-login-trust">
-              <div className="admin-trust-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <span>256-Bit TLS</span>
-              </div>
-              <div className="admin-trust-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-                <span>Rate-Limited</span>
-              </div>
-              <div className="admin-trust-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                <span>Supabase Sync</span>
-              </div>
-            </div>
-
             <div className="admin-login-legal">
-              EcoBlue Environmental Services Ltd. • Port Harcourt Dispatch Command
+              EcoBlue Environmental Services Ltd. • Staff Operations
             </div>
           </div>
         </div>
