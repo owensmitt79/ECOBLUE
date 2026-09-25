@@ -647,52 +647,70 @@ function AdminDashboardContent() {
     return (
       <div className="admin-body">
         <div className="admin-login-screen" id="adminLoginOverlay">
+          {/* Top navigation row */}
+          <div className="admin-login-topbar">
+            <Link href="/" className="admin-login-back-link" title="Return to public homepage">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              <span>Back to EcoBlue Site</span>
+            </Link>
+
+            <div className="admin-login-badge">
+              <span className="admin-pulse-dot" />
+              <span>Port Harcourt Operations Dispatch</span>
+            </div>
+          </div>
+
+          {/* Main Clean Enterprise Card */}
           <div className="admin-login-card">
-            <img
-              src="/images/logo.png"
-              alt="EcoBlue Logo"
-              style={{
-                height: '96px',
-                width: 'auto',
-                objectFit: 'contain',
-                margin: '0 auto 1.25rem auto',
-                display: 'block',
-                border: 'none',
-                boxShadow: 'none',
-                background: 'transparent'
-              }}
-            />
-            <h2 style={{ fontSize: '1.5rem', color: 'var(--color-primary-navy)', marginBottom: '0.35rem' }}>
-              EcoBlue Staff Portal
-            </h2>
-            <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
-              Authorized administrative access for EcoBlue operations and client dispatch in Port Harcourt.
+            <div className="admin-login-logo-wrap">
+              <img
+                src="/images/logo.png"
+                alt="EcoBlue Environmental Services Ltd. Logo"
+                className="admin-login-logo-img"
+              />
+            </div>
+
+            <h1 className="admin-login-title">
+              Staff Operations Portal
+            </h1>
+            <p className="admin-login-subtitle">
+              Sign in with your authorized EcoBlue credentials to manage client dispatches, waste collection quotes, and driver records.
             </p>
 
             {loginError && (
               <div
                 style={{
-                  backgroundColor: '#FEE2E2',
-                  border: '1px solid #F87171',
+                  backgroundColor: '#FEF2F2',
+                  border: '1px solid #FCA5A5',
                   color: '#991B1B',
-                  padding: '12px',
-                  borderRadius: '8px',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
                   fontSize: '0.85rem',
                   marginBottom: '16px',
                   textAlign: 'left',
-                  lineHeight: 1.5
+                  lineHeight: 1.5,
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.65rem'
                 }}
               >
-                {loginError}
+                <svg style={{ flexShrink: 0, marginTop: '2px' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <div>
+                  <strong>Access Denied:</strong> {loginError}
+                </div>
               </div>
             )}
 
             {viewParam && (
               <div
                 style={{
-                  backgroundColor: '#EFF6FF',
-                  border: '1.5px solid #BFDBFE',
-                  color: '#1E40AF',
+                  backgroundColor: '#F0FDF4',
+                  border: '1.5px solid #BBF7D0',
+                  color: '#166534',
                   padding: '12px 14px',
                   borderRadius: '10px',
                   fontSize: '0.85rem',
@@ -703,101 +721,140 @@ function AdminDashboardContent() {
                   gap: '0.65rem'
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-green)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                <svg style={{ flexShrink: 0 }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+                </svg>
                 <div>
-                  <strong>Staff Access Link:</strong> Request <strong>{viewParam}</strong> is queued for inspection. Sign in below to load the live dispatch record.
+                  <strong>Direct Record Link:</strong> Record <strong>{viewParam}</strong> is queued. Sign in to view and process this file immediately.
                 </div>
               </div>
             )}
 
-            <form onSubmit={handleLogin} style={{ textAlign: 'left' }}>
-              <div className="form-group" style={{ marginBottom: '1rem' }}>
-                <label className="form-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '4px' }}>
-                  Staff Email / Username
+            <form onSubmit={handleLogin}>
+              <div className="admin-input-group">
+                <label className="admin-input-label">
+                  Staff Email / Operations ID
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="ecoblueenvironmentalservice@gmail.com"
-                  value={adminEmail}
-                  onChange={e => setAdminEmail(e.target.value)}
-                  required
-                  autoComplete="username"
-                  style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)', fontSize: '0.95rem' }}
-                />
+                <div className="admin-input-wrap">
+                  <svg className="admin-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <input
+                    type="email"
+                    className="admin-input-field"
+                    placeholder="ecoblueenvironmentalservice@gmail.com"
+                    value={adminEmail}
+                    onChange={e => setAdminEmail(e.target.value)}
+                    required
+                    autoComplete="username"
+                    id="adminEmailInput"
+                  />
+                </div>
               </div>
 
-              <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                <label className="form-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '4px' }}>
-                  Password
+              <div className="admin-input-group">
+                <label className="admin-input-label">
+                  Security Password
                 </label>
-                <div style={{ position: 'relative' }}>
+                <div className="admin-input-wrap">
+                  <svg className="admin-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    className="form-control"
-                    placeholder="Enter security password"
+                    className="admin-input-field"
+                    placeholder="••••••••••••••••"
                     value={adminPass}
                     onChange={e => setAdminPass(e.target.value)}
                     required
                     autoComplete="current-password"
-                    style={{ width: '100%', padding: '10px 42px 10px 12px', borderRadius: '6px', border: '1px solid var(--color-border-medium)', fontSize: '0.95rem' }}
+                    id="adminPasswordInput"
+                    style={{ paddingRight: '42px' }}
                   />
                   <button
                     type="button"
+                    className="admin-password-toggle"
                     onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                      position: 'absolute',
-                      right: '10px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--color-text-subtle)',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      fontSize: '0.8rem',
-                      fontWeight: 600
-                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     title={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? 'Hide' : 'Show'}
+                    {showPassword ? (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+                      </svg>
+                    ) : (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
 
+              <div className="admin-login-options">
+                <label className="admin-remember-label">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    style={{ accentColor: 'var(--color-primary-green)', cursor: 'pointer' }}
+                  />
+                  <span>Keep session active</span>
+                </label>
+                <a
+                  href="mailto:ecoblueenvironmentalservice@gmail.com?subject=EcoBlue%20Staff%20Portal%20Password%20Assistance"
+                  className="admin-support-link"
+                >
+                  Need Support?
+                </a>
+              </div>
+
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="admin-login-btn"
                 disabled={isLoggingIn}
-                style={{
-                  width: '100%',
-                  marginTop: '0.75rem',
-                  padding: '12px',
-                  fontSize: '1rem',
-                  fontWeight: 700,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                  cursor: isLoggingIn ? 'wait' : 'pointer'
-                }}
+                id="adminLoginSubmitBtn"
               >
                 {isLoggingIn ? (
                   <>
-                    <svg className="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <svg className="spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
                     </svg>
-                    <span>Authenticating...</span>
+                    <span>Verifying Staff Credentials...</span>
                   </>
                 ) : (
-                  <span>Sign In to Operations Portal</span>
+                  <>
+                    <span>Authenticate & Access Dashboard</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </>
                 )}
               </button>
             </form>
 
-            <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #E2E8F0', fontSize: '0.75rem', color: 'var(--color-text-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>256-bit Encrypted Operations Gateway • Authorized Personnel Only</span>
+            <div className="admin-login-trust">
+              <div className="admin-trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span>256-Bit TLS</span>
+              </div>
+              <div className="admin-trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Rate-Limited</span>
+              </div>
+              <div className="admin-trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Supabase Sync</span>
+              </div>
+            </div>
+
+            <div className="admin-login-legal">
+              EcoBlue Environmental Services Ltd. • Port Harcourt Dispatch Command
             </div>
           </div>
         </div>
